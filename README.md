@@ -1,8 +1,16 @@
 # samiam3d
 
-A faithful, self-contained static replica of [samiam3d.com](https://samiam3d.com/), preserving the complete portfolio content, project order, galleries, video embeds, header behavior, navigation drawer, and contact drawer.
+Sam Gutierrez's art-direction and game-development portfolio, rebuilt as a v0-friendly Next.js App Router project.
 
-All displayed portfolio images are stored locally in `public/assets/images`; the built site does not hotlink images from the WordPress installation. Source-to-local mappings, hashes, byte sizes, and content types are recorded in `public/assets/asset-manifest.json`.
+The portfolio preserves the complete project order, written content, galleries, and video embeds from [samiam3d.com](https://samiam3d.com/). All 85 source images are stored in `public/assets/images`; the site does not depend on WordPress image hosting. Source URLs, hashes, byte sizes, and content types are recorded in `public/assets/asset-manifest.json`.
+
+## Stack
+
+- Next.js App Router
+- React
+- TypeScript
+- Tailwind CSS
+- Local portfolio assets
 
 ## Run locally
 
@@ -11,22 +19,17 @@ npm install
 npm run dev
 ```
 
-## Production build
+Open [http://localhost:3000](http://localhost:3000).
+
+## Verify a production build
 
 ```bash
+npm run lint
 npm run build
 ```
 
-The generated site is written to `dist/`.
+The repository is ready to import into v0 or deploy through Vercel's Git integration.
 
-## Refresh from the source site
+## Content and credits
 
-```bash
-npm run sync
-```
-
-The sync script downloads the current public homepage, keeps the original portfolio markup and ordering, selects the highest-resolution source for each displayed image, localizes the theme styles and fonts, strips WordPress runtime and analytics scripts, and rebuilds the asset manifest.
-
-## Source and credits
-
-Portfolio content and artwork are mirrored from `samiam3d.com`. The visual foundation is the WordPress **Eighties** theme by Kopepasah; the original credit remains in the site footer.
+Portfolio content and artwork belong to Sam Gutierrez. The complete WordPress source snapshot has been converted into local, static portfolio content for predictable v0 and Vercel rendering.
