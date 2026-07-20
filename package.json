@@ -1,28 +1,19 @@
 {
-  "name": "samiam3d",
-  "version": "2.0.0",
-  "private": true,
-  "description": "Sam Gutierrez portfolio, rebuilt for v0 and Vercel with Next.js",
+  "name": "workspace",
+  "version": "0.0.0",
+  "license": "MIT",
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
-    "lint": "tsc --noEmit"
+    "preinstall": "sh -c 'rm -f package-lock.json yarn.lock; case \"$npm_config_user_agent\" in pnpm/*) ;; *) echo \"Use pnpm instead\" >&2; exit 1 ;; esac'",
+    "build": "pnpm run typecheck && pnpm -r --if-present run build",
+    "typecheck:libs": "tsc --build",
+    "typecheck": "pnpm run typecheck:libs && pnpm -r --filter \"./artifacts/**\" --filter \"./scripts\" --if-present run typecheck"
   },
+  "private": true,
   "dependencies": {
-    "next": "16.2.10",
-    "react": "19.2.7",
-    "react-dom": "19.2.7"
+    "@replit/connectors-sdk": "^0.4.1"
   },
   "devDependencies": {
-    "@tailwindcss/postcss": "4.3.3",
-    "@types/node": "^24.0.0",
-    "@types/react": "^19.0.0",
-    "@types/react-dom": "^19.0.0",
-    "tailwindcss": "4.3.3",
-    "typescript": "^5.9.0"
-  },
-  "overrides": {
-    "postcss": "8.5.20"
+    "prettier": "^3.9.5",
+    "typescript": "~5.9.3"
   }
 }
