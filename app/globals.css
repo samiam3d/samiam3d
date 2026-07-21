@@ -102,14 +102,85 @@ a:focus-visible {
   text-transform: uppercase;
 }
 
-.site-nav__links a {
+.site-nav__links a,
+.site-nav__links button {
   color: var(--muted);
+  border: 0;
+  padding: 0;
+  margin: 0;
+  background: transparent;
+  text-decoration: none;
   text-decoration: none;
   transition: color 180ms ease;
+  cursor: pointer;
+  font: inherit;
 }
 
-.site-nav__links a:hover {
+.site-nav__links a:hover,
+.site-nav__links button:hover {
   color: var(--text);
+}
+
+.contact-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 40;
+  display: grid;
+  place-items: center;
+  padding: 1.25rem;
+  background: rgb(0 0 0 / 0.52);
+}
+
+.contact-modal {
+  width: min(100% - 2rem, 34rem);
+  border: 1px solid var(--line);
+  background: var(--surface);
+  padding: 1.3rem 1.2rem;
+  box-shadow: 0 24px 70px rgb(0 0 0 / 40%);
+}
+
+.contact-modal__heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.contact-modal__heading h2 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 400;
+  letter-spacing: -0.02em;
+}
+
+.contact-modal__close {
+  min-height: 2rem;
+  border: 1px solid var(--line);
+  background: transparent;
+  color: var(--text);
+  font-size: 0.75rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 0.28rem 0.72rem;
+  cursor: pointer;
+}
+
+.contact-modal__list {
+  margin: 1rem 0 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 0.7rem;
+}
+
+.contact-modal__list a {
+  color: var(--text);
+  text-decoration-color: color-mix(in srgb, var(--accent) 70%, transparent);
+  text-underline-offset: 0.2em;
+}
+
+.contact-modal__list a:hover {
+  color: var(--accent);
 }
 
 .hero {
