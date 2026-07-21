@@ -289,6 +289,18 @@ button:focus-visible {
   opacity: 0.88;
 }
 
+.hero__title > .hero__name {
+  position: relative;
+  z-index: 0;
+  text-shadow:
+    0.004em 0.006em 0 rgb(222 242 255 / 88%),
+    0.009em 0.013em 0 rgb(132 184 224 / 78%),
+    0.015em 0.022em 0 rgb(65 111 154 / 68%),
+    0.022em 0.032em 0 rgb(24 53 83 / 56%),
+    0.032em 0.046em 0.08em rgb(19 67 116 / 34%),
+    0 0 0.14em rgb(91 177 255 / 13%);
+}
+
 .hero__d {
   display: inline-block;
   font-size: 1.17em;
