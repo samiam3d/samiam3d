@@ -94,6 +94,7 @@ export function preparePortfolioLayout(html: string) {
 
   splitNestedImage(document, "68");
   removeImage(document, "70");
+  removeImage(document, "266");
   mergeTalesMobileGallery(document);
 
   const ruinedOverview = paragraphContaining(
