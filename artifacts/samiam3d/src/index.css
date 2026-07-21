@@ -340,6 +340,16 @@ button:focus-visible {
   font-size: clamp(1.8rem, 3vw, 3rem);
 }
 
+.portfolio-content > #past-projects {
+  margin-bottom: 1.5rem;
+  font-size: clamp(2.35rem, 4.6vw, 4.8rem);
+}
+
+.portfolio-content > #ea-visceral {
+  margin-top: 0;
+  font-size: clamp(1.75rem, 2.8vw, 2.9rem);
+}
+
 .portfolio-content > p {
   width: 100%;
   max-width: none;
@@ -401,6 +411,38 @@ button:focus-visible {
 .portfolio-content > figure img,
 .portfolio-content > .wp-block-image img {
   width: 100%;
+}
+
+.portfolio-content
+  > :is(div.wp-block-image, figure.wp-block-image):has(
+    :is(.wp-image-71, .wp-image-65, .wp-image-281, .wp-image-62)
+  ) {
+  width: 70%;
+  margin-inline: auto !important;
+}
+
+.portfolio-content
+  > :is(div.wp-block-image, figure.wp-block-image):has(
+    :is(
+      .wp-image-61,
+      .wp-image-60,
+      .wp-image-59,
+      .wp-image-70,
+      .wp-image-69,
+      .wp-image-67
+    )
+  ) {
+  display: inline-block !important;
+  width: calc(50% - clamp(0.4rem, 0.75vw, 0.7rem) - 0.2rem) !important;
+  margin-block: clamp(0.4rem, 0.75vw, 0.7rem) !important;
+  vertical-align: top;
+}
+
+.portfolio-content
+  > :is(div.wp-block-image, figure.wp-block-image):has(
+    :is(.wp-image-61, .wp-image-59, .wp-image-69)
+  ) {
+  margin-right: clamp(0.8rem, 1.5vw, 1.4rem) !important;
 }
 
 .portfolio-content img.wp-image-367 {
@@ -996,6 +1038,26 @@ button:focus-visible {
 
   .portfolio-content > h2 {
     max-width: 100%;
+  }
+
+  .portfolio-content
+    > :is(div.wp-block-image, figure.wp-block-image):has(
+      :is(
+        .wp-image-71,
+        .wp-image-65,
+        .wp-image-281,
+        .wp-image-62,
+        .wp-image-61,
+        .wp-image-60,
+        .wp-image-59,
+        .wp-image-70,
+        .wp-image-69,
+        .wp-image-67
+      )
+    ) {
+    display: block !important;
+    width: 100% !important;
+    margin-inline: 0 !important;
   }
 
   .portfolio-content img.wp-image-367 {
