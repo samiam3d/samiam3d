@@ -1,23 +1,18 @@
 type HeroProps = {
   title?: string;
-  repeatLines?: number;
 };
 
-export function Hero({
-  title = "samiam3d",
-  repeatLines = 4,
-}: HeroProps) {
-  const lines = Array.from({ length: repeatLines }).map((_, index) => (
-    <span key={index} className="hero__line">
-      {title.toLocaleUpperCase()}
-    </span>
-  ));
-
+export function Hero({ title = "samiam3D" }: HeroProps) {
   return (
-    <section className="hero" aria-labelledby="hero-title">
+    <section id="hero" className="hero" aria-labelledby="hero-title">
       <div className="hero__inner">
-        <h1 id="hero-title" className="hero__title">
-          {lines}
+        <h1
+          id="hero-title"
+          className="hero__title"
+          data-text={title}
+        >
+          <span className="hero__name">samiam3</span>
+          <span className="hero__d">D</span>
         </h1>
       </div>
     </section>

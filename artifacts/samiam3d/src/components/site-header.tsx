@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 
 const contactLinks = [
   {
@@ -53,7 +54,7 @@ function ContactModal({
     return null;
   }
 
-  return (
+  return createPortal(
     <div
       className="contact-modal-backdrop"
       role="presentation"
@@ -64,44 +65,85 @@ function ContactModal({
         }
       }}
     >
-      <div className="contact-modal" ref={panelRef} role="dialog" aria-modal="true" aria-labelledby="contact-modal-title">
+      <div
+        className="contact-modal"
+        ref={panelRef}
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="contact-modal-title"
+      >
         <div className="contact-modal__heading">
-          <h2 id="contact-modal-title">Contact</h2>
+          <div>
+            <p className="contact-modal__eyebrow">Let&apos;s make something</p>
+            <h2 id="contact-modal-title">Contact</h2>
+          </div>
           <button
             type="button"
             className="contact-modal__close"
             onClick={onClose}
             data-autofocus
           >
-            Close
+            <span aria-hidden="true">×</span>
+            <span className="sr-only">Close contact dialog</span>
           </button>
         </div>
         <ul className="contact-modal__list">
           {contactLinks.map((item) => (
-            <li key={item.id}>
+            <li key={item.id} className={`contact-modal__item contact-modal__item--${item.id}`}>
+              <span>{item.label}</span>
               <a
                 href={item.href}
                 target={item.id === "linkedin" ? "_blank" : undefined}
                 rel={item.id === "linkedin" ? "noopener noreferrer" : undefined}
               >
-                {item.label}: {item.value}
+                {item.value}
               </a>
             </li>
           ))}
         </ul>
       </div>
-    </div>
+    </div>,
+    document.body,
   );
 }
 
 export function SiteHeader() {
   const [isContactOpen, setIsContactOpen] = useState(false);
+  const [showBrand, setShowBrand] = useState(false);
+
+  useEffect(() => {
+    let animationFrame = 0;
+
+    const updateBrandVisibility = () => {
+      cancelAnimationFrame(animationFrame);
+      animationFrame = requestAnimationFrame(() => {
+        const hero = document.getElementById("hero");
+        setShowBrand(Boolean(hero && hero.getBoundingClientRect().bottom <= 84));
+      });
+    };
+
+    updateBrandVisibility();
+    window.addEventListener("scroll", updateBrandVisibility, { passive: true });
+    window.addEventListener("resize", updateBrandVisibility);
+
+    return () => {
+      cancelAnimationFrame(animationFrame);
+      window.removeEventListener("scroll", updateBrandVisibility);
+      window.removeEventListener("resize", updateBrandVisibility);
+    };
+  }, []);
 
   return (
     <header className="site-nav">
       <div className="site-nav__inner">
-        <a className="site-nav__brand" href="#" aria-label="SamIam3D home">
-          samiam3d
+        <a
+          className={`site-nav__brand${showBrand ? " is-visible" : ""}`}
+          href="#hero"
+          aria-label="SamIam3D home"
+          aria-hidden={!showBrand}
+          tabIndex={showBrand ? 0 : -1}
+        >
+          samiam3D
         </a>
         <nav className="site-nav__links" aria-label="Primary navigation">
           <button

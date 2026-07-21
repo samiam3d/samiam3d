@@ -1,0 +1,6 @@
+{
+  "files": ["artifacts/samiam3d/index.html"],
+  "insertBefore": "</body>",
+  "commentSyntax": "html",
+  "cspChecked": true
+}

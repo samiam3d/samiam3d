@@ -2,61 +2,44 @@ import { SiteHeader } from "@/components/site-header";
 import { Hero } from "@/components/hero";
 import { PortfolioContent } from "@/components/portfolio-content";
 import { SiteFooter } from "@/components/site-footer";
+import { CursorEmitter } from "@/components/cursor-emitter";
 
 type HeroSectionConfig = {
   kind: "hero";
   id: "hero";
   title: string;
-  repeatLines: number;
 };
 
 type WorkSectionConfig = {
   kind: "work";
   id: "work";
-  title: string;
-  summary: string;
 };
 
 type PageSection = HeroSectionConfig | WorkSectionConfig;
 
 const sections: PageSection[] = [
-  { kind: "hero", id: "hero", title: "samiam3d", repeatLines: 4 },
-  {
-    kind: "work",
-    id: "work",
-    title: "Selected work",
-    summary:
-      "Art direction, world building, production design, and interactive storytelling across original work and globally recognized games.",
-  },
+  { kind: "hero", id: "hero", title: "samiam3D" },
+  { kind: "work", id: "work" },
 ];
 
 function App() {
   return (
     <>
+      <CursorEmitter />
       <SiteHeader />
       <main>
         {sections.map((section) => {
           if (section.kind === "hero") {
-            return (
-              <Hero
-                key={section.id}
-                title={section.title}
-                repeatLines={section.repeatLines}
-              />
-            );
+            return <Hero key={section.id} title={section.title} />;
           }
 
           return (
             <section
               id={section.id}
               className="work-section"
-              aria-labelledby="work-title"
+              aria-label="Portfolio work"
               key={section.id}
             >
-              <div className="work-intro">
-                <h2 id="work-title">{section.title}</h2>
-                <p>{section.summary}</p>
-              </div>
               <PortfolioContent />
             </section>
           );
