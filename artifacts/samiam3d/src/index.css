@@ -495,6 +495,17 @@ button:focus-visible {
   user-select: none;
 }
 
+.portfolio-content .wp-block-gallery.wp-block-gallery-11 {
+  display: flex !important;
+  justify-content: center;
+}
+
+.portfolio-content
+  .wp-block-gallery.wp-block-gallery-11
+  > figure.wp-block-image {
+  flex: 0 0 43.333% !important;
+}
+
 .portfolio-content .wp-block-gallery.has-nested-images figure.wp-block-image {
   display: block !important;
   width: auto !important;
@@ -1014,6 +1025,12 @@ button:focus-visible {
     .wp-block-gallery:is(.wp-block-gallery-5, .wp-block-gallery-10)
     > figure.wp-block-image {
     flex-basis: 11.55rem !important;
+  }
+
+  .portfolio-content
+    .wp-block-gallery.wp-block-gallery-11
+    > figure.wp-block-image {
+    flex-basis: 100% !important;
   }
 
   .portfolio-content > .wp-block-group.is-layout-flex {
