@@ -199,11 +199,9 @@ button:focus-visible {
   --sheen-y: 50%;
   position: relative;
   isolation: isolate;
-  display: inline-flex;
+  display: inline-block;
   max-width: 100%;
   margin: 0;
-  align-items: baseline;
-  color: rgb(173 215 255 / 20%);
   font-family: var(--font-display);
   font-size: clamp(4rem, 15.8vw, 17rem);
   font-weight: 400;
@@ -211,12 +209,37 @@ button:focus-visible {
   line-height: 0.82;
   text-align: center;
   white-space: nowrap;
+}
+
+.hero__layer {
+  display: inline-flex;
+  align-items: baseline;
+}
+
+.hero__face {
+  position: relative;
+  z-index: 2;
+  color: rgb(173 215 255 / 20%);
   -webkit-text-stroke: 1.25px rgb(191 225 255 / 62%);
   text-shadow:
     0 1px 0 rgb(235 248 255 / 78%),
     0 12px 42px rgb(0 0 0 / 35%),
     0 0 38px rgb(75 163 255 / 14%),
     0 0 72px rgb(145 211 255 / 11%);
+}
+
+.hero__depth {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  color: rgb(54 105 158 / 68%);
+  pointer-events: none;
+  transform: translateY(-0.055em);
+  -webkit-text-stroke: 1.25px rgb(133 192 242 / 72%);
+  text-shadow:
+    0 -1px 0 rgb(226 244 255 / 42%),
+    0 0.025em 0 rgb(24 63 111 / 88%),
+    0 0 32px rgb(83 163 255 / 28%);
 }
 
 .hero__title::before {
@@ -252,8 +275,7 @@ button:focus-visible {
 .hero__sheen {
   position: absolute;
   inset: 0;
-  display: inline-flex;
-  align-items: baseline;
+  z-index: 3;
   color: transparent;
   background: linear-gradient(
     115deg in oklch,
