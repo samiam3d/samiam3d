@@ -2,6 +2,7 @@
 
 :root {
   color-scheme: dark;
+  --font-display: "Righteous", "Open Sans", sans-serif;
   --background: #111214;
   --surface: #191b1f;
   --surface-raised: #22252a;
@@ -16,6 +17,7 @@
 @media (prefers-color-scheme: light) {
   :root {
     color-scheme: light;
+    --font-display: "Righteous", "Open Sans", sans-serif;
     --background: #f3f1ec;
     --surface: #e8e6e1;
     --surface-raised: #ffffff;
@@ -84,7 +86,7 @@ a:focus-visible {
 
 .site-nav__brand {
   color: var(--text);
-  font-family: "Righteous", "Open Sans", sans-serif;
+  font-family: var(--font-display);
   font-size: 1.25rem;
   letter-spacing: -0.02em;
   text-decoration: none;
@@ -142,7 +144,7 @@ a:focus-visible {
 .hero h1 {
   max-width: 11ch;
   margin: 0;
-  font-family: "Varela Round", "Open Sans", sans-serif;
+  font-family: var(--font-display);
   font-size: clamp(3rem, 5.4vw, 6.6rem);
   font-weight: 400;
   letter-spacing: -0.065em;
@@ -292,7 +294,7 @@ a:focus-visible {
 .work-intro h2,
 .site-footer h2 {
   margin: 0;
-  font-family: "Varela Round", "Open Sans", sans-serif;
+  font-family: var(--font-display);
   font-size: clamp(2.8rem, 6vw, 6.5rem);
   font-weight: 400;
   letter-spacing: -0.06em;
@@ -318,7 +320,7 @@ a:focus-visible {
 .portfolio-content > h3 {
   scroll-margin-top: 6rem;
   color: var(--text);
-  font-family: "Varela Round", "Open Sans", sans-serif;
+  font-family: var(--font-display);
   font-weight: 400;
   letter-spacing: -0.045em;
   line-height: 1.06;
