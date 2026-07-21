@@ -780,6 +780,22 @@ button:focus-visible {
   height: auto !important;
 }
 
+.portfolio-content
+  > .wp-block-group.is-layout-flex:has(:is(.wp-image-26, .wp-image-38)) {
+  width: min(70%, 72rem);
+  margin-inline: auto;
+}
+
+.portfolio-content
+  > .wp-block-group.is-layout-flex:has(.wp-image-26) {
+  grid-template-columns: minmax(0, 665fr) minmax(0, 791fr);
+}
+
+.portfolio-content
+  > .wp-block-group.is-layout-flex:has(.wp-image-38) {
+  grid-template-columns: minmax(0, 733fr) minmax(0, 682.667fr);
+}
+
 .portfolio-content > figure,
 .portfolio-content > .wp-block-image,
 .portfolio-content > .wp-block-embed {
@@ -1235,6 +1251,11 @@ button:focus-visible {
 @media (max-width: 900px) {
   :root {
     --page-gutter: clamp(3.25rem, 13vw, 7.8rem);
+  }
+
+  .portfolio-content
+    > .wp-block-group.is-layout-flex:has(:is(.wp-image-26, .wp-image-38)) {
+    width: 100%;
   }
 
   .hero__title {
