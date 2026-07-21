@@ -20,6 +20,13 @@ function splitNestedImage(document: Document, imageId: string) {
   sourceBlock.querySelector("figcaption:empty")?.remove();
 }
 
+function removeImage(document: Document, imageId: string) {
+  const image = document.querySelector(`.wp-image-${imageId}`);
+  if (!image) return;
+
+  topLevelBlock(image, document.body).remove();
+}
+
 function groupImages(document: Document, imageIds: string[], className: string) {
   const body = document.body;
   const blocks = imageIds
@@ -71,12 +78,13 @@ export function preparePortfolioLayout(html: string) {
     ?.remove();
 
   splitNestedImage(document, "68");
+  removeImage(document, "70");
   mergeTalesMobileGallery(document);
 
   groupImages(document, ["281", "62"], "portfolio-media-grid--pair");
   groupImages(
     document,
-    ["61", "60", "59", "70", "69", "68", "67"],
+    ["61", "60", "59", "69", "68", "67"],
     "portfolio-media-grid--monsters",
   );
   groupImages(
