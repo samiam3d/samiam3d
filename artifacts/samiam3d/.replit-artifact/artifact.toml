@@ -1,0 +1,27 @@
+kind = "web"
+previewPath = "/"
+title = "Sam Gutierrez Portfolio"
+version = "1.0.0"
+id = "artifacts/samiam3d"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 23781
+
+[services.development]
+run = "pnpm --filter @workspace/samiam3d run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/samiam3d", "run", "build" ]
+serve = "static"
+publicDir = "artifacts/samiam3d/dist/public"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "23781"
+BASE_PATH = "/"
