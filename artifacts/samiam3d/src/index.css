@@ -508,6 +508,8 @@ button:focus-visible {
 
 .portfolio-content
   .wp-block-gallery:is(
+    .wp-block-gallery-1,
+    .wp-block-gallery-2,
     .wp-block-gallery-4,
     .wp-block-gallery-7,
     .wp-block-gallery-8,
@@ -526,6 +528,8 @@ button:focus-visible {
 
 .portfolio-content
   .wp-block-gallery:is(
+    .wp-block-gallery-1,
+    .wp-block-gallery-2,
     .wp-block-gallery-4,
     .wp-block-gallery-7,
     .wp-block-gallery-8,
@@ -538,6 +542,8 @@ button:focus-visible {
 
 .portfolio-content
   .wp-block-gallery:is(
+    .wp-block-gallery-1,
+    .wp-block-gallery-2,
     .wp-block-gallery-4,
     .wp-block-gallery-7,
     .wp-block-gallery-8,
@@ -555,6 +561,8 @@ button:focus-visible {
 
 .portfolio-content
   .wp-block-gallery:is(
+    .wp-block-gallery-1,
+    .wp-block-gallery-2,
     .wp-block-gallery-4,
     .wp-block-gallery-7,
     .wp-block-gallery-8,
@@ -567,6 +575,8 @@ button:focus-visible {
 
 .portfolio-content
   .wp-block-gallery:is(
+    .wp-block-gallery-1,
+    .wp-block-gallery-2,
     .wp-block-gallery-4,
     .wp-block-gallery-7,
     .wp-block-gallery-8,
@@ -579,6 +589,8 @@ button:focus-visible {
 
 .portfolio-content
   .wp-block-gallery:is(
+    .wp-block-gallery-1,
+    .wp-block-gallery-2,
     .wp-block-gallery-4,
     .wp-block-gallery-7,
     .wp-block-gallery-8,
@@ -591,6 +603,8 @@ button:focus-visible {
 
 .portfolio-content
   .wp-block-gallery:is(
+    .wp-block-gallery-1,
+    .wp-block-gallery-2,
     .wp-block-gallery-4,
     .wp-block-gallery-7,
     .wp-block-gallery-8,
@@ -603,6 +617,8 @@ button:focus-visible {
 
 .portfolio-content
   .wp-block-gallery:is(
+    .wp-block-gallery-1,
+    .wp-block-gallery-2,
     .wp-block-gallery-4,
     .wp-block-gallery-7,
     .wp-block-gallery-8,
@@ -615,6 +631,8 @@ button:focus-visible {
 
 .portfolio-content
   .wp-block-gallery:is(
+    .wp-block-gallery-1,
+    .wp-block-gallery-2,
     .wp-block-gallery-4,
     .wp-block-gallery-7,
     .wp-block-gallery-8,
@@ -720,6 +738,8 @@ button:focus-visible {
 
 .portfolio-content
   .wp-block-gallery:is(
+    .wp-block-gallery-1,
+    .wp-block-gallery-2,
     .wp-block-gallery-4,
     .wp-block-gallery-5,
     .wp-block-gallery-7,
@@ -809,6 +829,13 @@ button:focus-visible {
   height: auto !important;
   min-height: 0 !important;
   flex: none !important;
+  object-fit: contain !important;
+}
+
+.portfolio-content
+  .wp-block-gallery:is(.wp-block-gallery-1, .wp-block-gallery-2)
+  img {
+  aspect-ratio: auto;
   object-fit: contain !important;
 }
 
@@ -1314,6 +1341,8 @@ button:focus-visible {
 
   .portfolio-content
     .wp-block-gallery:is(
+      .wp-block-gallery-1,
+      .wp-block-gallery-2,
       .wp-block-gallery-4,
       .wp-block-gallery-7,
       .wp-block-gallery-8,
@@ -1432,6 +1461,8 @@ button:focus-visible {
 
   .portfolio-content
     .wp-block-gallery:is(
+      .wp-block-gallery-1,
+      .wp-block-gallery-2,
       .wp-block-gallery-4,
       .wp-block-gallery-7,
       .wp-block-gallery-8,
@@ -1444,6 +1475,8 @@ button:focus-visible {
 
   .portfolio-content
     .wp-block-gallery:is(
+      .wp-block-gallery-1,
+      .wp-block-gallery-2,
       .wp-block-gallery-4,
       .wp-block-gallery-7,
       .wp-block-gallery-8,
