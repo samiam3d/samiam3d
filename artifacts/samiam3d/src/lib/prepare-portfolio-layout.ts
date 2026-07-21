@@ -27,7 +27,18 @@ function removeImage(document: Document, imageId: string) {
   topLevelBlock(image, document.body).remove();
 }
 
-function groupImages(document: Document, imageIds: string[], className: string) {
+function paragraphContaining(document: Document, text: string) {
+  return Array.from(document.querySelectorAll("p")).find((paragraph) =>
+    paragraph.textContent?.includes(text),
+  );
+}
+
+function groupImages(
+  document: Document,
+  imageIds: string[],
+  className: string,
+  insertAfter?: Element,
+) {
   const body = document.body;
   const blocks = imageIds
     .map((id) => document.querySelector(`.wp-image-${id}`))
@@ -39,7 +50,11 @@ function groupImages(document: Document, imageIds: string[], className: string) 
 
   const grid = document.createElement("div");
   grid.className = `portfolio-media-grid ${className}`;
-  blocks[0].before(grid);
+  if (insertAfter) {
+    insertAfter.after(grid);
+  } else {
+    blocks[0].before(grid);
+  }
   blocks.forEach((block) => grid.append(block));
 }
 
@@ -81,6 +96,15 @@ export function preparePortfolioLayout(html: string) {
   removeImage(document, "70");
   mergeTalesMobileGallery(document);
 
+  const ruinedOverview = paragraphContaining(
+    document,
+    "presented itself as a 3rd person shooter battle arena game",
+  );
+  const ruinedMarketing = paragraphContaining(
+    document,
+    "My partnership with the marketing team was equally integral",
+  );
+
   groupImages(document, ["281", "62"], "portfolio-media-grid--pair");
   groupImages(
     document,
@@ -89,8 +113,15 @@ export function preparePortfolioLayout(html: string) {
   );
   groupImages(
     document,
-    ["49", "48", "31", "29", "30", "46", "47"],
+    ["49", "48", "31"],
     "portfolio-media-grid--ruined",
+    ruinedOverview,
+  );
+  groupImages(
+    document,
+    ["29", "30", "46", "47"],
+    "portfolio-media-grid--ruined",
+    ruinedMarketing,
   );
   groupImages(document, ["293", "292"], "portfolio-media-grid--pair");
   groupImages(document, ["297", "296"], "portfolio-media-grid--pair");
