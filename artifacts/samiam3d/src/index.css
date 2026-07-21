@@ -526,6 +526,10 @@ button:focus-visible {
   transform-style: preserve-3d;
 }
 
+.portfolio-content .wp-block-gallery.wp-block-gallery-1 {
+  width: 97.5%;
+}
+
 .portfolio-content
   .wp-block-gallery:is(
     .wp-block-gallery-1,
