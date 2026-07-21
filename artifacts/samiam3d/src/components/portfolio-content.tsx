@@ -1,12 +1,14 @@
 import {
   useCallback,
   useEffect,
+  useMemo,
   useRef,
   useState,
   type MouseEvent,
 } from "react";
 import { createPortal } from "react-dom";
 import { portfolioHtml } from "@/lib/portfolio-content";
+import { preparePortfolioLayout } from "@/lib/prepare-portfolio-layout";
 
 type PortfolioImage = {
   src: string;
@@ -133,6 +135,7 @@ function ImageLightbox({
 }
 
 export function PortfolioContent() {
+  const preparedHtml = useMemo(() => preparePortfolioLayout(portfolioHtml), []);
   const [images, setImages] = useState<PortfolioImage[]>([]);
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
 
@@ -166,7 +169,7 @@ export function PortfolioContent() {
       <div
         className="portfolio-content"
         onClick={handleContentClick}
-        dangerouslySetInnerHTML={{ __html: portfolioHtml }}
+        dangerouslySetInnerHTML={{ __html: preparedHtml }}
       />
       {activeIndex !== null && (
         <ImageLightbox
