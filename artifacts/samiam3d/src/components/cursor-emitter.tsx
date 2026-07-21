@@ -15,15 +15,8 @@ export function CursorEmitter() {
 
     document.documentElement.classList.add("has-custom-cursor");
     const heroTitle = document.querySelector<HTMLElement>(".hero__title");
-    const particlePool = Array.from({ length: 16 }, () => {
-      const particle = document.createElement("span");
-      particle.className = "cursor-letter";
-      document.body.appendChild(particle);
-      return particle;
-    });
     let lastEmission = 0;
     let letterIndex = 0;
-    let particleIndex = 0;
     let frameId = 0;
     let pointerX = -100;
     let pointerY = -100;
@@ -34,20 +27,6 @@ export function CursorEmitter() {
         "transform",
         `translate3d(${pointerX}px, ${pointerY}px, 0) translate(-50%, -50%)`,
       );
-
-      if (heroTitle) {
-        const heroRect = heroTitle.getBoundingClientRect();
-        const isOverHero =
-          pointerX >= heroRect.left &&
-          pointerX <= heroRect.right &&
-          pointerY >= heroRect.top &&
-          pointerY <= heroRect.bottom;
-
-        heroTitle.style.setProperty("--sheen-x", `${pointerX - heroRect.left}px`);
-        heroTitle.style.setProperty("--sheen-y", `${pointerY - heroRect.top}px`);
-        heroTitle.classList.toggle("is-cursor-active", isOverHero);
-        cursorRef.current?.classList.toggle("is-over-hero", isOverHero);
-      }
     };
 
     const handlePointerMove = (event: PointerEvent) => {
@@ -57,39 +36,55 @@ export function CursorEmitter() {
       pointerY = event.clientY;
       if (!frameId) frameId = window.requestAnimationFrame(paintCursor);
 
+      if (heroTitle) {
+        const heroRect = heroTitle.getBoundingClientRect();
+        const isOverHero =
+          event.clientX >= heroRect.left &&
+          event.clientX <= heroRect.right &&
+          event.clientY >= heroRect.top &&
+          event.clientY <= heroRect.bottom;
+
+        heroTitle.style.setProperty(
+          "--sheen-x",
+          `${event.clientX - heroRect.left}px`,
+        );
+        heroTitle.style.setProperty(
+          "--sheen-y",
+          `${event.clientY - heroRect.top}px`,
+        );
+        heroTitle.classList.toggle("is-cursor-active", isOverHero);
+        cursorRef.current?.classList.toggle("is-over-hero", isOverHero);
+      }
+
       const now = performance.now();
       if (now - lastEmission < 55) return;
       lastEmission = now;
 
-      const particle = particlePool[particleIndex % particlePool.length];
+      const particle = document.createElement("span");
       const angle = Math.random() * Math.PI * 2;
       const distance = 38 + Math.random() * 64;
+      particle.className = "cursor-letter";
       particle.textContent = letters[letterIndex % letters.length];
       particle.style.left = `${event.clientX}px`;
       particle.style.top = `${event.clientY}px`;
-      const particleX = Math.cos(angle) * distance;
-      const particleY = Math.sin(angle) * distance - 16;
-      const rotation = -28 + Math.random() * 56;
-      particle.getAnimations().forEach((animation) => animation.cancel());
-      particle.animate(
-        [
-          {
-            opacity: 0.95,
-            transform: "translate(-50%, -50%) scale(1) rotate(0deg)",
-          },
-          {
-            opacity: 0,
-            transform: `translate(calc(-50% + ${particleX}px), calc(-50% + ${particleY}px)) scale(0.55) rotate(${rotation}deg)`,
-          },
-        ],
-        {
-          duration: 720,
-          easing: "cubic-bezier(0.16, 1, 0.3, 1)",
-          fill: "forwards",
-        },
+      particle.style.setProperty(
+        "--particle-x",
+        `${Math.cos(angle) * distance}px`,
       );
+      particle.style.setProperty(
+        "--particle-y",
+        `${Math.sin(angle) * distance - 16}px`,
+      );
+      particle.style.setProperty(
+        "--particle-rotation",
+        `${-28 + Math.random() * 56}deg`,
+      );
+      document.body.appendChild(particle);
       letterIndex += 1;
-      particleIndex += 1;
+
+      particle.addEventListener("animationend", () => particle.remove(), {
+        once: true,
+      });
     };
 
     const handlePointerLeave = () => {
@@ -113,7 +108,9 @@ export function CursorEmitter() {
       window.removeEventListener("pointermove", handlePointerMove);
       document.removeEventListener("mouseleave", handlePointerLeave);
       document.removeEventListener("mouseenter", handlePointerEnter);
-      particlePool.forEach((particle) => particle.remove());
+      document
+        .querySelectorAll(".cursor-letter")
+        .forEach((node) => node.remove());
     };
   }, []);
 
