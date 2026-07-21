@@ -435,7 +435,7 @@ button:focus-visible {
   max-width: var(--page-width);
   margin-inline: auto;
   padding: clamp(2.4rem, 5vw, 4.75rem)
-    max(1rem, calc(50% - clamp(8.25rem, 13vw, 11.5rem)));
+    max(1rem, calc(50% - clamp(5.775rem, 9.1vw, 8.05rem)));
   align-items: center !important;
   gap: clamp(0.7rem, 1.25vw, 1.15rem) !important;
   overflow-x: auto;
@@ -458,7 +458,7 @@ button:focus-visible {
 .portfolio-content
   .wp-block-gallery.wp-block-gallery-5
   > figure.wp-block-image {
-  flex: 0 0 clamp(16.5rem, 26vw, 23rem) !important;
+  flex: 0 0 clamp(11.55rem, 18.2vw, 16.1rem) !important;
   scroll-snap-align: center;
   scroll-snap-stop: always;
   transform-origin: center center;
@@ -998,13 +998,13 @@ button:focus-visible {
   .portfolio-content .wp-block-gallery.wp-block-gallery-5 {
     display: flex !important;
     width: 100%;
-    padding-inline: calc(50% - 8.25rem);
+    padding-inline: calc(50% - 5.775rem);
   }
 
   .portfolio-content
     .wp-block-gallery.wp-block-gallery-5
     > figure.wp-block-image {
-    flex-basis: 16.5rem !important;
+    flex-basis: 11.55rem !important;
   }
 
   .portfolio-content > .wp-block-group.is-layout-flex {
