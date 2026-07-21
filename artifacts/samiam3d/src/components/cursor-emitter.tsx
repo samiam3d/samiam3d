@@ -14,6 +14,7 @@ export function CursorEmitter() {
     }
 
     document.documentElement.classList.add("has-custom-cursor");
+    const heroTitle = document.querySelector<HTMLElement>(".hero__title");
     let lastEmission = 0;
     let letterIndex = 0;
 
@@ -25,13 +26,27 @@ export function CursorEmitter() {
         `translate3d(${event.clientX}px, ${event.clientY}px, 0)`,
       );
 
+      if (heroTitle) {
+        const heroRect = heroTitle.getBoundingClientRect();
+        const isOverHero =
+          event.clientX >= heroRect.left &&
+          event.clientX <= heroRect.right &&
+          event.clientY >= heroRect.top &&
+          event.clientY <= heroRect.bottom;
+
+        heroTitle.style.setProperty("--sheen-x", `${event.clientX - heroRect.left}px`);
+        heroTitle.style.setProperty("--sheen-y", `${event.clientY - heroRect.top}px`);
+        heroTitle.classList.toggle("is-cursor-active", isOverHero);
+        cursorRef.current?.classList.toggle("is-over-hero", isOverHero);
+      }
+
       const now = performance.now();
       if (now - lastEmission < 55) return;
       lastEmission = now;
 
       const particle = document.createElement("span");
       const angle = Math.random() * Math.PI * 2;
-      const distance = 22 + Math.random() * 42;
+      const distance = 38 + Math.random() * 64;
       particle.className = "cursor-letter";
       particle.textContent = letters[letterIndex % letters.length];
       particle.style.left = `${event.clientX}px`;
@@ -61,6 +76,7 @@ export function CursorEmitter() {
 
     return () => {
       document.documentElement.classList.remove("has-custom-cursor");
+      heroTitle?.classList.remove("is-cursor-active");
       window.removeEventListener("pointermove", handlePointerMove);
       document.removeEventListener("mouseleave", handlePointerLeave);
       document.removeEventListener("mouseenter", handlePointerEnter);

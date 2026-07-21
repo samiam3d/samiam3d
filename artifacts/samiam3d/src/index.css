@@ -12,7 +12,7 @@
   --accent: #ff6a45;
   --accent-ink: #17110f;
   --header: rgb(16 17 19 / 72%);
-  --page-gutter: clamp(1.5rem, 6vw, 7.5rem);
+  --page-gutter: clamp(3rem, 12vw, 15rem);
   --page-width: 100rem;
   --z-sticky: 30;
   --z-modal-backdrop: 80;
@@ -194,6 +194,8 @@ button:focus-visible {
 }
 
 .hero__title {
+  --sheen-x: 50%;
+  --sheen-y: 50%;
   position: relative;
   display: inline-flex;
   max-width: 100%;
@@ -211,7 +213,46 @@ button:focus-visible {
   text-shadow:
     0 1px 0 rgb(255 255 255 / 75%),
     0 12px 42px rgb(0 0 0 / 35%),
-    0 0 56px rgb(255 255 255 / 8%);
+    0 0 56px rgb(255 255 255 / 10%);
+}
+
+.hero__title::before {
+  position: absolute;
+  inset: -0.15em -0.08em;
+  z-index: -1;
+  border-radius: 50%;
+  background: rgb(255 255 255 / 5%);
+  content: "";
+  filter: blur(36px);
+  opacity: 0.55;
+}
+
+.hero__sheen {
+  position: absolute;
+  inset: 0;
+  display: inline-flex;
+  align-items: baseline;
+  color: rgb(255 255 255 / 62%);
+  opacity: 0.34;
+  pointer-events: none;
+  -webkit-text-stroke: 1px rgb(255 255 255 / 82%);
+  -webkit-mask-image: radial-gradient(
+    circle 7rem at var(--sheen-x) var(--sheen-y),
+    #000 0%,
+    rgb(0 0 0 / 74%) 38%,
+    transparent 76%
+  );
+  mask-image: radial-gradient(
+    circle 7rem at var(--sheen-x) var(--sheen-y),
+    #000 0%,
+    rgb(0 0 0 / 74%) 38%,
+    transparent 76%
+  );
+  transition: opacity 300ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.hero__title.is-cursor-active .hero__sheen {
+  opacity: 1;
 }
 
 .hero__d {
@@ -252,7 +293,7 @@ button:focus-visible {
 .portfolio-content > h2 {
   max-width: 19ch;
   margin: clamp(7rem, 12vw, 11rem) 0 clamp(2.5rem, 5vw, 4.5rem);
-  font-size: clamp(2.7rem, 5.6vw, 6rem);
+  font-size: clamp(2.2rem, 4vw, 4.5rem);
 }
 
 .portfolio-content > h2:first-child {
@@ -621,15 +662,28 @@ button:focus-visible {
   z-index: var(--z-cursor);
   width: 10px;
   height: 10px;
-  border: 1px solid rgb(255 255 255 / 82%);
+  border: 1px solid rgb(255 255 255 / 88%);
   border-radius: 50%;
   background: rgb(255 106 69 / 70%);
-  box-shadow: 0 0 12px rgb(255 106 69 / 65%);
+  box-shadow:
+    0 0 12px rgb(255 106 69 / 65%),
+    0 0 0 5px rgb(255 255 255 / 6%);
   opacity: 1;
   pointer-events: none;
   transform: translate3d(-100px, -100px, 0);
-  transition: opacity 120ms ease;
+  transition:
+    opacity 120ms ease,
+    scale 220ms cubic-bezier(0.16, 1, 0.3, 1),
+    box-shadow 220ms ease;
   translate: -50% -50%;
+}
+
+.cursor-emitter.is-over-hero {
+  box-shadow:
+    0 0 18px rgb(255 255 255 / 80%),
+    0 0 0 9px rgb(255 255 255 / 9%),
+    0 0 34px rgb(255 106 69 / 58%);
+  scale: 1.45;
 }
 
 .cursor-emitter.is-hidden {
@@ -641,7 +695,7 @@ button:focus-visible {
   z-index: calc(var(--z-cursor) - 1);
   color: var(--text);
   font-family: var(--font-display);
-  font-size: 0.95rem;
+  font-size: 2.85rem;
   line-height: 1;
   pointer-events: none;
   transform: translate(-50%, -50%);
@@ -732,7 +786,11 @@ button:focus-visible {
 
 @media (max-width: 900px) {
   :root {
-    --page-gutter: clamp(1.25rem, 5vw, 3rem);
+    --page-gutter: clamp(2.5rem, 10vw, 6rem);
+  }
+
+  .hero__title {
+    font-size: clamp(3.8rem, 13.5vw, 8rem);
   }
 
   .portfolio-content .wp-block-gallery.has-nested-images {

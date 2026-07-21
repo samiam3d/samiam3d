@@ -9,10 +9,14 @@ export function Hero({ title = "samiam3D" }: HeroProps) {
         <h1
           id="hero-title"
           className="hero__title"
-          data-text={title}
+          aria-label={title}
         >
           <span className="hero__name">samiam3</span>
           <span className="hero__d">D</span>
+          <span className="hero__sheen" aria-hidden="true">
+            <span className="hero__name">samiam3</span>
+            <span className="hero__d">D</span>
+          </span>
         </h1>
       </div>
     </section>
