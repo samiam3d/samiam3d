@@ -20,13 +20,36 @@ export function CursorEmitter() {
     let frameId = 0;
     let pointerX = -100;
     let pointerY = -100;
+    let cursorX = -100;
+    let cursorY = -100;
+    let hasPointer = false;
 
     const paintCursor = () => {
       frameId = 0;
+      cursorX += (pointerX - cursorX) * 0.32;
+      cursorY += (pointerY - cursorY) * 0.32;
       cursorRef.current?.style.setProperty(
         "transform",
-        `translate3d(${pointerX}px, ${pointerY}px, 0) translate(-50%, -50%)`,
+        `translate3d(${cursorX}px, ${cursorY}px, 0) translate(-50%, -50%)`,
       );
+
+      if (heroTitle) {
+        const heroRect = heroTitle.getBoundingClientRect();
+        const isOverHero =
+          cursorX >= heroRect.left &&
+          cursorX <= heroRect.right &&
+          cursorY >= heroRect.top &&
+          cursorY <= heroRect.bottom;
+
+        heroTitle.style.setProperty("--sheen-x", `${cursorX - heroRect.left}px`);
+        heroTitle.style.setProperty("--sheen-y", `${cursorY - heroRect.top}px`);
+        heroTitle.classList.toggle("is-cursor-active", isOverHero);
+        cursorRef.current?.classList.toggle("is-over-hero", isOverHero);
+      }
+
+      if (Math.abs(pointerX - cursorX) + Math.abs(pointerY - cursorY) > 0.25) {
+        frameId = window.requestAnimationFrame(paintCursor);
+      }
     };
 
     const handlePointerMove = (event: PointerEvent) => {
@@ -34,30 +57,15 @@ export function CursorEmitter() {
 
       pointerX = event.clientX;
       pointerY = event.clientY;
+      if (!hasPointer) {
+        cursorX = pointerX;
+        cursorY = pointerY;
+        hasPointer = true;
+      }
       if (!frameId) frameId = window.requestAnimationFrame(paintCursor);
 
-      if (heroTitle) {
-        const heroRect = heroTitle.getBoundingClientRect();
-        const isOverHero =
-          event.clientX >= heroRect.left &&
-          event.clientX <= heroRect.right &&
-          event.clientY >= heroRect.top &&
-          event.clientY <= heroRect.bottom;
-
-        heroTitle.style.setProperty(
-          "--sheen-x",
-          `${event.clientX - heroRect.left}px`,
-        );
-        heroTitle.style.setProperty(
-          "--sheen-y",
-          `${event.clientY - heroRect.top}px`,
-        );
-        heroTitle.classList.toggle("is-cursor-active", isOverHero);
-        cursorRef.current?.classList.toggle("is-over-hero", isOverHero);
-      }
-
       const now = performance.now();
-      if (now - lastEmission < 55) return;
+      if (now - lastEmission < 68) return;
       lastEmission = now;
 
       const particle = document.createElement("span");
@@ -65,8 +73,8 @@ export function CursorEmitter() {
       const distance = 38 + Math.random() * 64;
       particle.className = "cursor-letter";
       particle.textContent = letters[letterIndex % letters.length];
-      particle.style.left = `${event.clientX}px`;
-      particle.style.top = `${event.clientY}px`;
+      particle.style.left = `${cursorX}px`;
+      particle.style.top = `${cursorY}px`;
       particle.style.setProperty(
         "--particle-x",
         `${Math.cos(angle) * distance}px`,

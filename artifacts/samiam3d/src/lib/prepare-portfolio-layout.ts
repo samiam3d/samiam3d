@@ -39,6 +39,11 @@ function groupImages(document: Document, imageIds: string[], className: string) 
 export function preparePortfolioLayout(html: string) {
   const document = new DOMParser().parseFromString(html, "text/html");
 
+  document
+    .querySelector('iframe[src*="/embed/vCYMSLbMqOQ"]')
+    ?.closest("figure.wp-block-embed")
+    ?.remove();
+
   splitNestedImage(document, "68");
 
   groupImages(document, ["281", "62"], "portfolio-media-grid--pair");
