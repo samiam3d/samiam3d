@@ -513,7 +513,7 @@ button:focus-visible {
     .wp-block-gallery-8,
     .wp-block-gallery-9
   ) {
-  width: calc(50% - clamp(0.225rem, 0.5vw, 0.5rem));
+  width: 75%;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   margin-inline: auto;
   padding-block: clamp(2.5rem, 5vw, 4.5rem);
@@ -633,16 +633,19 @@ button:focus-visible {
 
 .portfolio-content
   .wp-block-gallery:is(.wp-block-gallery-5, .wp-block-gallery-10) {
+  position: relative;
+  left: 50%;
   display: grid !important;
-  width: calc(100vw - (var(--page-gutter) * 2));
-  max-width: var(--content-width);
+  width: min(150%, calc(100vw - 2rem));
+  max-width: none;
   grid-template-columns: repeat(6, minmax(0, 1fr));
-  margin-inline: auto;
+  margin-inline: 0;
   padding: clamp(3rem, 6vw, 5.5rem) 0;
   align-items: center !important;
   gap: clamp(0.45rem, 1vw, 1rem) !important;
   overflow: visible;
   perspective: 1200px;
+  transform: translateX(-50%);
   transform-style: preserve-3d;
 }
 
@@ -1322,8 +1325,12 @@ button:focus-visible {
 
   .portfolio-content
     .wp-block-gallery:is(.wp-block-gallery-5, .wp-block-gallery-10) {
+    position: static;
     display: grid !important;
+    width: 100%;
     grid-template-columns: repeat(3, minmax(0, 1fr));
+    margin-inline: auto;
+    transform: none;
   }
 
   .portfolio-content
