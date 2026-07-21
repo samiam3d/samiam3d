@@ -485,47 +485,65 @@ button:focus-visible {
 
 .portfolio-content
   .wp-block-gallery:is(.wp-block-gallery-5, .wp-block-gallery-10) {
-  display: flex !important;
+  display: grid !important;
   width: calc(100vw - (var(--page-gutter) * 2));
   max-width: var(--page-width);
+  grid-template-columns: repeat(6, minmax(0, 1fr));
   margin-inline: auto;
-  padding: clamp(2.4rem, 5vw, 4.75rem)
-    max(1rem, calc(50% - clamp(5.775rem, 9.1vw, 8.05rem)));
+  padding: clamp(3rem, 6vw, 5.5rem) 0;
   align-items: center !important;
-  gap: clamp(0.7rem, 1.25vw, 1.15rem) !important;
-  overflow-x: auto;
-  overflow-y: hidden;
-  overscroll-behavior-inline: contain;
+  gap: clamp(0.45rem, 1vw, 1rem) !important;
+  overflow: visible;
   perspective: 1200px;
-  scroll-behavior: smooth;
-  scroll-padding-inline: 50%;
-  scroll-snap-type: x mandatory;
-  scrollbar-color: rgb(138 202 255 / 42%) transparent;
-  scrollbar-width: thin;
   transform-style: preserve-3d;
-}
-
-.portfolio-content
-  .wp-block-gallery:is(
-    .wp-block-gallery-5,
-    .wp-block-gallery-10
-  ):focus-visible {
-  outline: 1px solid rgb(170 220 255 / 65%);
-  outline-offset: 0.6rem;
 }
 
 .portfolio-content
   .wp-block-gallery:is(.wp-block-gallery-5, .wp-block-gallery-10)
   > figure.wp-block-image {
-  flex: 0 0 clamp(11.55rem, 18.2vw, 16.1rem) !important;
-  scroll-snap-align: center;
-  scroll-snap-stop: always;
+  position: relative;
   transform-origin: center center;
   transform-style: preserve-3d;
   transition:
     opacity 180ms cubic-bezier(0.16, 1, 0.3, 1),
     transform 260ms cubic-bezier(0.16, 1, 0.3, 1);
   will-change: transform;
+}
+
+.portfolio-content
+  .wp-block-gallery:is(.wp-block-gallery-5, .wp-block-gallery-10)
+  > figure.wp-block-image:nth-child(1) {
+  transform: perspective(1200px) translateZ(-48px) rotateY(11deg) scale(0.9);
+}
+
+.portfolio-content
+  .wp-block-gallery:is(.wp-block-gallery-5, .wp-block-gallery-10)
+  > figure.wp-block-image:nth-child(2) {
+  transform: perspective(1200px) translateZ(-22px) rotateY(7deg) scale(0.96);
+}
+
+.portfolio-content
+  .wp-block-gallery:is(.wp-block-gallery-5, .wp-block-gallery-10)
+  > figure.wp-block-image:nth-child(3) {
+  transform: perspective(1200px) translateZ(6px) rotateY(2deg) scale(1.02);
+}
+
+.portfolio-content
+  .wp-block-gallery:is(.wp-block-gallery-5, .wp-block-gallery-10)
+  > figure.wp-block-image:nth-child(4) {
+  transform: perspective(1200px) translateZ(6px) rotateY(-2deg) scale(1.02);
+}
+
+.portfolio-content
+  .wp-block-gallery:is(.wp-block-gallery-5, .wp-block-gallery-10)
+  > figure.wp-block-image:nth-child(5) {
+  transform: perspective(1200px) translateZ(-22px) rotateY(-7deg) scale(0.96);
+}
+
+.portfolio-content
+  .wp-block-gallery:is(.wp-block-gallery-5, .wp-block-gallery-10)
+  > figure.wp-block-image:nth-child(6) {
+  transform: perspective(1200px) translateZ(-48px) rotateY(-11deg) scale(0.9);
 }
 
 .portfolio-content
@@ -1026,7 +1044,26 @@ button:focus-visible {
 
   .portfolio-content
     .wp-block-gallery:is(.wp-block-gallery-5, .wp-block-gallery-10) {
-    display: flex !important;
+    display: grid !important;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .portfolio-content
+    .wp-block-gallery:is(.wp-block-gallery-5, .wp-block-gallery-10)
+    > figure.wp-block-image:nth-child(3n + 1) {
+    transform: perspective(1200px) rotateY(6deg) scale(0.96);
+  }
+
+  .portfolio-content
+    .wp-block-gallery:is(.wp-block-gallery-5, .wp-block-gallery-10)
+    > figure.wp-block-image:nth-child(3n + 2) {
+    transform: perspective(1200px) translateZ(8px) scale(1.01);
+  }
+
+  .portfolio-content
+    .wp-block-gallery:is(.wp-block-gallery-5, .wp-block-gallery-10)
+    > figure.wp-block-image:nth-child(3n) {
+    transform: perspective(1200px) rotateY(-6deg) scale(0.96);
   }
 }
 
@@ -1090,15 +1127,23 @@ button:focus-visible {
 
   .portfolio-content
     .wp-block-gallery:is(.wp-block-gallery-5, .wp-block-gallery-10) {
-    display: flex !important;
+    display: grid !important;
     width: 100%;
-    padding-inline: calc(50% - 5.775rem);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.75rem !important;
+    padding: 2.5rem 0;
   }
 
   .portfolio-content
     .wp-block-gallery:is(.wp-block-gallery-5, .wp-block-gallery-10)
     > figure.wp-block-image {
-    flex-basis: 11.55rem !important;
+    transform: none !important;
+  }
+
+  .portfolio-content
+    .wp-block-gallery:is(.wp-block-gallery-5, .wp-block-gallery-10)
+    > figure.wp-block-image:hover {
+    transform: translateY(-5px) scale(1.025) !important;
   }
 
   .portfolio-content
