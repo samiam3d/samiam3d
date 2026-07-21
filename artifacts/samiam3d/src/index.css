@@ -12,7 +12,7 @@
   --accent: #ff6a45;
   --accent-ink: #17110f;
   --header: rgb(16 17 19 / 72%);
-  --page-gutter: clamp(3rem, 12vw, 15rem);
+  --page-gutter: clamp(3.9rem, 15.6vw, 19.5rem);
   --page-width: 100rem;
   --z-sticky: 30;
   --z-modal-backdrop: 80;
@@ -367,6 +367,11 @@ button:focus-visible {
 .portfolio-content > figure img,
 .portfolio-content > .wp-block-image img {
   width: 100%;
+}
+
+.portfolio-content img.wp-image-367 {
+  width: 60% !important;
+  margin-inline: auto;
 }
 
 .portfolio-content .wp-block-gallery.has-nested-images {
@@ -805,7 +810,7 @@ button:focus-visible {
 
 @media (max-width: 900px) {
   :root {
-    --page-gutter: clamp(2.5rem, 10vw, 6rem);
+    --page-gutter: clamp(3.25rem, 13vw, 7.8rem);
   }
 
   .hero__title {
@@ -837,6 +842,10 @@ button:focus-visible {
 
   .portfolio-content > h2 {
     max-width: 100%;
+  }
+
+  .portfolio-content img.wp-image-367 {
+    width: 100% !important;
   }
 
   .portfolio-content > p {
