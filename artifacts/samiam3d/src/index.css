@@ -744,7 +744,10 @@ button:focus-visible {
 }
 
 .portfolio-content
-  .wp-block-gallery:is(.wp-block-gallery-5, .wp-block-gallery-10)
+  .wp-block-gallery.has-nested-images:is(
+    .wp-block-gallery-5,
+    .wp-block-gallery-10
+  )
   img {
   -webkit-user-drag: none;
   aspect-ratio: 753 / 1024;
@@ -754,6 +757,13 @@ button:focus-visible {
     0 0 0 1px rgb(190 225 255 / 12%);
   object-fit: cover !important;
   user-select: none;
+}
+
+.portfolio-content
+  .wp-block-gallery.wp-block-gallery-5
+  img:is(.wp-image-550, .wp-image-545, .wp-image-538) {
+  background: transparent;
+  object-fit: contain !important;
 }
 
 .portfolio-content .wp-block-gallery.wp-block-gallery-11 {

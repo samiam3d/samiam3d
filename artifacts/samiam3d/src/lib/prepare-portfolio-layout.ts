@@ -36,6 +36,27 @@ function groupImages(document: Document, imageIds: string[], className: string) 
   blocks.forEach((block) => grid.append(block));
 }
 
+function mergeTalesMobileGallery(document: Document) {
+  const source = document.querySelector(
+    ".wp-block-gallery.wp-block-gallery-6",
+  );
+  const target = document.querySelector(
+    ".wp-block-gallery.wp-block-gallery-7",
+  );
+  if (!source || !target) return;
+
+  const targetFirstImage = target.querySelector(
+    ":scope > figure.wp-block-image",
+  );
+  source
+    .querySelectorAll(":scope > figure.wp-block-image")
+    .forEach((figure) => target.insertBefore(figure, targetFirstImage));
+
+  source.remove();
+  target.classList.remove("wp-block-gallery-7");
+  target.classList.add("wp-block-gallery-5");
+}
+
 export function preparePortfolioLayout(html: string) {
   const document = new DOMParser().parseFromString(html, "text/html");
 
@@ -50,6 +71,7 @@ export function preparePortfolioLayout(html: string) {
     ?.remove();
 
   splitNestedImage(document, "68");
+  mergeTalesMobileGallery(document);
 
   groupImages(document, ["281", "62"], "portfolio-media-grid--pair");
   groupImages(
