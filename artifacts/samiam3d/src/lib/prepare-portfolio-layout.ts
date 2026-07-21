@@ -87,11 +87,6 @@ export function preparePortfolioLayout(html: string) {
     ?.closest("figure.wp-block-embed")
     ?.remove();
 
-  document
-    .querySelector('a[href*="talescreator.app.link"]')
-    ?.closest("p")
-    ?.remove();
-
   splitNestedImage(document, "68");
   removeImage(document, "70");
   removeImage(document, "266");
