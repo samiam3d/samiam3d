@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
+import { activateDialogFocus } from "@/lib/dialog-focus";
 
 const contactLinks = [
   {
@@ -27,27 +28,7 @@ function ContactModal({
 
   useEffect(() => {
     if (!open) return;
-
-    const handleEscape = (event: KeyboardEvent) => {
-      if (event.key === "Escape") {
-        onClose();
-      }
-    };
-
-    const previouslyFocused = document.activeElement as HTMLElement | null;
-    const focusable = panelRef.current?.querySelector<HTMLElement>(
-      "[data-autofocus]",
-    );
-    focusable?.focus();
-
-    document.body.style.overflow = "hidden";
-    window.addEventListener("keydown", handleEscape);
-
-    return () => {
-      document.body.style.overflow = "";
-      window.removeEventListener("keydown", handleEscape);
-      previouslyFocused?.focus();
-    };
+    return activateDialogFocus(panelRef, onClose);
   }, [open, onClose]);
 
   if (!open) {
@@ -69,6 +50,7 @@ function ContactModal({
         className="contact-modal"
         ref={panelRef}
         role="dialog"
+        tabIndex={-1}
         aria-modal="true"
         aria-labelledby="contact-modal-title"
       >
@@ -81,7 +63,6 @@ function ContactModal({
             type="button"
             className="contact-modal__close"
             onClick={onClose}
-            data-autofocus
           >
             <span aria-hidden="true">×</span>
             <span className="sr-only">Close contact dialog</span>

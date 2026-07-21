@@ -25,6 +25,9 @@ const sections: PageSection[] = [
 function App() {
   return (
     <>
+      <a className="skip-link" href="#work">
+        Skip to portfolio
+      </a>
       <CursorEmitter />
       <SiteHeader />
       <main>

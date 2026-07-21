@@ -1,12 +1,15 @@
 import {
   useCallback,
   useEffect,
+  useMemo,
   useRef,
   useState,
   type MouseEvent,
 } from "react";
 import { createPortal } from "react-dom";
 import { portfolioHtml } from "@/lib/portfolio-content";
+import { activateDialogFocus } from "@/lib/dialog-focus";
+import { preparePortfolioHtml } from "@/lib/prepare-portfolio-html";
 
 type PortfolioImage = {
   src: string;
@@ -25,6 +28,7 @@ function ImageLightbox({
   onClose: () => void;
 }) {
   const closeButtonRef = useRef<HTMLButtonElement>(null);
+  const panelRef = useRef<HTMLDivElement>(null);
   const touchStartX = useRef<number | null>(null);
   const activeImage = images[activeIndex];
 
@@ -37,21 +41,17 @@ function ImageLightbox({
   }, [activeIndex, images.length, onChange]);
 
   useEffect(() => {
-    const previouslyFocused = document.activeElement as HTMLElement | null;
     const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.key === "Escape") onClose();
       if (event.key === "ArrowLeft") showPrevious();
       if (event.key === "ArrowRight") showNext();
     };
 
-    document.body.style.overflow = "hidden";
     window.addEventListener("keydown", handleKeyDown);
-    closeButtonRef.current?.focus();
+    const deactivateFocus = activateDialogFocus(panelRef, onClose);
 
     return () => {
-      document.body.style.overflow = "";
       window.removeEventListener("keydown", handleKeyDown);
-      previouslyFocused?.focus();
+      deactivateFocus();
     };
   }, [onClose, showNext, showPrevious]);
 
@@ -67,7 +67,9 @@ function ImageLightbox({
     >
       <div
         className="lightbox"
+        ref={panelRef}
         role="dialog"
+        tabIndex={-1}
         aria-modal="true"
         aria-label="Portfolio image viewer"
       >
@@ -133,6 +135,7 @@ function ImageLightbox({
 }
 
 export function PortfolioContent() {
+  const preparedHtml = useMemo(() => preparePortfolioHtml(portfolioHtml), []);
   const [images, setImages] = useState<PortfolioImage[]>([]);
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
 
@@ -140,7 +143,7 @@ export function PortfolioContent() {
     const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
     const rolodexes = Array.from(
       document.querySelectorAll<HTMLElement>(
-        ".wp-block-gallery-5, .wp-block-gallery-10",
+        ".poster-rolodex",
       ),
     );
     if (!rolodexes.length) return;
@@ -162,13 +165,9 @@ export function PortfolioContent() {
         frameId = 0;
         const galleryRect = rolodex.getBoundingClientRect();
         const galleryCenter = galleryRect.left + galleryRect.width / 2;
-
-        cards.forEach((card) => {
+        const cardStates = cards.map((card) => {
           if (reduceMotion.matches) {
-            card.style.removeProperty("transform");
-            card.style.removeProperty("opacity");
-            card.style.removeProperty("z-index");
-            return;
+            return { card, transform: "", opacity: "", zIndex: "" };
           }
 
           const cardRect = card.getBoundingClientRect();
@@ -177,9 +176,24 @@ export function PortfolioContent() {
           const clampedDistance = Math.max(-2.4, Math.min(2.4, distance));
           const depth = Math.min(Math.abs(clampedDistance), 2.4);
 
-          card.style.transform = `perspective(1200px) translateZ(${-depth * 42}px) rotateY(${-clampedDistance * 11}deg) scale(${1 - depth * 0.055})`;
-          card.style.opacity = `${1 - depth * 0.13}`;
-          card.style.zIndex = `${30 - Math.round(depth * 10)}`;
+          return {
+            card,
+            transform: `perspective(1200px) translateZ(${-depth * 42}px) rotateY(${-clampedDistance * 11}deg) scale(${1 - depth * 0.055})`,
+            opacity: `${1 - depth * 0.13}`,
+            zIndex: `${30 - Math.round(depth * 10)}`,
+          };
+        });
+
+        cardStates.forEach(({ card, transform, opacity, zIndex }) => {
+          if (!transform) {
+            card.style.removeProperty("transform");
+            card.style.removeProperty("opacity");
+            card.style.removeProperty("z-index");
+            return;
+          }
+          card.style.transform = transform;
+          card.style.opacity = opacity;
+          card.style.zIndex = zIndex;
         });
       };
 
@@ -227,6 +241,32 @@ export function PortfolioContent() {
     return () => cleanups.forEach((cleanup) => cleanup());
   }, []);
 
+  useEffect(() => {
+    const imageElements = Array.from(
+      document.querySelectorAll<HTMLImageElement>(".portfolio-content img"),
+    );
+    const cleanups = imageElements.map((image) => {
+      const originalSrc = image.getAttribute("src");
+      if (!originalSrc?.startsWith("/assets/images/")) return () => undefined;
+
+      const optimizedSrc = `${originalSrc}.webp`;
+      const handleError = () => {
+        image.removeEventListener("error", handleError);
+        image.src = originalSrc;
+      };
+      image.addEventListener("error", handleError);
+      image.src = optimizedSrc;
+      image.decoding = "async";
+
+      return () => {
+        image.removeEventListener("error", handleError);
+        image.src = originalSrc;
+      };
+    });
+
+    return () => cleanups.forEach((cleanup) => cleanup());
+  }, []);
+
   const handleContentClick = (event: MouseEvent<HTMLDivElement>) => {
     const target = event.target as HTMLElement;
     const image =
@@ -236,16 +276,30 @@ export function PortfolioContent() {
         ?.querySelector<HTMLImageElement>("img");
     if (!image) return;
 
+    const anchor = image.closest<HTMLAnchorElement>("a[href]");
+    if (anchor) {
+      const href = anchor.getAttribute("href") ?? "";
+      const isLocalArtwork = href.startsWith("/assets/images/");
+      if (!isLocalArtwork) return;
+    }
+
     event.preventDefault();
+    const imageScope =
+      image.closest<HTMLElement>(".wp-block-gallery, .wp-block-group") ??
+      image.closest<HTMLElement>("figure") ??
+      event.currentTarget;
     const imageElements = Array.from(
-      event.currentTarget.querySelectorAll<HTMLImageElement>("img"),
+      imageScope.querySelectorAll<HTMLImageElement>("img"),
     );
     const index = imageElements.indexOf(image);
     if (index < 0) return;
 
     setImages(
       imageElements.map((item) => ({
-        src: item.currentSrc || item.src,
+        src:
+          item.closest<HTMLAnchorElement>('a[href^="/assets/images/"]')?.href ||
+          item.currentSrc ||
+          item.src,
         alt: item.alt,
       })),
     );
@@ -257,7 +311,9 @@ export function PortfolioContent() {
       <div
         className="portfolio-content"
         onClick={handleContentClick}
-        dangerouslySetInnerHTML={{ __html: portfolioHtml }}
+        dangerouslySetInnerHTML={{
+          __html: preparedHtml,
+        }}
       />
       {activeIndex !== null && (
         <ImageLightbox
