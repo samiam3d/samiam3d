@@ -58,6 +58,7 @@ export function preparePortfolioLayout(html: string) {
     "portfolio-media-grid--ruined",
   );
   groupImages(document, ["293", "292"], "portfolio-media-grid--pair");
+  groupImages(document, ["297", "296"], "portfolio-media-grid--pair");
   groupImages(
     document,
     ["183", "184", "185", "186", "187", "188"],
