@@ -14,6 +14,7 @@
   --header: rgb(16 17 19 / 72%);
   --page-gutter: clamp(3.9rem, 15.6vw, 19.5rem);
   --page-width: 100rem;
+  --content-width: 80rem;
   --z-sticky: 30;
   --z-modal-backdrop: 80;
   --z-modal: 90;
@@ -296,7 +297,7 @@ button:focus-visible {
 }
 
 .work-section {
-  width: min(calc(100% - (var(--page-gutter) * 2)), var(--page-width));
+  width: min(calc(100% - (var(--page-gutter) * 2)), var(--content-width));
   margin-inline: auto;
   padding-block: clamp(5rem, 10vw, 10rem);
 }
@@ -597,7 +598,7 @@ button:focus-visible {
   .wp-block-gallery:is(.wp-block-gallery-5, .wp-block-gallery-10) {
   display: grid !important;
   width: calc(100vw - (var(--page-gutter) * 2));
-  max-width: var(--page-width);
+  max-width: var(--content-width);
   grid-template-columns: repeat(6, minmax(0, 1fr));
   margin-inline: auto;
   padding: clamp(3rem, 6vw, 5.5rem) 0;
