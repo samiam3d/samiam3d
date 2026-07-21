@@ -137,85 +137,94 @@ export function PortfolioContent() {
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
 
   useEffect(() => {
-    const rolodex = document.querySelector<HTMLElement>(".wp-block-gallery-5");
-    if (!rolodex) return;
-
-    const cards = Array.from(
-      rolodex.querySelectorAll<HTMLElement>(":scope > .wp-block-image"),
-    );
     const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
-    let frameId = 0;
-
-    rolodex.tabIndex = 0;
-    rolodex.setAttribute("role", "region");
-    rolodex.setAttribute(
-      "aria-label",
-      "Tales poster gallery. Scroll horizontally.",
+    const rolodexes = Array.from(
+      document.querySelectorAll<HTMLElement>(
+        ".wp-block-gallery-5, .wp-block-gallery-10",
+      ),
     );
+    if (!rolodexes.length) return;
 
-    const updateCards = () => {
-      frameId = 0;
-      const galleryRect = rolodex.getBoundingClientRect();
-      const galleryCenter = galleryRect.left + galleryRect.width / 2;
+    const cleanups = rolodexes.map((rolodex, galleryIndex) => {
+      const cards = Array.from(
+        rolodex.querySelectorAll<HTMLElement>(":scope > .wp-block-image"),
+      );
+      let frameId = 0;
 
-      cards.forEach((card) => {
-        if (reduceMotion.matches) {
-          card.style.removeProperty("transform");
-          card.style.removeProperty("opacity");
-          card.style.removeProperty("z-index");
+      rolodex.tabIndex = 0;
+      rolodex.setAttribute("role", "region");
+      rolodex.setAttribute(
+        "aria-label",
+        `Tales poster gallery ${galleryIndex + 1}. Scroll horizontally.`,
+      );
+
+      const updateCards = () => {
+        frameId = 0;
+        const galleryRect = rolodex.getBoundingClientRect();
+        const galleryCenter = galleryRect.left + galleryRect.width / 2;
+
+        cards.forEach((card) => {
+          if (reduceMotion.matches) {
+            card.style.removeProperty("transform");
+            card.style.removeProperty("opacity");
+            card.style.removeProperty("z-index");
+            return;
+          }
+
+          const cardRect = card.getBoundingClientRect();
+          const cardCenter = cardRect.left + cardRect.width / 2;
+          const distance = (cardCenter - galleryCenter) / cardRect.width;
+          const clampedDistance = Math.max(-2.4, Math.min(2.4, distance));
+          const depth = Math.min(Math.abs(clampedDistance), 2.4);
+
+          card.style.transform = `perspective(1200px) translateZ(${-depth * 42}px) rotateY(${-clampedDistance * 11}deg) scale(${1 - depth * 0.055})`;
+          card.style.opacity = `${1 - depth * 0.13}`;
+          card.style.zIndex = `${30 - Math.round(depth * 10)}`;
+        });
+      };
+
+      const requestCardUpdate = () => {
+        if (!frameId) frameId = window.requestAnimationFrame(updateCards);
+      };
+
+      const handleWheel = (event: WheelEvent) => {
+        if (Math.abs(event.deltaY) <= Math.abs(event.deltaX)) return;
+        const atStart = rolodex.scrollLeft <= 0;
+        const atEnd =
+          rolodex.scrollLeft >= rolodex.scrollWidth - rolodex.clientWidth - 1;
+        if ((event.deltaY < 0 && atStart) || (event.deltaY > 0 && atEnd))
           return;
-        }
+        event.preventDefault();
+        rolodex.scrollLeft += event.deltaY;
+      };
 
-        const cardRect = card.getBoundingClientRect();
-        const cardCenter = cardRect.left + cardRect.width / 2;
-        const distance = (cardCenter - galleryCenter) / cardRect.width;
-        const clampedDistance = Math.max(-2.4, Math.min(2.4, distance));
-        const depth = Math.min(Math.abs(clampedDistance), 2.4);
+      const handleKeyDown = (event: KeyboardEvent) => {
+        if (event.key !== "ArrowLeft" && event.key !== "ArrowRight") return;
+        event.preventDefault();
+        rolodex.scrollBy({
+          left:
+            (event.key === "ArrowRight" ? 1 : -1) * rolodex.clientWidth * 0.42,
+          behavior: reduceMotion.matches ? "auto" : "smooth",
+        });
+      };
 
-        card.style.transform = `perspective(1200px) translateZ(${-depth * 42}px) rotateY(${-clampedDistance * 11}deg) scale(${1 - depth * 0.055})`;
-        card.style.opacity = `${1 - depth * 0.13}`;
-        card.style.zIndex = `${30 - Math.round(depth * 10)}`;
-      });
-    };
+      rolodex.addEventListener("scroll", requestCardUpdate, { passive: true });
+      rolodex.addEventListener("wheel", handleWheel, { passive: false });
+      rolodex.addEventListener("keydown", handleKeyDown);
+      window.addEventListener("resize", requestCardUpdate);
+      updateCards();
 
-    const requestCardUpdate = () => {
-      if (!frameId) frameId = window.requestAnimationFrame(updateCards);
-    };
+      return () => {
+        if (frameId) window.cancelAnimationFrame(frameId);
+        rolodex.removeEventListener("scroll", requestCardUpdate);
+        rolodex.removeEventListener("wheel", handleWheel);
+        rolodex.removeEventListener("keydown", handleKeyDown);
+        window.removeEventListener("resize", requestCardUpdate);
+        cards.forEach((card) => card.removeAttribute("style"));
+      };
+    });
 
-    const handleWheel = (event: WheelEvent) => {
-      if (Math.abs(event.deltaY) <= Math.abs(event.deltaX)) return;
-      const atStart = rolodex.scrollLeft <= 0;
-      const atEnd =
-        rolodex.scrollLeft >= rolodex.scrollWidth - rolodex.clientWidth - 1;
-      if ((event.deltaY < 0 && atStart) || (event.deltaY > 0 && atEnd)) return;
-      event.preventDefault();
-      rolodex.scrollLeft += event.deltaY;
-    };
-
-    const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.key !== "ArrowLeft" && event.key !== "ArrowRight") return;
-      event.preventDefault();
-      rolodex.scrollBy({
-        left:
-          (event.key === "ArrowRight" ? 1 : -1) * rolodex.clientWidth * 0.42,
-        behavior: reduceMotion.matches ? "auto" : "smooth",
-      });
-    };
-
-    rolodex.addEventListener("scroll", requestCardUpdate, { passive: true });
-    rolodex.addEventListener("wheel", handleWheel, { passive: false });
-    rolodex.addEventListener("keydown", handleKeyDown);
-    window.addEventListener("resize", requestCardUpdate);
-    updateCards();
-
-    return () => {
-      if (frameId) window.cancelAnimationFrame(frameId);
-      rolodex.removeEventListener("scroll", requestCardUpdate);
-      rolodex.removeEventListener("wheel", handleWheel);
-      rolodex.removeEventListener("keydown", handleKeyDown);
-      window.removeEventListener("resize", requestCardUpdate);
-      cards.forEach((card) => card.removeAttribute("style"));
-    };
+    return () => cleanups.forEach((cleanup) => cleanup());
   }, []);
 
   const handleContentClick = (event: MouseEvent<HTMLDivElement>) => {

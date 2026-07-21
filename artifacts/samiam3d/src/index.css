@@ -429,7 +429,8 @@ button:focus-visible {
   justify-content: center;
 }
 
-.portfolio-content .wp-block-gallery.wp-block-gallery-5 {
+.portfolio-content
+  .wp-block-gallery:is(.wp-block-gallery-5, .wp-block-gallery-10) {
   display: flex !important;
   width: calc(100vw - (var(--page-gutter) * 2));
   max-width: var(--page-width);
@@ -450,13 +451,17 @@ button:focus-visible {
   transform-style: preserve-3d;
 }
 
-.portfolio-content .wp-block-gallery.wp-block-gallery-5:focus-visible {
+.portfolio-content
+  .wp-block-gallery:is(
+    .wp-block-gallery-5,
+    .wp-block-gallery-10
+  ):focus-visible {
   outline: 1px solid rgb(170 220 255 / 65%);
   outline-offset: 0.6rem;
 }
 
 .portfolio-content
-  .wp-block-gallery.wp-block-gallery-5
+  .wp-block-gallery:is(.wp-block-gallery-5, .wp-block-gallery-10)
   > figure.wp-block-image {
   flex: 0 0 clamp(11.55rem, 18.2vw, 16.1rem) !important;
   scroll-snap-align: center;
@@ -470,14 +475,16 @@ button:focus-visible {
 }
 
 .portfolio-content
-  .wp-block-gallery.wp-block-gallery-5
+  .wp-block-gallery:is(.wp-block-gallery-5, .wp-block-gallery-10)
   > figure.wp-block-image:hover {
   opacity: 1 !important;
   transform: perspective(1200px) translateZ(32px) rotateY(0deg) scale(1.035) !important;
   z-index: 40 !important;
 }
 
-.portfolio-content .wp-block-gallery.wp-block-gallery-5 img {
+.portfolio-content
+  .wp-block-gallery:is(.wp-block-gallery-5, .wp-block-gallery-10)
+  img {
   -webkit-user-drag: none;
   aspect-ratio: 753 / 1024;
   border-radius: 0.35rem;
@@ -952,7 +959,8 @@ button:focus-visible {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
-  .portfolio-content .wp-block-gallery.wp-block-gallery-5 {
+  .portfolio-content
+    .wp-block-gallery:is(.wp-block-gallery-5, .wp-block-gallery-10) {
     display: flex !important;
   }
 }
@@ -995,14 +1003,15 @@ button:focus-visible {
     grid-template-columns: 1fr;
   }
 
-  .portfolio-content .wp-block-gallery.wp-block-gallery-5 {
+  .portfolio-content
+    .wp-block-gallery:is(.wp-block-gallery-5, .wp-block-gallery-10) {
     display: flex !important;
     width: 100%;
     padding-inline: calc(50% - 5.775rem);
   }
 
   .portfolio-content
-    .wp-block-gallery.wp-block-gallery-5
+    .wp-block-gallery:is(.wp-block-gallery-5, .wp-block-gallery-10)
     > figure.wp-block-image {
     flex-basis: 11.55rem !important;
   }
