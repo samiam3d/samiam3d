@@ -517,12 +517,7 @@ button:focus-visible {
 .portfolio-content .wp-block-gallery.wp-block-gallery-3 {
   grid-template-columns: repeat(
     2,
-    minmax(
-      0,
-      calc(
-        (100% - clamp(0.7rem, 1.5vw, 1.4rem) - clamp(0.7rem, 1.5vw, 1.4rem)) / 3
-      )
-    )
+    minmax(0, 46.6667%)
   );
   justify-content: center;
 }
