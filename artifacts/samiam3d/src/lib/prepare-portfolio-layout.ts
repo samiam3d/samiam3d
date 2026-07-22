@@ -35,6 +35,14 @@ function removeImageLink(document: Document, imageId: string) {
   anchor.replaceWith(image);
 }
 
+function removeDuplicateImages(document: Document, imageId: string) {
+  document
+    .querySelectorAll(`.wp-image-${imageId}`)
+    .forEach((image, index) => {
+      if (index > 0) topLevelBlock(image, document.body).remove();
+    });
+}
+
 function paragraphContaining(document: Document, text: string) {
   return Array.from(document.querySelectorAll("p")).find((paragraph) =>
     paragraph.textContent?.includes(text),
@@ -98,6 +106,7 @@ export function preparePortfolioLayout(html: string) {
   splitNestedImage(document, "68");
   removeImage(document, "70");
   removeImage(document, "266");
+  removeDuplicateImages(document, "367");
   removeImageLink(document, "367");
   mergeTalesMobileGallery(document);
 

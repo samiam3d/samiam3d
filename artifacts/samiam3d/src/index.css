@@ -494,11 +494,9 @@ button:focus-visible {
 }
 
 .portfolio-content > .wp-block-image:has(.wp-image-367) {
-  position: relative;
-  left: 50%;
   width: min(78.75%, calc(70vw - 1.4rem));
   max-width: none;
-  transform: translateX(-50%);
+  margin-inline: auto;
 }
 
 .portfolio-content img.wp-image-367 {
