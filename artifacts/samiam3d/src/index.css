@@ -47,7 +47,7 @@ html {
 
 body {
   margin: 0;
-  min-width: 320px;
+  min-width: 0;
   overflow-x: hidden;
   background: var(--background);
   color: var(--text);
@@ -109,6 +109,9 @@ button:focus-visible {
 }
 
 .site-nav__brand {
+  display: inline-flex;
+  min-height: 2.75rem;
+  align-items: center;
   color: var(--text);
   font-family: var(--font-display);
   font-size: 1.25rem;
@@ -139,8 +142,12 @@ button:focus-visible {
 }
 
 .site-nav__links button {
+  display: inline-flex;
+  min-height: 2.75rem;
+  align-items: center;
+  justify-content: center;
   border: 0;
-  padding: 0;
+  padding: 0 0.75rem;
   margin: 0;
   background: transparent;
   color: var(--muted);
@@ -527,7 +534,12 @@ button:focus-visible {
 }
 
 .portfolio-content .wp-block-gallery.wp-block-gallery-1 {
-  width: 97.5%;
+  position: relative;
+  left: 50%;
+  width: min(146.25%, calc(100vw - 2rem));
+  max-width: none;
+  margin-inline: 0;
+  transform: translateX(-50%);
 }
 
 .portfolio-content
@@ -1323,7 +1335,7 @@ button:focus-visible {
 
 @media (max-width: 900px) {
   :root {
-    --page-gutter: clamp(3.25rem, 13vw, 7.8rem);
+    --page-gutter: clamp(1rem, 5vw, 3rem);
   }
 
   .portfolio-content
@@ -1352,8 +1364,24 @@ button:focus-visible {
       .wp-block-gallery-8,
       .wp-block-gallery-9
     ) {
+    position: static;
+    left: auto;
     width: 100%;
     grid-template-columns: repeat(3, minmax(0, 1fr));
+    margin-inline: auto;
+    transform: none;
+  }
+
+  .portfolio-content .wp-block-gallery.wp-block-gallery-1 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .portfolio-content
+    .wp-block-gallery.wp-block-gallery-1
+    > figure.wp-block-image:last-child {
+    width: calc(50% - 0.375rem) !important;
+    grid-column: 1 / -1;
+    justify-self: center;
   }
 
   .portfolio-content
@@ -1406,12 +1434,12 @@ button:focus-visible {
 }
 
 @media (max-width: 640px) {
-  :root {
-    --page-gutter: 1rem;
-  }
-
   .site-nav {
     height: 4.25rem;
+  }
+
+  .work-section {
+    padding-block: 3.5rem;
   }
 
   .hero__inner {
@@ -1425,6 +1453,15 @@ button:focus-visible {
 
   .portfolio-content > h2 {
     max-width: 100%;
+    margin-block: 5rem 2rem;
+  }
+
+  .portfolio-content > h1 {
+    margin-block: 5rem 2rem;
+  }
+
+  .portfolio-content > h3 {
+    margin-block: 3.5rem 1.75rem;
   }
 
   .portfolio-content
@@ -1453,6 +1490,9 @@ button:focus-visible {
 
   .portfolio-content > p {
     padding-inline: 1.25rem;
+    background: var(--surface);
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
   }
 
   .portfolio-content .wp-block-gallery.has-nested-images {
@@ -1490,6 +1530,19 @@ button:focus-visible {
     width: calc(50% - 0.375rem) !important;
     grid-column: 1 / -1;
     justify-self: center;
+  }
+
+  .portfolio-content
+    .wp-block-gallery:is(.wp-block-gallery-1, .wp-block-gallery-2) {
+    grid-template-columns: 1fr;
+  }
+
+  .portfolio-content
+    .wp-block-gallery:is(.wp-block-gallery-1, .wp-block-gallery-2)
+    > figure.wp-block-image:last-child:nth-child(odd) {
+    width: 100% !important;
+    grid-column: auto;
+    justify-self: stretch;
   }
 
   .portfolio-content
@@ -1566,6 +1619,42 @@ button:focus-visible {
 
   .lightbox__nav--next {
     right: 0.5rem;
+  }
+}
+
+@media (hover: none), (pointer: coarse) {
+  .portfolio-content
+    .wp-block-gallery:is(
+      .wp-block-gallery-1,
+      .wp-block-gallery-2,
+      .wp-block-gallery-4,
+      .wp-block-gallery-5,
+      .wp-block-gallery-7,
+      .wp-block-gallery-8,
+      .wp-block-gallery-9,
+      .wp-block-gallery-10
+    )
+    > figure.wp-block-image
+    > a,
+  .portfolio-content
+    .wp-block-gallery:is(
+      .wp-block-gallery-1,
+      .wp-block-gallery-2,
+      .wp-block-gallery-4,
+      .wp-block-gallery-5,
+      .wp-block-gallery-7,
+      .wp-block-gallery-8,
+      .wp-block-gallery-9,
+      .wp-block-gallery-10
+    )
+    > figure.wp-block-image:is(:hover, :focus-within)
+    > a {
+    transform: none !important;
+  }
+
+  .portfolio-content img:hover {
+    filter: none;
+    transform: none;
   }
 }
 
