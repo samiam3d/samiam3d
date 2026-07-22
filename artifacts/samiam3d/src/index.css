@@ -550,7 +550,7 @@ button:focus-visible {
 .portfolio-content .wp-block-gallery.wp-block-gallery-1 {
   position: relative;
   left: 50%;
-  width: min(146.25%, calc(100vw - 2rem));
+  width: min(87.75%, calc(60vw - 1.2rem));
   max-width: none;
   margin-inline: 0;
   transform: translateX(-50%);
