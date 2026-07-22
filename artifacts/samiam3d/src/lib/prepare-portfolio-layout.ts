@@ -27,6 +27,14 @@ function removeImage(document: Document, imageId: string) {
   topLevelBlock(image, document.body).remove();
 }
 
+function removeImageLink(document: Document, imageId: string) {
+  const image = document.querySelector(`.wp-image-${imageId}`);
+  const anchor = image?.parentElement;
+  if (!image || !anchor?.matches("a")) return;
+
+  anchor.replaceWith(image);
+}
+
 function paragraphContaining(document: Document, text: string) {
   return Array.from(document.querySelectorAll("p")).find((paragraph) =>
     paragraph.textContent?.includes(text),
@@ -90,6 +98,7 @@ export function preparePortfolioLayout(html: string) {
   splitNestedImage(document, "68");
   removeImage(document, "70");
   removeImage(document, "266");
+  removeImageLink(document, "367");
   mergeTalesMobileGallery(document);
 
   const ruinedOverview = paragraphContaining(

@@ -487,8 +487,16 @@ button:focus-visible {
   margin-right: clamp(0.8rem, 1.5vw, 1.4rem) !important;
 }
 
+.portfolio-content > .wp-block-image:has(.wp-image-367) {
+  position: relative;
+  left: 50%;
+  width: min(112.5%, calc(100vw - 2rem));
+  max-width: none;
+  transform: translateX(-50%);
+}
+
 .portfolio-content img.wp-image-367 {
-  width: 75% !important;
+  width: 100% !important;
   margin-inline: auto;
 }
 
@@ -813,7 +821,7 @@ button:focus-visible {
 .portfolio-content
   .wp-block-gallery.wp-block-gallery-11
   > figure.wp-block-image {
-  flex: 0 0 43.333% !important;
+  flex: 0 0 65% !important;
 }
 
 .portfolio-content .wp-block-gallery.has-nested-images figure.wp-block-image {
@@ -1330,6 +1338,44 @@ button:focus-visible {
         calc(-50% + var(--particle-y))
       )
       scale(0.55) rotate(var(--particle-rotation));
+  }
+}
+
+@media (min-width: 901px) {
+  .portfolio-content
+    .wp-block-gallery.wp-block-gallery-1
+    > figure.wp-block-image:nth-child(1)
+    > a {
+    transform: perspective(1200px) translateX(18%) translateZ(-28px)
+      rotateY(8deg) scale(1.41);
+  }
+
+  .portfolio-content
+    .wp-block-gallery.wp-block-gallery-1
+    > figure.wp-block-image:nth-child(2) {
+    z-index: 3;
+  }
+
+  .portfolio-content
+    .wp-block-gallery.wp-block-gallery-1
+    > figure.wp-block-image:nth-child(2)
+    > a {
+    transform: perspective(1200px) translateZ(18px) scale(1.53);
+  }
+
+  .portfolio-content
+    .wp-block-gallery.wp-block-gallery-1
+    > figure.wp-block-image:nth-child(3)
+    > a {
+    transform: perspective(1200px) translateX(-18%) translateZ(-28px)
+      rotateY(-8deg) scale(1.41);
+  }
+
+  .portfolio-content
+    .wp-block-gallery.wp-block-gallery-1
+    > figure.wp-block-image:is(:hover, :focus-within)
+    > a {
+    transform: perspective(1200px) translateZ(190px) rotateY(0deg) scale(1.75) !important;
   }
 }
 
