@@ -786,8 +786,12 @@ button:focus-visible {
   > :is(div.wp-block-image, figure.wp-block-image):has(
     :is(img[src*="/Hardline.jpg"], .wp-image-269)
   ) {
-  width: 70%;
-  margin-inline: auto !important;
+  position: relative;
+  left: 50%;
+  width: min(105%, calc(100vw - 2rem));
+  max-width: none;
+  margin-inline: 0 !important;
+  transform: translateX(-50%);
 }
 
 .portfolio-content
