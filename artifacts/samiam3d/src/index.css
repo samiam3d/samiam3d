@@ -919,6 +919,11 @@ button:focus-visible {
   width: 50%;
 }
 
+.portfolio-content
+  > :is(div.wp-block-image, figure.wp-block-image):has(.wp-image-267) {
+  width: min(75%, calc(100vw - 2rem));
+}
+
 .portfolio-content .portfolio-media-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
