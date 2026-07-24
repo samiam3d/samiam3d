@@ -5,8 +5,8 @@ type HeroProps = {
 function HeroWordmark() {
   return (
     <>
-      <span className="hero__name">samiam3</span>
-      <span className="hero__d">D</span>
+      <span className="hero__wordmark-prefix">samiam3</span>
+      <span className="hero__wordmark-d">D</span>
     </>
   );
 }
