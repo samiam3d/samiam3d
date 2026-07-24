@@ -4,8 +4,7 @@ const letters = ["s", "a", "m", "i", "a", "m", "3", "D"];
 const emissionIntervalMs = 136;
 const minimumEmissionDistance = 18;
 const particleLifetimeMs = 720;
-const particlePoolSize = 7;
-const cursorFollowRate = 24;
+const particlePoolSize = 6;
 const particleSlots = Array.from(
   { length: particlePoolSize },
   (_, index) => index,
@@ -29,24 +28,26 @@ export function CursorEmitter() {
 
     document.documentElement.classList.add("has-custom-cursor");
     const heroTitle = document.querySelector<HTMLElement>(".hero__title");
+
     const particleAnimations: Array<Animation | null> = particlePool.map(
       () => null,
     );
+
     let lastEmission = performance.now();
     let lastEmissionX = -100;
     let lastEmissionY = -100;
+    let lastPointerX = -100;
+    let lastPointerY = -100;
     let letterIndex = 0;
     let particleIndex = 0;
-    let frameId = 0;
     let boundsFrameId = 0;
-    let lastFrameTime = 0;
-    let pointerX = -100;
-    let pointerY = -100;
-    let trailX = -100;
-    let trailY = -100;
-    let hasPointer = false;
-    let isOverHero = false;
     let heroRect = heroTitle?.getBoundingClientRect() ?? null;
+    let isOverHero = false;
+    let hasPointer = false;
+    let rafId = 0;
+    let hasPendingPointer = false;
+    let pendingPointerX = -100;
+    let pendingPointerY = -100;
 
     const refreshHeroBounds = () => {
       boundsFrameId = 0;
@@ -77,9 +78,7 @@ export function CursorEmitter() {
 
       const speed = Math.hypot(velocityX, velocityY);
       const trailAngle =
-        speed > 0.25
-          ? Math.atan2(-velocityY, -velocityX)
-          : -Math.PI / 2;
+        speed > 0.25 ? Math.atan2(-velocityY, -velocityX) : -Math.PI / 2;
       const angle = trailAngle + (Math.random() - 0.5) * 0.42;
       const distance = 48 + Math.random() * 44;
       const particleX = Math.cos(angle) * distance;
@@ -88,51 +87,53 @@ export function CursorEmitter() {
 
       particleAnimations[poolIndex]?.cancel();
       particle.textContent = letters[letterIndex % letters.length];
-      let animation: Animation;
-      try {
-        animation = particle.animate(
-          [
-            {
-              opacity: 0.95,
-              transform: `translate3d(${x}px, ${y}px, 0) translate(-50%, -50%) scale(1) rotate(0deg)`,
-            },
-            {
-              opacity: 0,
-              transform: `translate3d(${x + particleX}px, ${y + particleY}px, 0) translate(-50%, -50%) scale(0.55) rotate(${particleRotation}deg)`,
-            },
-          ],
+      const animation = particle.animate(
+        [
           {
-            duration: particleLifetimeMs,
-            easing: "cubic-bezier(0.16, 1, 0.3, 1)",
-            fill: "forwards",
+            opacity: 0.95,
+            transform: `translate3d(${x}px, ${y}px, 0) translate(-50%, -50%) scale(1) rotate(0deg)`,
           },
-        );
-      } catch {
-        return;
-      }
+          {
+            opacity: 0,
+            transform: `translate3d(${x + particleX}px, ${y + particleY}px, 0) translate(-50%, -50%) scale(0.55) rotate(${particleRotation}deg)`,
+          },
+        ],
+        {
+          duration: particleLifetimeMs,
+          easing: "cubic-bezier(0.16, 1, 0.3, 1)",
+          fill: "forwards",
+        },
+      );
+
       particleAnimations[poolIndex] = animation;
       animation.onfinish = () => {
         if (particleAnimations[poolIndex] === animation) {
-          animation.cancel();
           particleAnimations[poolIndex] = null;
         }
       };
+
       particleIndex += 1;
       letterIndex += 1;
     };
 
-    const updateHeroSpotlight = (x: number, y: number) => {
+    const updateCursorPosition = (x: number, y: number) => {
+      const roundedX = Math.round(x);
+      const roundedY = Math.round(y);
+
+      cursor.style.transform =
+        `translate3d(${roundedX}px, ${roundedY}px, 0) translate(-50%, -50%)`;
+
       if (!heroTitle || !heroRect) return;
 
       const nextIsOverHero =
-        x >= heroRect.left &&
-        x <= heroRect.right &&
-        y >= heroRect.top &&
-        y <= heroRect.bottom;
+        roundedX >= heroRect.left &&
+        roundedX <= heroRect.right &&
+        roundedY >= heroRect.top &&
+        roundedY <= heroRect.bottom;
 
       if (nextIsOverHero) {
-        heroTitle.style.setProperty("--sheen-x", `${x - heroRect.left}px`);
-        heroTitle.style.setProperty("--sheen-y", `${y - heroRect.top}px`);
+        heroTitle.style.setProperty("--sheen-x", `${roundedX - heroRect.left}px`);
+        heroTitle.style.setProperty("--sheen-y", `${roundedY - heroRect.top}px`);
       }
 
       if (nextIsOverHero !== isOverHero) {
@@ -142,78 +143,66 @@ export function CursorEmitter() {
       }
     };
 
-    const renderCursor = () => {
-      cursor.style.setProperty(
-        "transform",
-        `translate3d(${pointerX}px, ${pointerY}px, 0) translate(-50%, -50%)`,
-      );
-      updateHeroSpotlight(pointerX, pointerY);
-    };
+    const processPointer = () => {
+      rafId = 0;
+      if (!hasPendingPointer) return;
+      hasPendingPointer = false;
 
-    const paintCursor = (timestamp: number) => {
-      frameId = 0;
-      const elapsedSeconds = lastFrameTime
-        ? Math.min((timestamp - lastFrameTime) / 1000, 0.05)
-        : 1 / 60;
-      const smoothing = 1 - Math.exp(-cursorFollowRate * elapsedSeconds);
-      lastFrameTime = timestamp;
-      const previousTrailX = trailX;
-      const previousTrailY = trailY;
-      trailX += (pointerX - trailX) * smoothing;
-      trailY += (pointerY - trailY) * smoothing;
-      renderCursor();
+      const now = performance.now();
+      const pointerX = pendingPointerX;
+      const pointerY = pendingPointerY;
 
       const distanceSinceEmission = Math.hypot(
-        trailX - lastEmissionX,
-        trailY - lastEmissionY,
+        pointerX - lastEmissionX,
+        pointerY - lastEmissionY,
       );
       if (
-        timestamp - lastEmission >= emissionIntervalMs &&
+        now - lastEmission >= emissionIntervalMs &&
         distanceSinceEmission >= minimumEmissionDistance
       ) {
-        lastEmission = timestamp;
-        lastEmissionX = trailX;
-        lastEmissionY = trailY;
         emitLetter(
-          trailX,
-          trailY,
-          trailX - previousTrailX,
-          trailY - previousTrailY,
+          pointerX,
+          pointerY,
+          pointerX - lastPointerX,
+          pointerY - lastPointerY,
         );
+        lastEmission = now;
+        lastEmissionX = pointerX;
+        lastEmissionY = pointerY;
       }
 
-      if (Math.hypot(pointerX - trailX, pointerY - trailY) > 0.1) {
-        frameId = window.requestAnimationFrame(paintCursor);
-      } else {
-        trailX = pointerX;
-        trailY = pointerY;
-        renderCursor();
-        lastFrameTime = 0;
-      }
+      updateCursorPosition(pointerX, pointerY);
+      lastPointerX = pointerX;
+      lastPointerY = pointerY;
     };
 
     const handlePointerMove = (event: PointerEvent) => {
       if (event.pointerType && event.pointerType !== "mouse") return;
 
-      pointerX = event.clientX;
-      pointerY = event.clientY;
+      pendingPointerX = event.clientX;
+      pendingPointerY = event.clientY;
+      hasPendingPointer = true;
+
       if (!hasPointer) {
-        trailX = pointerX;
-        trailY = pointerY;
-        lastEmission = performance.now();
-        lastEmissionX = trailX;
-        lastEmissionY = trailY;
         hasPointer = true;
+        lastPointerX = pendingPointerX;
+        lastPointerY = pendingPointerY;
+        lastEmission = performance.now();
+        lastEmissionX = pendingPointerX;
+        lastEmissionY = pendingPointerY;
       }
-      if (!frameId) frameId = window.requestAnimationFrame(paintCursor);
+
+      if (!rafId) {
+        rafId = window.requestAnimationFrame(processPointer);
+      }
     };
 
     const handlePointerLeave = () => {
       hasPointer = false;
-      lastFrameTime = 0;
-      if (frameId) {
-        window.cancelAnimationFrame(frameId);
-        frameId = 0;
+      hasPendingPointer = false;
+      if (rafId) {
+        window.cancelAnimationFrame(rafId);
+        rafId = 0;
       }
       if (isOverHero) {
         isOverHero = false;
@@ -241,8 +230,8 @@ export function CursorEmitter() {
       document.documentElement.classList.remove("has-custom-cursor");
       heroTitle?.classList.remove("is-cursor-active");
       heroResizeObserver?.disconnect();
-      if (frameId) window.cancelAnimationFrame(frameId);
       if (boundsFrameId) window.cancelAnimationFrame(boundsFrameId);
+      if (rafId) window.cancelAnimationFrame(rafId);
       window.removeEventListener("pointermove", handlePointerMove);
       window.removeEventListener("resize", scheduleHeroBoundsRefresh);
       window.removeEventListener("scroll", scheduleHeroBoundsRefresh);
