@@ -20,6 +20,9 @@ export function Hero({ title = "samiam3D" }: HeroProps) {
           className="hero__title"
           aria-label={title}
         >
+          <span className="hero__layer hero__base" aria-hidden="true">
+            <HeroWordmark />
+          </span>
           <span className="hero__layer hero__depth" aria-hidden="true">
             <HeroWordmark />
           </span>

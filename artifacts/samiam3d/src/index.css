@@ -216,6 +216,14 @@ button:focus-visible {
   align-items: baseline;
 }
 
+.hero__base {
+  position: relative;
+  z-index: 0;
+  color: rgb(88 152 225 / 55%);
+  -webkit-text-stroke: 0.9px rgb(176 214 255 / 72%);
+  text-shadow: 0 1px 0 rgb(204 233 255 / 42%), 0 0 24px rgb(83 163 255 / 22%);
+}
+
 .hero__face {
   position: relative;
   z-index: 2;
