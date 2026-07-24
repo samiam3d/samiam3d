@@ -217,8 +217,10 @@ button:focus-visible {
 }
 
 .hero__base {
-  position: relative;
+  position: absolute;
+  inset: 0;
   z-index: 0;
+  pointer-events: none;
   color: rgb(88 152 225 / 55%);
   -webkit-text-stroke: 0.9px rgb(176 214 255 / 72%);
   text-shadow: 0 1px 0 rgb(204 233 255 / 42%), 0 0 24px rgb(83 163 255 / 22%);
