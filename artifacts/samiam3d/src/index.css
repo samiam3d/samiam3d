@@ -325,6 +325,7 @@ button:focus-visible {
   display: inline-block;
 }
 
+.hero__wordmark-prefix,
 .hero__wordmark-d {
   font-size: 1.17em;
   transform: translateY(0.025em);
