@@ -168,23 +168,6 @@ button:focus-visible {
   isolation: isolate;
 }
 
-.hero::after {
-  position: absolute;
-  z-index: -1;
-  width: min(38rem, 62vw);
-  aspect-ratio: 1;
-  border-radius: 50%;
-  content: "";
-  filter: blur(110px);
-  opacity: 0.2;
-}
-
-.hero::after {
-  right: -18%;
-  bottom: -32%;
-  background: #7b8dff;
-}
-
 .hero__inner {
   display: grid;
   width: min(calc(100% - (var(--page-gutter) * 2)), var(--page-width));
