@@ -23,14 +23,18 @@ export function Hero({ title = "samiam3D" }: HeroProps) {
           <span className="hero__layer hero__base" aria-hidden="true">
             <HeroWordmark />
           </span>
-          <span className="hero__layer hero__depth" aria-hidden="true">
-            <HeroWordmark />
-          </span>
           <span className="hero__layer hero__face" aria-hidden="true">
             <HeroWordmark />
           </span>
-          <span className="hero__layer hero__sheen" aria-hidden="true">
-            <HeroWordmark />
+          <span className="hero__reveal" aria-hidden="true">
+            <span className="hero__reveal-content">
+              <span className="hero__layer hero__depth">
+                <HeroWordmark />
+              </span>
+              <span className="hero__layer hero__sheen">
+                <HeroWordmark />
+              </span>
+            </span>
           </span>
         </h1>
       </div>

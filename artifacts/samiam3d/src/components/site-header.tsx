@@ -1,5 +1,5 @@
-import { useEffect, useRef, useState } from "react";
-import { createPortal } from "react-dom";
+import { useEffect, useState } from "react";
+import * as Dialog from "@radix-ui/react-dialog";
 
 const contactLinks = [
   {
@@ -16,94 +16,47 @@ const contactLinks = [
   },
 ] as const;
 
-function ContactModal({
-  open,
-  onClose,
-}: {
-  open: boolean;
-  onClose: () => void;
-}) {
-  const panelRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    if (!open) return;
-
-    const handleEscape = (event: KeyboardEvent) => {
-      if (event.key === "Escape") {
-        onClose();
-      }
-    };
-
-    const previouslyFocused = document.activeElement as HTMLElement | null;
-    const focusable = panelRef.current?.querySelector<HTMLElement>(
-      "[data-autofocus]",
-    );
-    focusable?.focus();
-
-    document.body.style.overflow = "hidden";
-    window.addEventListener("keydown", handleEscape);
-
-    return () => {
-      document.body.style.overflow = "";
-      window.removeEventListener("keydown", handleEscape);
-      previouslyFocused?.focus();
-    };
-  }, [open, onClose]);
-
-  if (!open) {
-    return null;
-  }
-
-  return createPortal(
-    <div
-      className="contact-modal-backdrop"
-      role="presentation"
-      aria-hidden={!open}
-      onClick={(event) => {
-        if (event.target === event.currentTarget) {
-          onClose();
-        }
-      }}
-    >
-      <div
-        className="contact-modal"
-        ref={panelRef}
-        role="dialog"
-        aria-modal="true"
-        aria-labelledby="contact-modal-title"
-      >
+function ContactModal() {
+  return (
+    <Dialog.Portal>
+      <Dialog.Overlay className="contact-modal-backdrop" />
+      <Dialog.Content className="contact-modal">
         <div className="contact-modal__heading">
           <div>
             <p className="contact-modal__eyebrow">Let&apos;s make something</p>
-            <h2 id="contact-modal-title">Contact</h2>
+            <Dialog.Title id="contact-modal-title">Contact</Dialog.Title>
           </div>
-          <button
-            type="button"
-            className="contact-modal__close"
-            onClick={onClose}
-            data-autofocus
-          >
-            <span aria-hidden="true">×</span>
-            <span className="sr-only">Close contact dialog</span>
-          </button>
+          <Dialog.Close asChild>
+            <button type="button" className="contact-modal__close">
+              <span aria-hidden="true">×</span>
+              <span className="sr-only">Close contact dialog</span>
+            </button>
+          </Dialog.Close>
         </div>
+        <Dialog.Description className="sr-only">
+          Contact Sam Gutierrez by email or LinkedIn.
+        </Dialog.Description>
         <ul className="contact-modal__list">
           {contactLinks.map((item) => (
-            <li key={item.id} className={`contact-modal__item contact-modal__item--${item.id}`}>
+            <li
+              key={item.id}
+              className={`contact-modal__item contact-modal__item--${item.id}`}
+            >
               <span>{item.label}</span>
               <a
                 href={item.href}
                 target={item.id === "linkedin" ? "_blank" : undefined}
-                rel={item.id === "linkedin" ? "noopener noreferrer" : undefined}
+                rel={
+                  item.id === "linkedin" ? "noopener noreferrer" : undefined
+                }
               >
                 {item.value}
               </a>
             </li>
           ))}
         </ul>
-      </div>
-    </div>,
-    document.body,
+      </Dialog.Content>
+    </Dialog.Portal>
   );
 }
 
@@ -146,18 +99,15 @@ export function SiteHeader() {
           samiam3D
         </a>
         <nav className="site-nav__links" aria-label="Primary navigation">
-          <button
-            type="button"
-            className="site-nav__contact"
-            onClick={() => setIsContactOpen(true)}
-          >
-            Contact
-          </button>
+          <Dialog.Root open={isContactOpen} onOpenChange={setIsContactOpen}>
+            <Dialog.Trigger asChild>
+              <button type="button" className="site-nav__contact">
+                Contact
+              </button>
+            </Dialog.Trigger>
+            <ContactModal />
+          </Dialog.Root>
         </nav>
-        <ContactModal
-          open={isContactOpen}
-          onClose={() => setIsContactOpen(false)}
-        />
       </div>
     </header>
   );

@@ -6,13 +6,13 @@ import {
   useState,
   type MouseEvent,
 } from "react";
-import { createPortal } from "react-dom";
+import * as Dialog from "@radix-ui/react-dialog";
 import { portfolioHtml } from "@/lib/portfolio-content";
 import { preparePortfolioLayout } from "@/lib/prepare-portfolio-layout";
 
 type PortfolioImage = {
-  src: string;
   alt: string;
+  src: string;
 };
 
 function ImageLightbox({
@@ -26,9 +26,9 @@ function ImageLightbox({
   onChange: (index: number) => void;
   onClose: () => void;
 }) {
-  const closeButtonRef = useRef<HTMLButtonElement>(null);
   const touchStartX = useRef<number | null>(null);
   const activeImage = images[activeIndex];
+  const hasMultipleImages = images.length > 1;
 
   const showPrevious = useCallback(() => {
     onChange((activeIndex - 1 + images.length) % images.length);
@@ -39,99 +39,112 @@ function ImageLightbox({
   }, [activeIndex, images.length, onChange]);
 
   useEffect(() => {
-    const previouslyFocused = document.activeElement as HTMLElement | null;
+    if (!hasMultipleImages) return;
+
     const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.key === "Escape") onClose();
       if (event.key === "ArrowLeft") showPrevious();
       if (event.key === "ArrowRight") showNext();
     };
 
-    document.body.style.overflow = "hidden";
     window.addEventListener("keydown", handleKeyDown);
-    closeButtonRef.current?.focus();
-
-    return () => {
-      document.body.style.overflow = "";
-      window.removeEventListener("keydown", handleKeyDown);
-      previouslyFocused?.focus();
-    };
-  }, [onClose, showNext, showPrevious]);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [hasMultipleImages, showNext, showPrevious]);
 
   if (!activeImage) return null;
 
-  return createPortal(
-    <div
-      className="lightbox-backdrop"
-      role="presentation"
-      onClick={(event) => {
-        if (event.target === event.currentTarget) onClose();
+  return (
+    <Dialog.Root
+      open
+      onOpenChange={(open) => {
+        if (!open) onClose();
       }}
     >
-      <div
-        className="lightbox"
-        role="dialog"
-        aria-modal="true"
-        aria-label="Portfolio image viewer"
-      >
-        <div className="lightbox__toolbar">
-          <span className="lightbox__counter" aria-live="polite">
-            {String(activeIndex + 1).padStart(2, "0")} /{" "}
-            {String(images.length).padStart(2, "0")}
-          </span>
-          <button
-            ref={closeButtonRef}
-            type="button"
-            className="lightbox__close"
-            onClick={onClose}
-          >
-            <span aria-hidden="true">×</span>
-            <span className="sr-only">Close image viewer</span>
-          </button>
-        </div>
+      <Dialog.Portal>
+        <Dialog.Overlay className="lightbox-backdrop" />
+        <Dialog.Content className="lightbox">
+          <Dialog.Title className="sr-only">
+            Portfolio image viewer
+          </Dialog.Title>
 
-        <div
-          className="lightbox__stage"
-          onPointerDown={(event) => {
-            touchStartX.current = event.clientX;
-          }}
-          onPointerUp={(event) => {
-            if (touchStartX.current === null) return;
-            const travel = event.clientX - touchStartX.current;
-            if (travel > 60) showPrevious();
-            if (travel < -60) showNext();
-            touchStartX.current = null;
-          }}
-        >
-          <button
-            type="button"
-            className="lightbox__nav lightbox__nav--previous"
-            onClick={showPrevious}
-            aria-label="Previous image"
-          >
-            ←
-          </button>
-          <img
-            key={activeImage.src}
-            src={activeImage.src}
-            alt={activeImage.alt}
-          />
-          <button
-            type="button"
-            className="lightbox__nav lightbox__nav--next"
-            onClick={showNext}
-            aria-label="Next image"
-          >
-            →
-          </button>
-        </div>
+          <div className="lightbox__toolbar">
+            <span className="lightbox__counter" aria-live="polite">
+              {String(activeIndex + 1).padStart(2, "0")} /{" "}
+              {String(images.length).padStart(2, "0")}
+            </span>
+            <Dialog.Close asChild>
+              <button type="button" className="lightbox__close">
+                <span aria-hidden="true">×</span>
+                <span className="sr-only">Close image viewer</span>
+              </button>
+            </Dialog.Close>
+          </div>
 
-        <p className="lightbox__caption">
-          {activeImage.alt || "Portfolio image"}
-        </p>
-      </div>
-    </div>,
-    document.body,
+          <div
+            className="lightbox__stage"
+            onPointerDown={(event) => {
+              touchStartX.current = event.clientX;
+            }}
+            onPointerCancel={() => {
+              touchStartX.current = null;
+            }}
+            onPointerUp={(event) => {
+              if (!hasMultipleImages || touchStartX.current === null) return;
+              const travel = event.clientX - touchStartX.current;
+              if (travel > 60) showPrevious();
+              if (travel < -60) showNext();
+              touchStartX.current = null;
+            }}
+          >
+            {hasMultipleImages && (
+              <button
+                type="button"
+                className="lightbox__nav lightbox__nav--previous"
+                onClick={showPrevious}
+                aria-label="Previous image"
+              >
+                ←
+              </button>
+            )}
+            <img
+              key={activeImage.src}
+              src={activeImage.src}
+              alt={activeImage.alt}
+            />
+            {hasMultipleImages && (
+              <button
+                type="button"
+                className="lightbox__nav lightbox__nav--next"
+                onClick={showNext}
+                aria-label="Next image"
+              >
+                →
+              </button>
+            )}
+          </div>
+
+          <Dialog.Description className="lightbox__caption">
+            {activeImage.alt || "Portfolio image"}
+          </Dialog.Description>
+        </Dialog.Content>
+      </Dialog.Portal>
+    </Dialog.Root>
   );
+}
+
+function playVideo(button: HTMLButtonElement) {
+  const videoId = button.dataset.videoId;
+  const wrapper = button.closest<HTMLElement>(".wp-block-embed__wrapper");
+  if (!videoId || !wrapper || !/^[A-Za-z0-9_-]{11}$/.test(videoId)) return;
+
+  const iframe = document.createElement("iframe");
+  iframe.src = `https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1`;
+  iframe.title = button.getAttribute("aria-label")?.replace(/^Play /, "") ||
+    "Portfolio video";
+  iframe.allow =
+    "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share";
+  iframe.allowFullscreen = true;
+  iframe.referrerPolicy = "strict-origin-when-cross-origin";
+  wrapper.replaceChildren(iframe);
 }
 
 export function PortfolioContent() {
@@ -141,25 +154,40 @@ export function PortfolioContent() {
 
   const handleContentClick = (event: MouseEvent<HTMLDivElement>) => {
     const target = event.target as HTMLElement;
-    const image =
-      target.closest<HTMLImageElement>("img") ??
-      target
-        .closest<HTMLAnchorElement>("a")
-        ?.querySelector<HTMLImageElement>("img");
-    if (!image) return;
+    const videoButton = target.closest<HTMLButtonElement>("[data-video-id]");
+    if (videoButton) {
+      playVideo(videoButton);
+      return;
+    }
+
+    const trigger =
+      target.closest<HTMLElement>("[data-lightbox-image]") ??
+      target.querySelector<HTMLElement>("[data-lightbox-image]");
+    if (!trigger) return;
 
     event.preventDefault();
-    const imageElements = Array.from(
-      event.currentTarget.querySelectorAll<HTMLImageElement>("img"),
+    const group =
+      trigger.closest<HTMLElement>("[data-lightbox-group]") ?? trigger;
+    const triggers = Array.from(
+      group.querySelectorAll<HTMLElement>("[data-lightbox-image]"),
     );
-    const index = imageElements.indexOf(image);
+    const normalizedTriggers = triggers.length > 0 ? triggers : [trigger];
+    const index = normalizedTriggers.indexOf(trigger);
     if (index < 0) return;
 
     setImages(
-      imageElements.map((item) => ({
-        src: item.currentSrc || item.src,
-        alt: item.alt,
-      })),
+      normalizedTriggers
+        .map((item) => {
+          const image = item.querySelector<HTMLImageElement>("img");
+          const source =
+            item.dataset.fullSrc ||
+            image?.dataset.fullSrc ||
+            image?.currentSrc ||
+            image?.src;
+          if (!image || !source) return null;
+          return { src: source, alt: image.alt };
+        })
+        .filter((image): image is PortfolioImage => image !== null),
     );
     setActiveIndex(index);
   };
@@ -171,10 +199,10 @@ export function PortfolioContent() {
         onClick={handleContentClick}
         dangerouslySetInnerHTML={{ __html: preparedHtml }}
       />
-      {activeIndex !== null && (
+      {activeIndex !== null && images.length > 0 && (
         <ImageLightbox
           images={images}
-          activeIndex={activeIndex}
+          activeIndex={Math.min(activeIndex, images.length - 1)}
           onChange={setActiveIndex}
           onClose={() => setActiveIndex(null)}
         />
