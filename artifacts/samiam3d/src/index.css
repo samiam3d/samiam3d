@@ -231,8 +231,8 @@ button:focus-visible {
   left: 0;
   z-index: 4;
   overflow: hidden;
-  width: 22rem;
-  height: 22rem;
+  width: 26rem;
+  height: 26rem;
   border-radius: 50%;
   contain: strict;
   opacity: 0;
@@ -242,14 +242,14 @@ button:focus-visible {
   will-change: transform, opacity;
   -webkit-mask-image: radial-gradient(
     circle at center,
-    #000 0 42%,
-    rgb(0 0 0 / 88%) 58%,
+    #000 0 54%,
+    rgb(0 0 0 / 90%) 72%,
     transparent 100%
   );
   mask-image: radial-gradient(
     circle at center,
-    #000 0 42%,
-    rgb(0 0 0 / 88%) 58%,
+    #000 0 54%,
+    rgb(0 0 0 / 90%) 72%,
     transparent 100%
   );
 }
@@ -265,21 +265,21 @@ button:focus-visible {
 .hero__reveal-stamp {
   position: absolute;
   display: block;
-  width: 22rem;
-  height: 22rem;
+  width: 26rem;
+  height: 26rem;
   overflow: hidden;
   border-radius: 50%;
   pointer-events: none;
   -webkit-mask-image: radial-gradient(
     circle at center,
-    #000 0 42%,
-    rgb(0 0 0 / 82%) 60%,
+    #000 0 54%,
+    rgb(0 0 0 / 90%) 72%,
     transparent 100%
   );
   mask-image: radial-gradient(
     circle at center,
-    #000 0 42%,
-    rgb(0 0 0 / 82%) 60%,
+    #000 0 54%,
+    rgb(0 0 0 / 90%) 72%,
     transparent 100%
   );
 }

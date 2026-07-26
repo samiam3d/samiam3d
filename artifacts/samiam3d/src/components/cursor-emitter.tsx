@@ -6,7 +6,9 @@ const minimumEmissionDistance = 42;
 const particleLifetimeMs = 560;
 const particlePoolSize = 3;
 const maximumPaintStamps = 48;
-const revealRadius = 176;
+// Keep the persistent paint comfortably larger than the wordmark height so the
+// rounded edge of the D is covered when the draw pass reaches it.
+const revealRadius = 208;
 const particleSlots = Array.from(
   { length: particlePoolSize },
   (_, index) => index,
