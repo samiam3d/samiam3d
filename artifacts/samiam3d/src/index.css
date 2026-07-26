@@ -1812,6 +1812,7 @@ button:focus-visible {
   .hero__title {
     font-size: clamp(3rem, 15vw, 5rem);
     -webkit-text-stroke-width: 0.8px;
+    touch-action: none;
   }
 
   .portfolio-content > h2 {
@@ -2098,6 +2099,10 @@ button:focus-visible {
 }
 
 @media (hover: none), (pointer: coarse) {
+  .hero__title {
+    touch-action: none;
+  }
+
   .portfolio-content
     .wp-block-gallery:is(
       .wp-block-gallery-1,

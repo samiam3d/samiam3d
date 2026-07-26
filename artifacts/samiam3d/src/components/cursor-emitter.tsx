@@ -24,9 +24,7 @@ export function CursorEmitter() {
 
   useEffect(() => {
     const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
-    const coarsePointer = window.matchMedia("(pointer: coarse)");
-
-    if (reduceMotion.matches || coarsePointer.matches) return;
+    if (reduceMotion.matches) return;
 
     const canvas = canvasRef.current;
     const cursor = cursorRef.current;
@@ -61,6 +59,7 @@ export function CursorEmitter() {
     let hasPointer = false;
     let hasPendingPointer = false;
     let isOverHero = false;
+    let activeTouchId: number | null = null;
 
     const resizeCanvas = () => {
       canvasWidth = window.innerWidth;
@@ -214,7 +213,21 @@ export function CursorEmitter() {
     };
 
     const handlePointerMove = (event: PointerEvent) => {
-      if (event.pointerType && event.pointerType !== "mouse") return;
+      if (
+        event.pointerType &&
+        event.pointerType !== "mouse" &&
+        event.pointerType !== "touch" &&
+        event.pointerType !== "pen"
+      ) {
+        return;
+      }
+
+      if (
+        event.pointerType === "touch" &&
+        (activeTouchId === null || event.pointerId !== activeTouchId)
+      ) {
+        return;
+      }
 
       pendingPointerX = event.clientX;
       pendingPointerY = event.clientY;
@@ -232,6 +245,45 @@ export function CursorEmitter() {
       if (!pointerFrame) {
         pointerFrame = window.requestAnimationFrame(processPointer);
       }
+    };
+
+    const handlePointerDown = (event: PointerEvent) => {
+      if (event.pointerType !== "touch" && event.pointerType !== "pen") return;
+      if (!event.isPrimary || !heroRect) return;
+
+      const isOverHero =
+        event.clientX >= heroRect.left &&
+        event.clientX <= heroRect.right &&
+        event.clientY >= heroRect.top &&
+        event.clientY <= heroRect.bottom;
+      if (!isOverHero) return;
+
+      activeTouchId = event.pointerId;
+      hasPointer = true;
+      pendingPointerX = event.clientX;
+      pendingPointerY = event.clientY;
+      hasPendingPointer = true;
+      lastPointerX = event.clientX;
+      lastPointerY = event.clientY;
+      lastEmissionX = -100;
+      lastEmissionY = -100;
+      lastEmissionTime = performance.now() - emissionIntervalMs;
+      cursor.classList.remove("is-hidden");
+      if (!pointerFrame) {
+        pointerFrame = window.requestAnimationFrame(processPointer);
+      }
+    };
+
+    const handlePointerEnd = (event: PointerEvent) => {
+      if (
+        (event.pointerType !== "touch" && event.pointerType !== "pen") ||
+        event.pointerId !== activeTouchId
+      ) {
+        return;
+      }
+
+      activeTouchId = null;
+      handlePointerLeave();
     };
 
     const handlePointerLeave = () => {
@@ -267,6 +319,9 @@ export function CursorEmitter() {
     resizeCanvas();
     heroResizeObserver?.observe(heroTitle!);
     window.addEventListener("pointermove", handlePointerMove, { passive: true });
+    window.addEventListener("pointerdown", handlePointerDown, { passive: true });
+    window.addEventListener("pointerup", handlePointerEnd, { passive: true });
+    window.addEventListener("pointercancel", handlePointerEnd, { passive: true });
     window.addEventListener("resize", resizeCanvas);
     window.addEventListener("resize", scheduleHeroBoundsRefresh);
     window.addEventListener("scroll", scheduleHeroBoundsRefresh, {
@@ -285,6 +340,9 @@ export function CursorEmitter() {
       if (particleFrame) window.cancelAnimationFrame(particleFrame);
       if (boundsFrame) window.cancelAnimationFrame(boundsFrame);
       window.removeEventListener("pointermove", handlePointerMove);
+      window.removeEventListener("pointerdown", handlePointerDown);
+      window.removeEventListener("pointerup", handlePointerEnd);
+      window.removeEventListener("pointercancel", handlePointerEnd);
       window.removeEventListener("resize", resizeCanvas);
       window.removeEventListener("resize", scheduleHeroBoundsRefresh);
       window.removeEventListener("scroll", scheduleHeroBoundsRefresh);
