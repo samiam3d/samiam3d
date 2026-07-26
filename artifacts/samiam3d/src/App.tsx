@@ -54,9 +54,17 @@ function App() {
             <section
               id={section.id}
               className="work-section"
-              aria-label="Portfolio work"
+              aria-labelledby="past-roles-title"
               key={section.id}
             >
+              <div className="work-section__intro">
+                <p>Selected roles</p>
+                <h2 id="past-roles-title">Past roles / companies</h2>
+                <span>
+                  Art direction, world-building, and interactive game work across
+                  studios and original worlds.
+                </span>
+              </div>
               <PortfolioContent />
             </section>
           );
