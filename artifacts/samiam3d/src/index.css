@@ -229,7 +229,7 @@ button:focus-visible {
   position: absolute;
   top: 0;
   left: 0;
-  z-index: 3;
+  z-index: 4;
   overflow: hidden;
   width: 22rem;
   height: 22rem;
@@ -240,6 +240,48 @@ button:focus-visible {
   transform: translate3d(-24rem, -24rem, 0);
   transition: opacity 180ms cubic-bezier(0.16, 1, 0.3, 1);
   will-change: transform, opacity;
+  -webkit-mask-image: radial-gradient(
+    circle at center,
+    #000 0 42%,
+    rgb(0 0 0 / 88%) 58%,
+    transparent 100%
+  );
+  mask-image: radial-gradient(
+    circle at center,
+    #000 0 42%,
+    rgb(0 0 0 / 88%) 58%,
+    transparent 100%
+  );
+}
+
+.hero__paint-layer {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  overflow: visible;
+  pointer-events: none;
+}
+
+.hero__reveal-stamp {
+  position: absolute;
+  display: block;
+  width: 22rem;
+  height: 22rem;
+  overflow: hidden;
+  border-radius: 50%;
+  pointer-events: none;
+  -webkit-mask-image: radial-gradient(
+    circle at center,
+    #000 0 42%,
+    rgb(0 0 0 / 82%) 60%,
+    transparent 100%
+  );
+  mask-image: radial-gradient(
+    circle at center,
+    #000 0 42%,
+    rgb(0 0 0 / 82%) 60%,
+    transparent 100%
+  );
 }
 
 .hero__reveal-content {
@@ -1523,15 +1565,22 @@ button:focus-visible {
   opacity: 0;
 }
 
-.cursor-particles {
+.cursor-letter {
   position: fixed;
-  inset: 0;
+  top: 0;
+  left: 0;
   z-index: calc(var(--z-cursor) - 1);
   display: block;
-  width: 100vw;
-  height: 100vh;
-  contain: strict;
+  width: max-content;
+  color: #fff;
+  font-family: var(--font-display);
+  font-size: 46px;
+  font-weight: 400;
+  line-height: 1;
+  opacity: 0;
   pointer-events: none;
+  text-rendering: geometricPrecision;
+  will-change: transform, opacity;
 }
 
 .site-footer {
@@ -2158,7 +2207,7 @@ button:focus-visible {
   }
 
   .cursor-emitter,
-  .cursor-particles {
+  .cursor-letter {
     display: none !important;
   }
 }

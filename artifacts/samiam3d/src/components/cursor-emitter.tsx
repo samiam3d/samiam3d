@@ -1,52 +1,47 @@
 import { useEffect, useRef } from "react";
 
 const letters = ["s", "a", "m", "i", "a", "m", "3", "D"];
-const emissionIntervalMs = 190;
-const minimumEmissionDistance = 34;
-const particleLifetimeMs = 620;
-const maximumParticles = 5;
+const emissionIntervalMs = 210;
+const minimumEmissionDistance = 42;
+const particleLifetimeMs = 560;
+const particlePoolSize = 3;
+const maximumPaintStamps = 48;
 const revealRadius = 176;
-
-type LetterParticle = {
-  age: number;
-  letter: string;
-  rotation: number;
-  rotationVelocity: number;
-  velocityX: number;
-  velocityY: number;
-  x: number;
-  y: number;
-};
+const particleSlots = Array.from(
+  { length: particlePoolSize },
+  (_, index) => index,
+);
 
 export function CursorEmitter() {
-  const canvasRef = useRef<HTMLCanvasElement>(null);
   const cursorRef = useRef<HTMLDivElement>(null);
+  const particleRefs = useRef<Array<HTMLSpanElement | null>>([]);
 
   useEffect(() => {
     const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
     if (reduceMotion.matches) return;
 
-    const canvas = canvasRef.current;
     const cursor = cursorRef.current;
-    const context = canvas?.getContext("2d", { alpha: true });
-    if (!canvas || !cursor || !context) return;
+    const particlePool = particleRefs.current.filter(
+      (particle): particle is HTMLSpanElement => particle !== null,
+    );
+    if (!cursor || particlePool.length === 0) return;
 
     const heroTitle = document.querySelector<HTMLElement>(".hero__title");
     const heroReveal = heroTitle?.querySelector<HTMLElement>(".hero__reveal");
     const heroRevealContent = heroTitle?.querySelector<HTMLElement>(
       ".hero__reveal-content",
     );
+    const heroPaintLayer = heroTitle?.querySelector<HTMLElement>(
+      ".hero__paint-layer",
+    );
 
     document.documentElement.classList.add("has-custom-cursor");
 
-    const particles: LetterParticle[] = [];
-    let canvasWidth = window.innerWidth;
-    let canvasHeight = window.innerHeight;
-    let deviceScale = 1;
+    const particleAnimations: Array<Animation | null> = particlePool.map(
+      () => null,
+    );
     let pointerFrame = 0;
-    let particleFrame = 0;
     let boundsFrame = 0;
-    let lastParticleFrameTime = performance.now();
     let lastEmissionTime = performance.now();
     let lastEmissionX = -100;
     let lastEmissionY = -100;
@@ -56,25 +51,14 @@ export function CursorEmitter() {
     let pendingPointerY = -100;
     let heroRect = heroTitle?.getBoundingClientRect() ?? null;
     let letterIndex = 0;
+    let particleIndex = 0;
     let hasPointer = false;
     let hasPendingPointer = false;
     let isOverHero = false;
     let activeTouchId: number | null = null;
-
-    const resizeCanvas = () => {
-      canvasWidth = window.innerWidth;
-      canvasHeight = window.innerHeight;
-      deviceScale = Math.min(window.devicePixelRatio || 1, 1.5);
-      canvas.width = Math.round(canvasWidth * deviceScale);
-      canvas.height = Math.round(canvasHeight * deviceScale);
-      canvas.style.width = `${canvasWidth}px`;
-      canvas.style.height = `${canvasHeight}px`;
-      context.setTransform(deviceScale, 0, 0, deviceScale, 0, 0);
-      context.textAlign = "center";
-      context.textBaseline = "middle";
-      context.fillStyle = "#fff";
-      context.font = '46px "Righteous", sans-serif';
-    };
+    let paintStampCount = 0;
+    let lastPaintX = -100;
+    let lastPaintY = -100;
 
     const refreshHeroBounds = () => {
       boundsFrame = 0;
@@ -84,6 +68,30 @@ export function CursorEmitter() {
     const scheduleHeroBoundsRefresh = () => {
       if (!heroTitle || boundsFrame) return;
       boundsFrame = window.requestAnimationFrame(refreshHeroBounds);
+    };
+
+    const addPaintStamp = (localX: number, localY: number) => {
+      if (!heroPaintLayer || !heroRevealContent) return;
+      if (paintStampCount >= maximumPaintStamps) return;
+
+      const distance = Math.hypot(localX - lastPaintX, localY - lastPaintY);
+      if (distance < minimumEmissionDistance && paintStampCount > 0) return;
+
+      const stamp = document.createElement("span");
+      stamp.className = "hero__reveal-stamp";
+      stamp.style.left = `${localX - revealRadius}px`;
+      stamp.style.top = `${localY - revealRadius}px`;
+
+      const content = document.createElement("span");
+      content.className = "hero__reveal-content";
+      content.innerHTML = heroRevealContent.innerHTML;
+      content.style.transform = `translate3d(${-localX + revealRadius}px, ${-localY + revealRadius}px, 0)`;
+      stamp.append(content);
+      heroPaintLayer.append(stamp);
+
+      paintStampCount += 1;
+      lastPaintX = localX;
+      lastPaintY = localY;
     };
 
     const setHeroReaction = (clientX: number, clientY: number) => {
@@ -100,6 +108,7 @@ export function CursorEmitter() {
         const localY = clientY - heroRect.top;
         heroReveal.style.transform = `translate3d(${localX - revealRadius}px, ${localY - revealRadius}px, 0)`;
         heroRevealContent.style.transform = `translate3d(${-localX + revealRadius}px, ${-localY + revealRadius}px, 0)`;
+        addPaintStamp(localX, localY);
       }
 
       if (nextIsOverHero !== isOverHero) {
@@ -109,72 +118,58 @@ export function CursorEmitter() {
       }
     };
 
-    const renderParticles = (time: number) => {
-      particleFrame = 0;
-      const delta = Math.min((time - lastParticleFrameTime) / 1000, 0.032);
-      lastParticleFrameTime = time;
-      context.clearRect(0, 0, canvasWidth, canvasHeight);
-
-      for (let index = particles.length - 1; index >= 0; index -= 1) {
-        const particle = particles[index];
-        particle.age += delta * 1000;
-        if (particle.age >= particleLifetimeMs) {
-          particles.splice(index, 1);
-          continue;
-        }
-
-        const progress = particle.age / particleLifetimeMs;
-        particle.x += particle.velocityX * delta;
-        particle.y += particle.velocityY * delta;
-        particle.velocityY += 30 * delta;
-        particle.rotation += particle.rotationVelocity * delta;
-
-        context.save();
-        context.globalAlpha = Math.max(0, 0.92 * (1 - progress));
-        context.translate(particle.x, particle.y);
-        context.rotate(particle.rotation);
-        const scale = 1 - progress * 0.32;
-        context.scale(scale, scale);
-        context.fillText(particle.letter, 0, 0);
-        context.restore();
-      }
-
-      if (particles.length > 0) {
-        particleFrame = window.requestAnimationFrame(renderParticles);
-      }
-    };
-
     const emitLetter = (
       x: number,
       y: number,
       pointerVelocityX: number,
       pointerVelocityY: number,
     ) => {
+      const particle = particlePool[particleIndex % particlePool.length];
+      if (!particle || typeof particle.animate !== "function") return;
+
       const speed = Math.hypot(pointerVelocityX, pointerVelocityY);
       const travelAngle =
         speed > 0.2
           ? Math.atan2(-pointerVelocityY, -pointerVelocityX)
           : -Math.PI / 2;
-      const angle = travelAngle + (Math.random() - 0.5) * 0.36;
-      const velocity = 62 + Math.random() * 34;
+      const angle = travelAngle + (Math.random() - 0.5) * 0.28;
+      const distance = 42 + Math.random() * 28;
+      const particleX = Math.cos(angle) * distance;
+      const particleY = Math.sin(angle) * distance - 12;
+      const particleRotation = -10 + Math.random() * 20;
+      const poolIndex = particleIndex % particlePool.length;
 
-      if (particles.length >= maximumParticles) particles.shift();
-      particles.push({
-        age: 0,
-        letter: letters[letterIndex % letters.length],
-        rotation: 0,
-        rotationVelocity: (Math.random() - 0.5) * 0.5,
-        velocityX: Math.cos(angle) * velocity,
-        velocityY: Math.sin(angle) * velocity - 12,
-        x,
-        y,
-      });
+      particleAnimations[poolIndex]?.cancel();
+      particle.textContent = letters[letterIndex % letters.length];
+      particle.style.opacity = "1";
+      const animation = particle.animate(
+        [
+          {
+            opacity: 0.95,
+            transform: `translate3d(${x}px, ${y}px, 0) translate(-50%, -50%) scale(1) rotate(0deg)`,
+          },
+          {
+            opacity: 0,
+            transform: `translate3d(${x + particleX}px, ${y + particleY}px, 0) translate(-50%, -50%) scale(0.62) rotate(${particleRotation}deg)`,
+          },
+        ],
+        {
+          duration: particleLifetimeMs,
+          easing: "cubic-bezier(0.16, 1, 0.3, 1)",
+          fill: "forwards",
+        },
+      );
+
+      particleAnimations[poolIndex] = animation;
+      animation.onfinish = () => {
+        if (particleAnimations[poolIndex] !== animation) return;
+        particleAnimations[poolIndex] = null;
+        particle.style.opacity = "0";
+        particle.textContent = "";
+      };
+
+      particleIndex += 1;
       letterIndex += 1;
-
-      if (!particleFrame) {
-        lastParticleFrameTime = performance.now();
-        particleFrame = window.requestAnimationFrame(renderParticles);
-      }
     };
 
     const processPointer = () => {
@@ -274,6 +269,17 @@ export function CursorEmitter() {
       }
     };
 
+    const handlePointerLeave = () => {
+      hasPointer = false;
+      hasPendingPointer = false;
+      cursor.classList.add("is-hidden");
+      if (isOverHero) {
+        isOverHero = false;
+        heroTitle?.classList.remove("is-cursor-active");
+        cursor.classList.remove("is-over-hero");
+      }
+    };
+
     const handlePointerEnd = (event: PointerEvent) => {
       if (
         (event.pointerType !== "touch" && event.pointerType !== "pen") ||
@@ -286,29 +292,17 @@ export function CursorEmitter() {
       handlePointerLeave();
     };
 
-    const handlePointerLeave = () => {
-      hasPointer = false;
-      hasPendingPointer = false;
-      cursor.classList.add("is-hidden");
-      if (isOverHero) {
-        isOverHero = false;
-        heroTitle?.classList.remove("is-cursor-active");
-        cursor.classList.remove("is-over-hero");
-      }
-    };
-
     const handlePointerEnter = () => {
       cursor.classList.remove("is-hidden");
     };
 
     const handleVisibilityChange = () => {
       if (!document.hidden) return;
-      particles.length = 0;
-      context.clearRect(0, 0, canvasWidth, canvasHeight);
-      if (particleFrame) {
-        window.cancelAnimationFrame(particleFrame);
-        particleFrame = 0;
-      }
+      particleAnimations.forEach((animation) => animation?.cancel());
+      particlePool.forEach((particle) => {
+        particle.style.opacity = "0";
+        particle.textContent = "";
+      });
     };
 
     const heroResizeObserver =
@@ -316,13 +310,11 @@ export function CursorEmitter() {
         ? new ResizeObserver(scheduleHeroBoundsRefresh)
         : null;
 
-    resizeCanvas();
     heroResizeObserver?.observe(heroTitle!);
     window.addEventListener("pointermove", handlePointerMove, { passive: true });
     window.addEventListener("pointerdown", handlePointerDown, { passive: true });
     window.addEventListener("pointerup", handlePointerEnd, { passive: true });
     window.addEventListener("pointercancel", handlePointerEnd, { passive: true });
-    window.addEventListener("resize", resizeCanvas);
     window.addEventListener("resize", scheduleHeroBoundsRefresh);
     window.addEventListener("scroll", scheduleHeroBoundsRefresh, {
       passive: true,
@@ -337,13 +329,12 @@ export function CursorEmitter() {
       heroTitle?.classList.remove("is-cursor-active");
       heroResizeObserver?.disconnect();
       if (pointerFrame) window.cancelAnimationFrame(pointerFrame);
-      if (particleFrame) window.cancelAnimationFrame(particleFrame);
       if (boundsFrame) window.cancelAnimationFrame(boundsFrame);
+      particleAnimations.forEach((animation) => animation?.cancel());
       window.removeEventListener("pointermove", handlePointerMove);
       window.removeEventListener("pointerdown", handlePointerDown);
       window.removeEventListener("pointerup", handlePointerEnd);
       window.removeEventListener("pointercancel", handlePointerEnd);
-      window.removeEventListener("resize", resizeCanvas);
       window.removeEventListener("resize", scheduleHeroBoundsRefresh);
       window.removeEventListener("scroll", scheduleHeroBoundsRefresh);
       window.removeEventListener("blur", handlePointerLeave);
@@ -355,10 +346,19 @@ export function CursorEmitter() {
 
   return (
     <>
-      <canvas ref={canvasRef} className="cursor-particles" aria-hidden="true" />
       <div ref={cursorRef} className="cursor-emitter" aria-hidden="true">
         <span className="cursor-emitter__dot" />
       </div>
+      {particleSlots.map((slot) => (
+        <span
+          key={slot}
+          ref={(particle) => {
+            particleRefs.current[slot] = particle;
+          }}
+          className="cursor-letter"
+          aria-hidden="true"
+        />
+      ))}
     </>
   );
 }
