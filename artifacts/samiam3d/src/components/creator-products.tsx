@@ -1,208 +1,233 @@
+import { useCallback, useEffect, useRef, useState } from "react";
+import { ArrowUpRight } from "lucide-react";
+import { ProjectModal } from "@/components/project-modal";
 import { TrendInkEye } from "@/components/trendink-eye";
+import {
+  creatorProjects,
+  getCreatorProject,
+  isCreatorProjectId,
+  responsiveCreatorAsset,
+  type CreatorProject,
+  type CreatorProjectId,
+} from "@/lib/creator-projects";
 
-const responsiveSource = (name: string, width: 480 | 1200) =>
-  `/assets/responsive/creations/${name}-${width}.webp`;
+type ProjectHistoryState = {
+  creatorProjectLab?: boolean;
+  creatorProjectId?: CreatorProjectId;
+};
 
-const productStories = [
-  {
-    id: "clauseink",
-    name: "ClauseInk",
-    href: "https://www.clauseink.com/",
-    logo: "clauseink-logo",
-    logoAlt: "ClauseInk",
-    line: "Legal work, with the evidence attached.",
-    description: "AI-assisted legal drafting with review, redlines, and export in one focused workspace.",
-    image: "clauseink-editor-live",
-    imageAlt: "ClauseInk contract editor with document and clause review tools",
-    width: 2674,
-    height: 2014,
-  },
-  {
-    id: "hotclips",
-    name: "HotClips",
-    href: "https://www.hotclips.pro/",
-    logo: "hotclips-mark-blue",
-    logoAlt: "HotClips",
-    line: "One episode. The moments worth publishing.",
-    description: "A podcaster-first clip studio that finds the moments worth watching and keeps the final cut in your hands.",
-    image: "hotclips-podcast-studio",
-    imageAlt: "HotClips podcast editing studio with episode clips and transcript",
-    width: 1672,
-    height: 941,
-  },
-  {
-    id: "trendink",
-    name: "TrendInk",
-    href: "https://www.trendink.app/",
-    logo: "trendink-aperture",
-    logoAlt: "TrendInk aperture mark",
-    line: "See the signal. Make the right thing.",
-    description: "A source-backed production studio that carries a live signal from evidence to approved creative and export.",
-    image: "trendink-hero-studio",
-    imageAlt: "TrendInk aperture artwork representing a focused creative signal",
-    width: 1920,
-    height: 1280,
-  },
-] as const;
+const getProjectFromLocation = (): CreatorProjectId | null => {
+  const projectId = new URLSearchParams(window.location.search).get("project");
+  return isCreatorProjectId(projectId) ? projectId : null;
+};
+
+const getProjectUrl = (projectId: CreatorProjectId | null) => {
+  const url = new URL(window.location.href);
+
+  if (projectId) {
+    url.searchParams.set("project", projectId);
+  } else {
+    url.searchParams.delete("project");
+  }
+
+  return `${url.pathname}${url.search}${url.hash}`;
+};
+
+const getHistoryState = (): ProjectHistoryState => {
+  const state = window.history.state;
+  return state && typeof state === "object" ? state : {};
+};
+
+function ProjectCard({
+  project,
+  onOpen,
+}: {
+  project: CreatorProject;
+  onOpen: (projectId: CreatorProjectId, trigger: HTMLButtonElement) => void;
+}) {
+  const primaryMedia = project.media[0];
+
+  return (
+    <article className={`product-card product-card--${project.id}`}>
+      <button
+        className="product-card__button"
+        type="button"
+        aria-haspopup="dialog"
+        aria-label={`View ${project.name} project details`}
+        onClick={(event) => onOpen(project.id, event.currentTarget)}
+      >
+        <span className="product-card__media">
+          <img
+            src={responsiveCreatorAsset(primaryMedia.asset, 480)}
+            srcSet={`${responsiveCreatorAsset(primaryMedia.asset, 480)} 480w, ${responsiveCreatorAsset(primaryMedia.asset, 1200)} 1200w`}
+            sizes="(max-width: 640px) calc(100vw - 3rem), (max-width: 900px) calc(50vw - 2.25rem), 52vw"
+            width={primaryMedia.width}
+            height={primaryMedia.height}
+            loading="lazy"
+            decoding="async"
+            alt={primaryMedia.alt}
+          />
+          {project.id === "trendink" && (
+            <span className="product-card__trendink-eye">
+              <TrendInkEye compact />
+            </span>
+          )}
+        </span>
+
+        <span className="product-card__content">
+          <span className="product-card__identity">
+            <span className="product-card__logo">
+              <img
+                src={responsiveCreatorAsset(project.logo.asset, 480)}
+                srcSet={`${responsiveCreatorAsset(project.logo.asset, 480)} 480w, ${responsiveCreatorAsset(project.logo.asset, 1200)} 1200w`}
+                sizes="64px"
+                width={project.logo.width}
+                height={project.logo.height}
+                loading="lazy"
+                decoding="async"
+                alt=""
+              />
+            </span>
+            <span className="product-card__name">{project.name}</span>
+          </span>
+          <span className="product-card__category">{project.category}</span>
+          <span className="product-card__headline">{project.cardHeadline}</span>
+          <span className="product-card__description">
+            {project.cardDescription}
+          </span>
+          <span className="product-card__action">
+            <span>View project</span>
+            <ArrowUpRight aria-hidden="true" />
+          </span>
+        </span>
+      </button>
+    </article>
+  );
+}
 
 export function CreatorProducts() {
+  const [activeProjectId, setActiveProjectId] =
+    useState<CreatorProjectId | null>(null);
+  const focusReturnRef = useRef<HTMLButtonElement | null>(null);
+
+  const writeProjectHistory = useCallback(
+    (projectId: CreatorProjectId | null, method: "push" | "replace") => {
+      const nextState: ProjectHistoryState = {
+        ...getHistoryState(),
+        creatorProjectLab: Boolean(projectId),
+        creatorProjectId: projectId ?? undefined,
+      };
+      window.history[`${method}State`](nextState, "", getProjectUrl(projectId));
+    },
+    [],
+  );
+
+  useEffect(() => {
+    const directProject = getProjectFromLocation();
+
+    if (directProject && !getHistoryState().creatorProjectLab) {
+      const projectUrl = getProjectUrl(directProject);
+      const baseState: ProjectHistoryState = {
+        ...getHistoryState(),
+        creatorProjectLab: false,
+        creatorProjectId: undefined,
+      };
+      window.history.replaceState(baseState, "", getProjectUrl(null));
+      window.history.pushState(
+        {
+          ...baseState,
+          creatorProjectLab: true,
+          creatorProjectId: directProject,
+        },
+        "",
+        projectUrl,
+      );
+    }
+
+    setActiveProjectId(directProject);
+
+    const handlePopState = () => {
+      setActiveProjectId(getProjectFromLocation());
+    };
+
+    window.addEventListener("popstate", handlePopState);
+    return () => window.removeEventListener("popstate", handlePopState);
+  }, []);
+
+  const openProject = useCallback(
+    (projectId: CreatorProjectId, trigger: HTMLButtonElement) => {
+      focusReturnRef.current = trigger;
+      writeProjectHistory(projectId, "push");
+      setActiveProjectId(projectId);
+    },
+    [writeProjectHistory],
+  );
+
+  const navigateProject = useCallback(
+    (projectId: CreatorProjectId) => {
+      writeProjectHistory(projectId, "replace");
+      setActiveProjectId(projectId);
+    },
+    [writeProjectHistory],
+  );
+
+  const closeProject = useCallback(() => {
+    if (!activeProjectId) return;
+
+    if (getHistoryState().creatorProjectLab) {
+      window.history.back();
+      return;
+    }
+
+    writeProjectHistory(null, "replace");
+    setActiveProjectId(null);
+  }, [activeProjectId, writeProjectHistory]);
+
+  const activeProject = getCreatorProject(activeProjectId);
+
   return (
     <section
       id="creator-products"
-      className="creator-studio"
+      className="product-lab"
       aria-labelledby="creator-products-title"
     >
-      <div className="creator-studio__intro">
+      <div className="product-lab__intro">
         <div>
-          <p className="creator-studio__label">Independent work</p>
+          <p className="product-lab__label">Independent Product Lab</p>
           <h2 id="creator-products-title">
-            The studio behind the worlds.
+            I build the products I wish existed.
           </h2>
         </div>
-        <p className="creator-studio__lede">
-          I build products that turn messy creative work into a clear,
-          human-led path from first spark to finished work. MindInk is the
-          story studio; ClauseInk, HotClips, and TrendInk carry the same eye
-          into legal drafting, podcast clips, and trend-led production.
-        </p>
+        <div className="product-lab__context">
+          <p>
+            Four independent products conceived, designed, and shipped end to
+            end—across storytelling, legal workflows, creator intelligence, and
+            media. Each began as a problem I couldn’t ignore and became working
+            software you can open today.
+          </p>
+          <p className="product-lab__capabilities">
+            Product strategy · UX/UI · AI systems · Full-stack build · Brand ·
+            Launch
+          </p>
+        </div>
       </div>
 
-      <article className="creator-feature">
-        <div className="creator-feature__copy">
-          <p className="creator-feature__index">01 / 04</p>
-          <a
-            className="creator-brand-lockup creator-brand-lockup--mindink"
-            href="https://mindink.ai/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <img
-              src={responsiveSource("mindink-icon", 480)}
-              srcSet={`${responsiveSource("mindink-icon", 480)} 480w, ${responsiveSource("mindink-icon", 1200)} 1200w`}
-              width="700"
-              height="700"
-              loading="lazy"
-              decoding="async"
-              alt="MindInk"
-            />
-            <span>MindInk</span>
-          </a>
-          <p className="creator-feature__line">
-            Ideas into worlds. Worlds into scenes.
-          </p>
-          <p>
-            A creator-first story and movie studio for shaping characters,
-            branching paths, scenes, sound, and final edits in one production
-            flow.
-          </p>
-        </div>
-
-        <div className="creator-collage" aria-label="MindInk product gallery">
-          <figure className="creator-collage__studio">
-            <img
-              src={responsiveSource("mindink-cosmic-hero", 480)}
-              srcSet={`${responsiveSource("mindink-cosmic-hero", 480)} 480w, ${responsiveSource("mindink-cosmic-hero", 1200)} 1200w`}
-              sizes="(max-width: 640px) 55vw, 48vw"
-              width="1536"
-              height="1024"
-              loading="lazy"
-              decoding="async"
-              alt="MindInk story world beneath a trail of stars"
-            />
-          </figure>
-          <figure className="creator-collage__canvas">
-            <img
-              src={responsiveSource("mindink-galactic-banner", 480)}
-              srcSet={`${responsiveSource("mindink-galactic-banner", 480)} 480w, ${responsiveSource("mindink-galactic-banner", 1200)} 1200w`}
-              sizes="(max-width: 640px) 55vw, 48vw"
-              width="1006"
-              height="512"
-              loading="lazy"
-              decoding="async"
-              alt="Galactic Whiskerz story world created in MindInk"
-            />
-          </figure>
-          <figure className="creator-collage__cover">
-            <img
-              src={responsiveSource("mindink-cover-electric-veins", 480)}
-              srcSet={`${responsiveSource("mindink-cover-electric-veins", 480)} 480w, ${responsiveSource("mindink-cover-electric-veins", 1200)} 1200w`}
-              sizes="(max-width: 640px) 35vw, 20vw"
-              width="512"
-              height="713"
-              loading="lazy"
-              decoding="async"
-              alt="Electric Veins story cover created in MindInk"
-            />
-            <img
-              className="creator-collage__cover-secondary"
-              src={responsiveSource("mindink-cover-night-match", 480)}
-              srcSet={`${responsiveSource("mindink-cover-night-match", 480)} 480w, ${responsiveSource("mindink-cover-night-match", 1200)} 1200w`}
-              sizes="(max-width: 640px) 28vw, 14vw"
-              width="512"
-              height="696"
-              loading="lazy"
-              decoding="async"
-              alt="Night Match story cover created in MindInk"
-            />
-          </figure>
-        </div>
-      </article>
-
-      <div className="creator-products-grid">
-        {productStories.map((product, index) => (
-          <article
-            key={product.id}
-            className={`creator-product creator-product--${product.id}`}
-          >
-            <figure className="creator-product__media">
-              <img
-                src={responsiveSource(product.image, 480)}
-                srcSet={`${responsiveSource(product.image, 480)} 480w, ${responsiveSource(product.image, 1200)} 1200w`}
-                sizes="(max-width: 640px) 42vw, 26vw"
-                width={product.width}
-                height={product.height}
-                loading="lazy"
-                decoding="async"
-                alt={product.imageAlt}
-              />
-              {product.id === "trendink" && (
-                <span className="creator-product__robot">
-                  <TrendInkEye compact />
-                </span>
-              )}
-            </figure>
-            <p className="creator-feature__index">
-              {String(index + 2).padStart(2, "0")} / 04
-            </p>
-            <a
-              className="creator-brand-lockup"
-              href={product.href}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <img
-                src={responsiveSource(product.logo, 480)}
-                srcSet={`${responsiveSource(product.logo, 480)} 480w, ${responsiveSource(product.logo, 1200)} 1200w`}
-                width="640"
-                height="240"
-                loading="lazy"
-                decoding="async"
-                alt={product.logoAlt}
-              />
-              <span>{product.name}</span>
-            </a>
-            <p className="creator-product__line">{product.line}</p>
-            <p className="creator-product__description">
-              {product.description}
-            </p>
-          </article>
+      <div className="product-lab__grid">
+        {creatorProjects.map((project) => (
+          <ProjectCard
+            key={project.id}
+            project={project}
+            onOpen={openProject}
+          />
         ))}
       </div>
 
-      <p className="creator-studio__closing">
-        Different products, same rule: the person doing the work keeps the
-        final call.
-      </p>
+      <ProjectModal
+        project={activeProject}
+        onClose={closeProject}
+        onNavigate={navigateProject}
+        focusReturnRef={focusReturnRef}
+      />
     </section>
   );
 }
