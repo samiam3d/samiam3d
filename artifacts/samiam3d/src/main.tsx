@@ -4,5 +4,6 @@ import App from "./App";
 
 import "./index.css";
 import "./portfolio-refresh.css";
+import "./portfolio-refresh-overrides.css";
 
 createRoot(document.getElementById("root")!).render(<App />);
