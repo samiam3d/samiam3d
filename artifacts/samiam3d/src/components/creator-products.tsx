@@ -1,12 +1,11 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { ArrowUpRight } from "lucide-react";
 import { ProjectModal } from "@/components/project-modal";
-import { TrendInkEye } from "@/components/trendink-eye";
+import { ProjectMark, ProjectVisual } from "@/components/project-visual";
 import {
   creatorProjects,
   getCreatorProject,
   isCreatorProjectId,
-  responsiveCreatorAsset,
   type CreatorProject,
   type CreatorProjectId,
 } from "@/lib/creator-projects";
@@ -45,8 +44,6 @@ function ProjectCard({
   project: CreatorProject;
   onOpen: (projectId: CreatorProjectId, trigger: HTMLButtonElement) => void;
 }) {
-  const primaryMedia = project.media[0];
-
   return (
     <article className={`product-card product-card--${project.id}`}>
       <button
@@ -56,37 +53,15 @@ function ProjectCard({
         aria-label={`View ${project.name} project details`}
         onClick={(event) => onOpen(project.id, event.currentTarget)}
       >
-        <span className="product-card__media">
-          <img
-            src={responsiveCreatorAsset(primaryMedia.asset, 480)}
-            srcSet={`${responsiveCreatorAsset(primaryMedia.asset, 480)} 480w, ${responsiveCreatorAsset(primaryMedia.asset, 1200)} 1200w`}
-            sizes="(max-width: 640px) calc(100vw - 3rem), (max-width: 900px) calc(50vw - 2.25rem), 52vw"
-            width={primaryMedia.width}
-            height={primaryMedia.height}
-            loading="lazy"
-            decoding="async"
-            alt={primaryMedia.alt}
-          />
-          {project.id === "trendink" && (
-            <span className="product-card__trendink-eye">
-              <TrendInkEye compact />
-            </span>
-          )}
-        </span>
+        <div className="product-card__media">
+          <ProjectVisual project={project} />
+        </div>
 
-        <span className="product-card__content">
+        <div className="product-card__content">
+          <span className="product-card__status">{project.status}</span>
           <span className="product-card__identity">
             <span className="product-card__logo">
-              <img
-                src={responsiveCreatorAsset(project.logo.asset, 480)}
-                srcSet={`${responsiveCreatorAsset(project.logo.asset, 480)} 480w, ${responsiveCreatorAsset(project.logo.asset, 1200)} 1200w`}
-                sizes="64px"
-                width={project.logo.width}
-                height={project.logo.height}
-                loading="lazy"
-                decoding="async"
-                alt=""
-              />
+              <ProjectMark project={project} />
             </span>
             <span className="product-card__name">{project.name}</span>
           </span>
@@ -99,7 +74,7 @@ function ProjectCard({
             <span>View project</span>
             <ArrowUpRight aria-hidden="true" />
           </span>
-        </span>
+        </div>
       </button>
     </article>
   );
@@ -193,21 +168,20 @@ export function CreatorProducts() {
     >
       <div className="product-lab__intro">
         <div>
-          <p className="product-lab__label">Independent Product Lab</p>
+          <p className="product-lab__label">Founder-built ventures</p>
           <h2 id="creator-products-title">
-            I build the products I wish existed.
+            From first spark to working system.
           </h2>
         </div>
         <div className="product-lab__context">
           <p>
-            Four independent products conceived, designed, and shipped end to
-            end—across storytelling, legal workflows, creator intelligence, and
-            media. Each began as a problem I couldn’t ignore and became working
-            software you can open today.
+            I conceive, direct, design, and build products end to end—combining
+            creative vision, narrative, brand, experience design, technical
+            systems, and launch into one connected practice.
           </p>
           <p className="product-lab__capabilities">
-            Product strategy · UX/UI · AI systems · Full-stack build · Brand ·
-            Launch
+            Product strategy · Creative direction · UX/UI · AI systems · Build ·
+            Brand · Launch
           </p>
         </div>
       </div>
