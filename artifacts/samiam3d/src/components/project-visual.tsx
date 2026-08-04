@@ -84,6 +84,7 @@ function MindInkVisual({
   return (
     <div
       className={`project-visual project-visual--mindink project-visual--${context}`}
+      role="group"
       aria-label="MindInk story posters and connected creation studio"
     >
       <div className="mindink-visual__halo" aria-hidden="true" />
@@ -152,7 +153,9 @@ function VibeMindVisual({ context }: { context: "card" | "modal" }) {
       <div className="vibemind-visual__workspace">
         <div className="vibemind-visual__prompt">
           <span>PRODUCT BRIEF</span>
-          <strong>Build a creator-first workspace that turns intent into owned software.</strong>
+          <strong>
+            Build a creator-first workspace that turns intent into owned software.
+          </strong>
           <p>Plan approved. Changes remain visible, recoverable, and reviewable.</p>
         </div>
         <div className="vibemind-visual__preview">
@@ -206,7 +209,10 @@ function FlowerVisual({ context }: { context: "card" | "modal" }) {
       </div>
       <div className="flower-visual__waveform" aria-hidden="true">
         {Array.from({ length: 28 }, (_, index) => (
-          <i key={index} style={{ "--wave-index": index } as CSSProperties} />
+          <i
+            key={index}
+            style={{ height: `${18 + (index % 7) * 9}%` }}
+          />
         ))}
       </div>
       <div className="flower-visual__meta" aria-hidden="true">
