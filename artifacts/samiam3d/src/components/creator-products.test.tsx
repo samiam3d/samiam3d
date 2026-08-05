@@ -14,15 +14,21 @@ import { creatorProjects } from "@/lib/creator-projects";
 const expectedCardCopy = [
   {
     name: "MindInk",
-    headline: "Direct stories like a studio.",
+    headline: "Build stories like a studio.",
     description:
-      "A connected story studio for building characters, branching narratives, cinematic scenes, and entire worlds.",
+      "A creator-led studio for story architecture, characters, real branching narratives, cinematic scenes, posters, sound, video, and publishing.",
   },
   {
-    name: "ClauseInk",
-    headline: "Draft contracts without fighting the document.",
+    name: "VibeMind",
+    headline: "Turn an idea into a visible, working product.",
     description:
-      "A legal workspace for drafting, reviewing, redlining, collaborating, and exporting polished agreements.",
+      "A private application workspace where a product brief becomes an approved plan, recoverable code changes, a healthy preview, and owned software.",
+  },
+  {
+    name: "Flower Musica",
+    headline: "A music brand designed to move.",
+    description:
+      "A producer-led world combining music, podcasting, culture, studio life, community, and useful creator tools inside one expressive identity.",
   },
   {
     name: "HotClips",
@@ -35,6 +41,12 @@ const expectedCardCopy = [
     headline: "Find the signal. Build the story.",
     description:
       "A creator-led system that carries live trends and their source evidence from discovery through production.",
+  },
+  {
+    name: "ClauseInk",
+    headline: "Draft contracts without fighting the document.",
+    description:
+      "A focused workspace for drafting, reviewing, redlining, collaborating, and exporting polished agreements.",
   },
 ] as const;
 
@@ -53,34 +65,34 @@ const openProject = async (name: string, user = userEvent.setup()) => {
   return { dialog, trigger, user };
 };
 
-describe("Independent Product Lab", () => {
+describe("Founder-built ventures", () => {
   beforeEach(() => {
     window.history.replaceState({}, "", "/#creator-products");
   });
 
-  it("renders the supplied introduction and all four product cards without direct external links", () => {
+  it("renders the venture introduction and all six project cards without direct external links", () => {
     renderProductLab();
 
     expect(
       screen.getByRole("heading", {
-        name: "I build the products I wish existed.",
+        name: "From first spark to working system.",
       }),
     ).toBeVisible();
-    expect(screen.getByText("Independent Product Lab")).toBeVisible();
+    expect(screen.getByText("Founder-built ventures")).toBeVisible();
     expect(
       screen.getByText(
-        "Four independent products conceived, designed, and shipped end to end—across storytelling, legal workflows, creator intelligence, and media. Each began as a problem I couldn’t ignore and became working software you can open today.",
+        "I conceive, direct, design, and build products end to end—combining creative vision, narrative, brand, experience design, technical systems, and launch into one connected practice.",
       ),
     ).toBeVisible();
     expect(
       screen.getByText(
-        "Product strategy · UX/UI · AI systems · Full-stack build · Brand · Launch",
+        "Product strategy · Creative direction · UX/UI · AI systems · Build · Brand · Launch",
       ),
     ).toBeVisible();
 
     expect(
       screen.getAllByRole("button", { name: /View .* project details/ }),
-    ).toHaveLength(4);
+    ).toHaveLength(6);
     expect(screen.queryByRole("link")).not.toBeInTheDocument();
 
     expectedCardCopy.forEach(({ name, headline, description }) => {
@@ -90,13 +102,28 @@ describe("Independent Product Lab", () => {
     });
   });
 
+  it("renders custom product visuals for VibeMind and Flower Musica", () => {
+    renderProductLab();
+
+    expect(
+      screen.getByRole("img", {
+        name: /VibeMind workflow moving from a product brief/i,
+      }),
+    ).toBeVisible();
+    expect(
+      screen.getByRole("img", {
+        name: /Flower Musica lightning-eyed flower identity/i,
+      }),
+    ).toBeVisible();
+  });
+
   it("opens a project dialog from a full-card click and writes the project URL", async () => {
     renderProductLab();
     const { dialog } = await openProject("MindInk");
 
     expect(
       within(dialog).getByRole("heading", {
-        name: "A studio pipeline for independent storytellers.",
+        name: "A complete creative studio for stories, worlds, movies, and publishing.",
       }),
     ).toBeVisible();
     expect(window.location.search).toBe("?project=mindink");
@@ -139,17 +166,17 @@ describe("Independent Product Lab", () => {
 
     await user.click(
       within(dialog).getByRole("button", {
-        name: "Next project, ClauseInk",
+        name: "Next project, VibeMind",
       }),
     );
     await waitFor(() =>
       expect(
         screen.getByRole("heading", {
-          name: "Legal drafting designed around the work—not around Word.",
+          name: "Creative intent in. Owned software out.",
         }),
       ).toBeVisible(),
     );
-    expect(window.location.search).toBe("?project=clauseink");
+    expect(window.location.search).toBe("?project=vibemind");
 
     await user.click(
       screen.getByRole("button", {
@@ -159,7 +186,7 @@ describe("Independent Product Lab", () => {
     await waitFor(() =>
       expect(
         screen.getByRole("heading", {
-          name: "A studio pipeline for independent storytellers.",
+          name: "A complete creative studio for stories, worlds, movies, and publishing.",
         }),
       ).toBeVisible(),
     );
@@ -232,9 +259,14 @@ describe("Independent Product Lab", () => {
     expect(cta).toHaveAttribute("rel", "noopener noreferrer");
   });
 
-  it("supplies meaningful alt text for every project logo and modal visual", () => {
+  it("supplies meaningful labels for every project visual and mark", () => {
     creatorProjects.forEach((project) => {
-      expect(project.logo.alt.trim()).not.toBe("");
+      if (project.logo) {
+        expect(project.logo.alt.trim()).not.toBe("");
+      } else {
+        expect(project.textMark?.trim()).not.toBe("");
+      }
+
       project.media.forEach((media) => {
         expect(media.alt.trim()).not.toBe("");
       });

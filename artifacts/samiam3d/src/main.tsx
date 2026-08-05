@@ -1,7 +1,9 @@
-import { createRoot } from 'react-dom/client';
+import { createRoot } from "react-dom/client";
 
-import App from './App';
+import App from "./App";
 
-import './index.css';
+import "./index.css";
+import "./portfolio-refresh.css";
+import "./portfolio-refresh-overrides.css";
 
-createRoot(document.getElementById('root')!).render(<App />);
+createRoot(document.getElementById("root")!).render(<App />);

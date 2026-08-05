@@ -1,9 +1,9 @@
 import { useEffect, useMemo, useRef, type MutableRefObject } from "react";
 import * as Dialog from "@radix-ui/react-dialog";
 import { ArrowUpRight, ChevronLeft, ChevronRight, X } from "lucide-react";
+import { ProjectMark, ProjectVisual } from "@/components/project-visual";
 import {
   creatorProjects,
-  responsiveCreatorAsset,
   type CreatorProject,
   type CreatorProjectId,
 } from "@/lib/creator-projects";
@@ -18,27 +18,10 @@ type ProjectModalProps = {
 function ProjectMediaGallery({ project }: { project: CreatorProject }) {
   return (
     <div
-      className={`project-modal__media project-modal__media--${project.media.length}`}
+      className={`project-modal__media project-modal__media--${project.visual}`}
       aria-label={`${project.name} product visuals`}
     >
-      {project.media.map((media, index) => (
-        <figure
-          className={`project-modal__media-frame project-modal__media-frame--${index + 1}`}
-          key={`${media.asset}-${index}`}
-        >
-          <img
-            className={media.crop ? `is-crop-${media.crop}` : undefined}
-            src={responsiveCreatorAsset(media.asset, 480)}
-            srcSet={`${responsiveCreatorAsset(media.asset, 480)} 480w, ${responsiveCreatorAsset(media.asset, 1200)} 1200w`}
-            sizes="(max-width: 640px) calc(100vw - 3rem), (max-width: 900px) 72vw, 54vw"
-            width={media.width}
-            height={media.height}
-            loading={index === 0 ? "eager" : "lazy"}
-            decoding="async"
-            alt={media.alt}
-          />
-        </figure>
-      ))}
+      <ProjectVisual project={project} context="modal" />
     </div>
   );
 }
@@ -138,16 +121,9 @@ export function ProjectModal({
 
                 <div className="project-modal__content">
                   <div className="project-modal__brand">
-                    <img
-                      src={responsiveCreatorAsset(project.logo.asset, 480)}
-                      srcSet={`${responsiveCreatorAsset(project.logo.asset, 480)} 480w, ${responsiveCreatorAsset(project.logo.asset, 1200)} 1200w`}
-                      sizes="120px"
-                      width={project.logo.width}
-                      height={project.logo.height}
-                      loading="eager"
-                      decoding="async"
-                      alt={project.logo.alt}
-                    />
+                    <span className="project-modal__brand-mark">
+                      <ProjectMark project={project} />
+                    </span>
                     <span>{project.name}</span>
                   </div>
                   <p className="project-modal__category">{project.category}</p>

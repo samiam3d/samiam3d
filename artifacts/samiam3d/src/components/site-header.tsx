@@ -99,6 +99,8 @@ export function SiteHeader() {
           samiam3D
         </a>
         <nav className="site-nav__links" aria-label="Primary navigation">
+          <a href="#creator-products">Ventures</a>
+          <a href="#leadership">Leadership</a>
           <Dialog.Root open={isContactOpen} onOpenChange={setIsContactOpen}>
             <Dialog.Trigger asChild>
               <button type="button" className="site-nav__contact">
