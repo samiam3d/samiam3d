@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { ArrowUpRight } from "lucide-react";
+import { MindInkFlagship } from "@/components/mindink-flagship";
 import { ProjectModal } from "@/components/project-modal";
 import { ProjectMark, ProjectVisual } from "@/components/project-visual";
 import {
@@ -36,6 +37,9 @@ const getHistoryState = (): ProjectHistoryState => {
   const state = window.history.state;
   return state && typeof state === "object" ? state : {};
 };
+
+// Projects shown in the grid — MindInk is presented as the flagship above.
+const gridProjects = creatorProjects.filter((p) => p.id !== "mindink");
 
 function ProjectCard({
   project,
@@ -121,8 +125,13 @@ export function CreatorProducts() {
 
     setActiveProjectId(directProject);
 
-    const handlePopState = () => {
-      setActiveProjectId(getProjectFromLocation());
+    const handlePopState = (event: PopStateEvent) => {
+      const state = event.state as ProjectHistoryState | null;
+      setActiveProjectId(
+        state?.creatorProjectLab && state.creatorProjectId
+          ? state.creatorProjectId
+          : null,
+      );
     };
 
     window.addEventListener("popstate", handlePopState);
@@ -132,31 +141,24 @@ export function CreatorProducts() {
   const openProject = useCallback(
     (projectId: CreatorProjectId, trigger: HTMLButtonElement) => {
       focusReturnRef.current = trigger;
+      setActiveProjectId(projectId);
       writeProjectHistory(projectId, "push");
-      setActiveProjectId(projectId);
-    },
-    [writeProjectHistory],
-  );
-
-  const navigateProject = useCallback(
-    (projectId: CreatorProjectId) => {
-      writeProjectHistory(projectId, "replace");
-      setActiveProjectId(projectId);
     },
     [writeProjectHistory],
   );
 
   const closeProject = useCallback(() => {
-    if (!activeProjectId) return;
-
-    if (getHistoryState().creatorProjectLab) {
-      window.history.back();
-      return;
-    }
-
-    writeProjectHistory(null, "replace");
     setActiveProjectId(null);
-  }, [activeProjectId, writeProjectHistory]);
+    writeProjectHistory(null, "push");
+  }, [writeProjectHistory]);
+
+  const navigateProject = useCallback(
+    (projectId: CreatorProjectId) => {
+      setActiveProjectId(projectId);
+      writeProjectHistory(projectId, "replace");
+    },
+    [writeProjectHistory],
+  );
 
   const activeProject = getCreatorProject(activeProjectId);
 
@@ -186,8 +188,12 @@ export function CreatorProducts() {
         </div>
       </div>
 
-      <div className="product-lab__grid">
-        {creatorProjects.map((project) => (
+      {/* MindInk flagship — full-bleed, breaks out of the lab constraint */}
+      <MindInkFlagship onOpen={openProject} />
+
+      {/* Remaining ventures grid */}
+      <div className="product-lab__grid product-lab__grid--flagship">
+        {gridProjects.map((project) => (
           <ProjectCard
             key={project.id}
             project={project}

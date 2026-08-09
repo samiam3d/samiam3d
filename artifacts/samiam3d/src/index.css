@@ -3396,3 +3396,484 @@ html.has-project-modal-open .cursor-emitter {
     transition: none;
   }
 }
+
+/* ═══════════════════════════════════════════════════════════════
+   MindInk Flagship
+   ═══════════════════════════════════════════════════════════════ */
+
+/* Full-bleed container — breaks out of .product-lab's max-width */
+.mindink-flagship {
+  position: relative;
+  left: 50%;
+  width: 100vw;
+  margin-left: -50vw;
+  margin-block: clamp(3.5rem, 7vw, 6rem);
+  padding-block: clamp(4rem, 9vw, 8rem) clamp(3.5rem, 7vw, 6.5rem);
+  overflow: hidden;
+  background:
+    radial-gradient(ellipse 90% 55% at 50% -5%, rgb(90 68 200 / 0.26), transparent),
+    radial-gradient(ellipse 55% 45% at 88% 100%, rgb(55 38 160 / 0.18), transparent),
+    radial-gradient(ellipse 50% 40% at 8% 80%, rgb(70 50 180 / 0.14), transparent),
+    #0e0d1c;
+}
+
+/* Width-constrained sections within the flagship */
+.mindink-flagship__inner {
+  width: min(calc(100% - (var(--page-gutter) * 2)), var(--content-width));
+  margin-inline: auto;
+}
+
+/* ── Hero row ─────────────────────────────────── */
+.mindink-flagship__hero {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: clamp(3rem, 6vw, 7rem);
+  align-items: center;
+  margin-bottom: clamp(4.5rem, 9vw, 8rem);
+}
+
+/* ── Animated orb ─────────────────────────────── */
+.mindink-orb {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: clamp(9rem, 14vw, 14rem);
+  flex: 0 0 auto;
+  aspect-ratio: 1;
+}
+
+.mindink-orb__image {
+  position: relative;
+  z-index: 2;
+  display: block;
+  width: 100%;
+  height: 100%;
+  border-radius: 26%;
+  object-fit: contain;
+  animation:
+    mindink-orb-pulse 4.8s ease-in-out infinite,
+    mindink-orb-glow 4.8s ease-in-out infinite;
+}
+
+.mindink-orb__halo {
+  position: absolute;
+  inset: -14%;
+  z-index: 1;
+  border: 1.5px solid rgb(155 135 255 / 0.32);
+  border-radius: 33%;
+  pointer-events: none;
+  animation: mindink-orb-halo-inner 4.8s ease-in-out infinite;
+}
+
+.mindink-orb__halo--mid {
+  inset: -28%;
+  border-color: rgb(130 110 245 / 0.18);
+  animation-name: mindink-orb-halo-mid;
+  animation-delay: 0.3s;
+}
+
+.mindink-orb__halo--outer {
+  inset: -44%;
+  border-color: rgb(110 88 230 / 0.09);
+  animation-name: mindink-orb-halo-outer;
+  animation-delay: 0.65s;
+}
+
+@keyframes mindink-orb-pulse {
+  0%, 100% { transform: scale(1); }
+  50%       { transform: scale(1.045); }
+}
+
+@keyframes mindink-orb-glow {
+  0%, 100% {
+    box-shadow:
+      0 0 36px 10px rgb(108 88 238 / 0.34),
+      0 0 80px 28px rgb(80 60 210 / 0.16);
+  }
+  50% {
+    box-shadow:
+      0 0 60px 20px rgb(148 128 255 / 0.52),
+      0 0 130px 52px rgb(100 80 230 / 0.26);
+  }
+}
+
+@keyframes mindink-orb-halo-inner {
+  0%, 100% { opacity: 0.38; transform: scale(1); }
+  50%       { opacity: 0.15; transform: scale(1.1); }
+}
+
+@keyframes mindink-orb-halo-mid {
+  0%, 100% { opacity: 0.22; transform: scale(1); }
+  50%       { opacity: 0.09; transform: scale(1.16); }
+}
+
+@keyframes mindink-orb-halo-outer {
+  0%, 100% { opacity: 0.12; transform: scale(1); }
+  50%       { opacity: 0.04; transform: scale(1.22); }
+}
+
+/* ── Title area ───────────────────────────────── */
+.mindink-flagship__eyebrow {
+  margin: 0;
+  color: color-mix(in srgb, #a99aff 68%, var(--text));
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.mindink-flagship__title {
+  margin: 0.5rem 0 0;
+  font-family: var(--font-display);
+  font-size: clamp(5.5rem, 11.5vw, 12rem);
+  font-weight: 400;
+  letter-spacing: -0.04em;
+  line-height: 0.88;
+  color: var(--text);
+  text-shadow:
+    0 0 72px rgb(130 110 255 / 0.3),
+    0 1px 0 rgb(205 195 255 / 0.48);
+}
+
+.mindink-flagship__tagline {
+  max-width: 50ch;
+  margin: 1.35rem 0 0;
+  color: var(--muted);
+  font-size: clamp(1rem, 1.35vw, 1.18rem);
+  line-height: 1.72;
+  text-wrap: pretty;
+}
+
+.mindink-flagship__cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  margin-top: 2rem;
+  padding: 0.82rem 1.5rem;
+  border: 1px solid rgb(160 140 255 / 0.48);
+  border-radius: 999px;
+  background: rgb(130 108 255 / 0.13);
+  color: #ccc0ff;
+  cursor: pointer;
+  font: inherit;
+  font-size: 0.88rem;
+  font-weight: 700;
+  text-align: left;
+  transition:
+    background 180ms ease,
+    color 180ms ease,
+    transform 180ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.mindink-flagship__cta svg {
+  width: 1rem;
+  height: 1rem;
+  transition: transform 200ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.mindink-flagship__cta:focus-visible {
+  outline: 3px solid #a99aff;
+  outline-offset: 3px;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .mindink-flagship__cta:hover {
+    background: rgb(150 128 255 / 0.22);
+    color: #fff;
+    transform: translateY(-1px);
+  }
+
+  .mindink-flagship__cta:hover svg {
+    transform: translate(3px, -3px);
+  }
+}
+
+/* ── Section divider labels ───────────────────── */
+.mindink-flagship__section-head {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: clamp(1.75rem, 3.5vw, 3rem);
+}
+
+.mindink-flagship__section-head::before {
+  display: block;
+  flex: 1;
+  height: 1px;
+  background: color-mix(in srgb, var(--line) 55%, transparent);
+  content: "";
+}
+
+.mindink-flagship__section-head span {
+  flex: none;
+  color: color-mix(in srgb, var(--text) 52%, transparent);
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+/* ── Story poster reel ────────────────────────── */
+.mindink-story-reel {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(0.75rem, 1.5vw, 1.5rem);
+  align-items: start;
+  margin-bottom: clamp(3.5rem, 7vw, 6.5rem);
+}
+
+.mindink-story-reel__poster {
+  margin: 0;
+  overflow: hidden;
+  border-radius: 0.85rem;
+  border: 1px solid rgb(255 255 255 / 0.09);
+  background: var(--surface);
+  box-shadow:
+    0 1rem 2.8rem -0.8rem rgb(0 0 0 / 0.7),
+    0 0 0 1px rgb(160 140 255 / 0.06);
+  aspect-ratio: 2 / 3;
+}
+
+.mindink-story-reel__poster--1 { transform: translateY(1.8rem); }
+.mindink-story-reel__poster--2 { transform: translateY(-1.2rem); }
+.mindink-story-reel__poster--3 { transform: translateY(0.6rem); }
+
+.mindink-story-reel__poster img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 420ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .mindink-story-reel__poster:hover img {
+    transform: scale(1.045);
+  }
+}
+
+/* ── Full-bleed cinematic worlds collage ──────── */
+.mindink-worlds {
+  position: relative;
+  width: 100%;
+  max-height: clamp(22rem, 40vw, 40rem);
+  margin-bottom: clamp(3.5rem, 7vw, 6.5rem);
+  overflow: hidden;
+}
+
+.mindink-worlds img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  max-height: inherit;
+  object-fit: cover;
+  object-position: center 35%;
+}
+
+/* Fade edges into the flagship background */
+.mindink-worlds::before,
+.mindink-worlds::after {
+  position: absolute;
+  z-index: 1;
+  right: 0;
+  left: 0;
+  height: clamp(3rem, 8vw, 7rem);
+  content: "";
+  pointer-events: none;
+}
+
+.mindink-worlds::before {
+  top: 0;
+  background: linear-gradient(to bottom, #0e0d1c, transparent);
+}
+
+.mindink-worlds::after {
+  bottom: 0;
+  background: linear-gradient(to top, #0e0d1c, transparent);
+}
+
+/* ── 3-part product proof ─────────────────────── */
+.mindink-proof {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(1.5rem, 3vw, 3rem);
+}
+
+.mindink-proof__item {
+  display: flex;
+  flex-direction: column;
+}
+
+.mindink-proof__frame {
+  position: relative;
+  margin: 0 0 1.35rem;
+  overflow: hidden;
+  border-radius: 0.9rem;
+  border: 1px solid rgb(255 255 255 / 0.11);
+  background: rgb(14 13 28 / 0.85);
+  aspect-ratio: 16 / 10;
+  box-shadow: 0 0.9rem 2.4rem -0.8rem rgb(0 0 0 / 0.65);
+}
+
+.mindink-proof__frame::before {
+  position: absolute;
+  inset: 0 0 auto;
+  z-index: 1;
+  height: 0.2rem;
+  background: rgb(255 255 255 / 0.11);
+  content: "";
+}
+
+.mindink-proof__frame img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 380ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .mindink-proof__item:hover .mindink-proof__frame img {
+    transform: scale(1.025);
+  }
+}
+
+.mindink-proof__index {
+  margin: 0 0 0.35rem;
+  color: color-mix(in srgb, #a99aff 68%, transparent);
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.mindink-proof__label {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: clamp(1.35rem, 2.2vw, 2rem);
+  font-weight: 400;
+  letter-spacing: -0.022em;
+  line-height: 1.05;
+  color: var(--text);
+}
+
+.mindink-proof__desc {
+  margin: 0.6rem 0 0;
+  color: var(--muted);
+  font-size: 0.9rem;
+  line-height: 1.62;
+  text-wrap: pretty;
+}
+
+/* ── Grid rebalance: 5 ventures without MindInk ─ */
+.product-lab__grid--flagship .product-card--vibemind      { grid-column: span 5; }
+.product-lab__grid--flagship .product-card--flower-musica { grid-column: span 7; }
+.product-lab__grid--flagship .product-card--clauseink     { grid-column: 1 / -1; }
+
+/* ── Responsive ───────────────────────────────── */
+@media (max-width: 900px) {
+  .mindink-flagship__hero {
+    gap: clamp(2rem, 4.5vw, 4rem);
+  }
+
+  .mindink-story-reel {
+    gap: 0.75rem;
+  }
+
+  .mindink-story-reel__poster--1,
+  .mindink-story-reel__poster--2,
+  .mindink-story-reel__poster--3 {
+    transform: none;
+  }
+
+  .mindink-proof {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .mindink-proof__item:last-child {
+    grid-column: 1 / -1;
+  }
+
+  .product-lab__grid--flagship .product-card--vibemind,
+  .product-lab__grid--flagship .product-card--flower-musica,
+  .product-lab__grid--flagship .product-card--clauseink {
+    grid-column: auto;
+  }
+}
+
+@media (max-width: 640px) {
+  .mindink-flagship {
+    padding-block: clamp(3rem, 8vw, 5rem) clamp(2.5rem, 7vw, 4.5rem);
+  }
+
+  .mindink-flagship__hero {
+    grid-template-columns: 1fr;
+    gap: 1.75rem;
+    text-align: center;
+    margin-bottom: clamp(3rem, 8vw, 5.5rem);
+  }
+
+  .mindink-flagship__orb-area {
+    display: flex;
+    justify-content: center;
+  }
+
+  .mindink-orb {
+    width: clamp(7.5rem, 22vw, 9.5rem);
+  }
+
+  .mindink-flagship__title {
+    font-size: clamp(4.8rem, 21vw, 7.5rem);
+  }
+
+  .mindink-flagship__tagline {
+    margin-inline: auto;
+  }
+
+  .mindink-flagship__section-head {
+    margin-bottom: 1.5rem;
+  }
+
+  .mindink-story-reel {
+    gap: 0.55rem;
+    margin-bottom: clamp(2.5rem, 7vw, 5rem);
+  }
+
+  .mindink-proof {
+    grid-template-columns: 1fr;
+  }
+
+  .mindink-proof__item:last-child {
+    grid-column: auto;
+  }
+
+  .mindink-worlds {
+    max-height: clamp(14rem, 52vw, 22rem);
+    margin-bottom: clamp(2.5rem, 7vw, 5rem);
+  }
+}
+
+/* ── Reduced motion ───────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .mindink-orb__image,
+  .mindink-orb__halo {
+    animation: none;
+  }
+
+  .mindink-story-reel__poster--1,
+  .mindink-story-reel__poster--2,
+  .mindink-story-reel__poster--3 {
+    transform: none;
+  }
+
+  .mindink-story-reel__poster img,
+  .mindink-proof__frame img {
+    transition: none;
+  }
+
+  .mindink-flagship__cta {
+    transition: none;
+  }
+}
