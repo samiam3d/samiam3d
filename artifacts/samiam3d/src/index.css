@@ -3618,7 +3618,7 @@ html.has-project-modal-open .cursor-emitter {
 /* ── Story poster reel ────────────────────────── */
 .mindink-story-reel {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(5, minmax(0, 1fr));
   gap: clamp(0.75rem, 1.5vw, 1.5rem);
   align-items: start;
   margin-bottom: clamp(3.5rem, 7vw, 6.5rem);
@@ -3636,9 +3636,39 @@ html.has-project-modal-open .cursor-emitter {
   aspect-ratio: 2 / 3;
 }
 
-.mindink-story-reel__poster--1 { transform: translateY(1.8rem); }
-.mindink-story-reel__poster--2 { transform: translateY(-1.2rem); }
-.mindink-story-reel__poster--3 { transform: translateY(0.6rem); }
+.mindink-story-reel__poster--1 { transform: translateY(1.6rem); }
+.mindink-story-reel__poster--2 { transform: translateY(-1.4rem); }
+.mindink-story-reel__poster--3 { transform: translateY(0.8rem); }
+.mindink-story-reel__poster--4 { transform: translateY(-1rem); }
+.mindink-story-reel__poster--5 { transform: translateY(1.2rem); }
+
+/* Wide poster (Serious Weirdness) spans full reel width */
+.mindink-story-reel__wide {
+  grid-column: 1 / -1;
+  aspect-ratio: 21 / 8;
+  margin-top: clamp(0.5rem, 1.2vw, 1rem);
+  transform: none !important;
+}
+
+/* Caption beneath each poster */
+.mindink-story-reel__caption {
+  display: block;
+  padding: 0.55rem 0.6rem 0.5rem;
+  color: color-mix(in srgb, var(--text) 58%, transparent);
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  background: linear-gradient(to bottom, transparent, rgb(0 0 0 / 0.55));
+  border-radius: 0 0 0.85rem 0.85rem;
+  /* sit flush inside the figure so it overlays the bottom of the image */
+  margin-top: -2.1rem;
+  position: relative;
+  z-index: 1;
+}
 
 .mindink-story-reel__poster img {
   display: block;
@@ -3767,6 +3797,18 @@ html.has-project-modal-open .cursor-emitter {
   text-wrap: pretty;
 }
 
+/* ── Portrait proof item (Stories home — phone mockup) ── */
+.mindink-proof__item--portrait .mindink-proof__frame {
+  aspect-ratio: 9 / 16;
+  background: rgb(8 7 20 / 0.95);
+  max-height: 22rem;
+}
+
+.mindink-proof__item--portrait .mindink-proof__frame img {
+  object-fit: contain;
+  object-position: center top;
+}
+
 /* ── Grid rebalance: 5 ventures without MindInk ─ */
 .product-lab__grid--flagship .product-card--vibemind      { grid-column: span 5; }
 .product-lab__grid--flagship .product-card--flower-musica { grid-column: span 7; }
@@ -3779,12 +3821,15 @@ html.has-project-modal-open .cursor-emitter {
   }
 
   .mindink-story-reel {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 0.75rem;
   }
 
   .mindink-story-reel__poster--1,
   .mindink-story-reel__poster--2,
-  .mindink-story-reel__poster--3 {
+  .mindink-story-reel__poster--3,
+  .mindink-story-reel__poster--4,
+  .mindink-story-reel__poster--5 {
     transform: none;
   }
 
@@ -3794,6 +3839,10 @@ html.has-project-modal-open .cursor-emitter {
 
   .mindink-proof__item:last-child {
     grid-column: 1 / -1;
+  }
+
+  .mindink-proof__item--portrait .mindink-proof__frame {
+    max-height: none;
   }
 
   .product-lab__grid--flagship .product-card--vibemind,
@@ -3837,8 +3886,14 @@ html.has-project-modal-open .cursor-emitter {
   }
 
   .mindink-story-reel {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 0.55rem;
     margin-bottom: clamp(2.5rem, 7vw, 5rem);
+  }
+
+  .mindink-story-reel__poster--5 {
+    grid-column: 1 / -1;
+    aspect-ratio: 3 / 2;
   }
 
   .mindink-proof {
@@ -3864,7 +3919,9 @@ html.has-project-modal-open .cursor-emitter {
 
   .mindink-story-reel__poster--1,
   .mindink-story-reel__poster--2,
-  .mindink-story-reel__poster--3 {
+  .mindink-story-reel__poster--3,
+  .mindink-story-reel__poster--4,
+  .mindink-story-reel__poster--5 {
     transform: none;
   }
 

@@ -5,32 +5,58 @@ import {
   type CreatorProjectId,
 } from "@/lib/creator-projects";
 
-// ─── Static content ──────────────────────────────────────────────────────────
+// ─── URL helpers ─────────────────────────────────────────────────────────────
 
+// Story covers — pre-generated responsive webp from the original site migration
+const storySrc = (stem: string, width: 480 | 1200) =>
+  `/assets/responsive/2025/02/${stem}-${width}.webp`;
+
+// UI captures from 2025/03 — PNG only, no responsive variants
+const uiSrc = (filename: string) => `/assets/images/2025/03/${filename}`;
+
+// ─── Content ─────────────────────────────────────────────────────────────────
+
+// Six of the seven named story posters. "The Elite Five" is not in the
+// repository — it should be added once the file is uploaded to the workspace.
 const storyPosters = [
   {
-    asset: "mindink-cover-night-match",
-    alt: "MindInk story cover — a cinematic world created in MindInk",
-    width: 800,
-    height: 1200,
+    stem: "MidnightSpirits_cover_tall",
+    title: "Midnight Spirits",
+    width: 700,
+    height: 1050,
   },
   {
-    asset: "mindink-world-cover",
-    alt: "MindInk world cover — a published story world",
-    width: 1024,
-    height: 1536,
+    stem: "LightsInTheMist_cover_tall",
+    title: "Lights in the Mist",
+    width: 700,
+    height: 1050,
   },
   {
-    asset: "mindink-cover-electric-veins",
-    alt: "MindInk story cover — another cinematic world created in MindInk",
-    width: 800,
-    height: 1200,
+    stem: "MascaraMurders_cover_tall",
+    title: "Mascara Murders",
+    width: 700,
+    height: 1050,
+  },
+  {
+    stem: "MirrorMirror_cover_tall",
+    title: "Mirror Mirror",
+    width: 700,
+    height: 1050,
+  },
+  {
+    stem: "ApexPredators_cover_tall-1",
+    title: "Apex Predators",
+    width: 700,
+    height: 1050,
   },
 ] as const;
 
 const proofItems = [
   {
-    asset: "mindink-story-canvas",
+    // Branch Canvas — existing responsive webp from creations folder
+    src: responsiveCreatorAsset("mindink-story-canvas", 480),
+    srcSet: `${responsiveCreatorAsset("mindink-story-canvas", 480)} 480w, ${responsiveCreatorAsset("mindink-story-canvas", 1200)} 1200w`,
+    sizes: "(max-width: 640px) 90vw, (max-width: 900px) 45vw, 28vw",
     alt: "MindInk Branch Canvas — visual story architecture with connected narrative beats",
     width: 1400,
     height: 900,
@@ -38,26 +64,35 @@ const proofItems = [
     label: "Branch Canvas",
     description:
       "Architect branching narratives visually. Connect beats, paths, and choices into living story structures.",
+    portrait: false,
   },
   {
-    asset: "mindink-studio",
-    alt: "MindInk Scene Editor — cinematic creation studio for movies and sound",
-    width: 1280,
-    height: 720,
+    // Scene Editor — 2025/03 UI capture (Story-Editor-Copy.png)
+    src: uiSrc("Story-Editor-Copy.png"),
+    srcSet: undefined as string | undefined,
+    sizes: "(max-width: 640px) 90vw, (max-width: 900px) 45vw, 28vw",
+    alt: "MindInk Scene Editor — cinematic creation studio with dialogue beats, sound, and mobile preview",
+    width: 1024,
+    height: 576,
     index: "02",
     label: "Scene Editor",
     description:
       "Direct cinematic scenes with tools for dialogue, action, sound, and visual direction.",
+    portrait: false,
   },
   {
-    asset: "mindink-galactic-banner",
-    alt: "MindInk Story Worlds — publish your creations to a reading audience",
-    width: 1600,
+    // Stories home — 2025/03 UI capture (readers-storytelliing-remixed.png)
+    src: uiSrc("readers-storytelliing-remixed.png"),
+    srcSet: undefined as string | undefined,
+    sizes: "(max-width: 640px) 60vw, (max-width: 900px) 30vw, 18vw",
+    alt: "MindInk Stories — the reader app home showing published story worlds including Apex Predators",
+    width: 500,
     height: 900,
     index: "03",
-    label: "Story Worlds",
+    label: "Stories",
     description:
       "Publish complete worlds — posters, trailers, branching stories — directly to readers.",
+    portrait: true,
   },
 ] as const;
 
@@ -130,7 +165,7 @@ export function MindInkFlagship({
           <span>Story worlds</span>
         </div>
 
-        {/* ── Story poster reel ── */}
+        {/* ── Story poster reel: 5 named portrait covers ── */}
         <div
           className="mindink-story-reel"
           role="group"
@@ -138,21 +173,41 @@ export function MindInkFlagship({
         >
           {storyPosters.map((poster, i) => (
             <figure
-              key={poster.asset}
+              key={poster.stem}
               className={`mindink-story-reel__poster mindink-story-reel__poster--${i + 1}`}
             >
               <img
-                src={responsiveCreatorAsset(poster.asset, 480)}
-                srcSet={`${responsiveCreatorAsset(poster.asset, 480)} 480w, ${responsiveCreatorAsset(poster.asset, 1200)} 1200w`}
-                sizes="(max-width: 640px) 42vw, (max-width: 900px) 28vw, 22vw"
+                src={storySrc(poster.stem, 480)}
+                srcSet={`${storySrc(poster.stem, 480)} 480w, ${storySrc(poster.stem, 1200)} 1200w`}
+                sizes="(max-width: 640px) 42vw, (max-width: 900px) 22vw, 16vw"
                 width={poster.width}
                 height={poster.height}
-                alt={poster.alt}
+                alt={`${poster.title} — a story world created in MindInk`}
                 loading="lazy"
                 decoding="async"
               />
+              <figcaption className="mindink-story-reel__caption">
+                {poster.title}
+              </figcaption>
             </figure>
           ))}
+
+          {/* Serious Weirdness — wide artwork, spans full reel width */}
+          <figure className="mindink-story-reel__poster mindink-story-reel__wide">
+            <img
+              src={storySrc("SeriousWeirdness_cover_wide-1", 480)}
+              srcSet={`${storySrc("SeriousWeirdness_cover_wide-1", 480)} 480w, ${storySrc("SeriousWeirdness_cover_wide-1", 1200)} 1200w`}
+              sizes="(max-width: 640px) 90vw, 70vw"
+              width={1200}
+              height={450}
+              alt="Serious Weirdness — wide artwork from a MindInk story world"
+              loading="lazy"
+              decoding="async"
+            />
+            <figcaption className="mindink-story-reel__caption">
+              Serious Weirdness
+            </figcaption>
+          </figure>
         </div>
       </div>
 
@@ -182,12 +237,15 @@ export function MindInkFlagship({
 
         <div className="mindink-proof" aria-label="MindInk creation tools">
           {proofItems.map((item) => (
-            <div key={item.asset} className="mindink-proof__item">
+            <div
+              key={item.index}
+              className={`mindink-proof__item${item.portrait ? " mindink-proof__item--portrait" : ""}`}
+            >
               <figure className="mindink-proof__frame">
                 <img
-                  src={responsiveCreatorAsset(item.asset, 480)}
-                  srcSet={`${responsiveCreatorAsset(item.asset, 480)} 480w, ${responsiveCreatorAsset(item.asset, 1200)} 1200w`}
-                  sizes="(max-width: 640px) 90vw, (max-width: 900px) 45vw, 28vw"
+                  src={item.src}
+                  {...(item.srcSet ? { srcSet: item.srcSet } : {})}
+                  sizes={item.sizes}
                   width={item.width}
                   height={item.height}
                   alt={item.alt}
