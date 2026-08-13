@@ -29,6 +29,9 @@ export function CursorEmitter() {
     const heroPaintLayer = heroTitle?.querySelector<HTMLElement>(
       ".hero__paint-layer",
     );
+    const heroPaintSource = heroRevealContent?.querySelector<HTMLElement>(
+      ".hero__sheen",
+    );
 
     document.documentElement.classList.add("has-custom-cursor");
 
@@ -55,7 +58,7 @@ export function CursorEmitter() {
     };
 
     const addPaintStamp = (localX: number, localY: number) => {
-      if (!heroPaintLayer || !heroRevealContent) return;
+      if (!heroPaintLayer || !heroPaintSource) return;
       if (paintStampCount >= maximumPaintStamps) return;
 
       const distance = Math.hypot(localX - lastPaintX, localY - lastPaintY);
@@ -68,7 +71,9 @@ export function CursorEmitter() {
 
       const content = document.createElement("span");
       content.className = "hero__reveal-content";
-      content.innerHTML = heroRevealContent.innerHTML;
+      // Persistent stamps only keep the bright glass finish. Repeating the
+      // offset depth layer causes dark seams where painted circles overlap.
+      content.innerHTML = heroPaintSource.outerHTML;
       content.style.transform = `translate3d(${-localX + revealRadius}px, ${-localY + revealRadius}px, 0)`;
       stamp.append(content);
       heroPaintLayer.append(stamp);
@@ -228,3 +233,4 @@ export function CursorEmitter() {
     </div>
   );
 }
+
