@@ -73,7 +73,10 @@ export function CursorEmitter() {
       content.className = "hero__reveal-content";
       // Persistent stamps only keep the bright glass finish. Repeating the
       // offset depth layer causes dark seams where painted circles overlap.
-      content.innerHTML = heroPaintSource.outerHTML;
+      const sheen = heroPaintSource.cloneNode(true) as HTMLElement;
+      // The sheen must size its wrapper after the in-flow depth is removed.
+      sheen.style.position = "relative";
+      content.append(sheen);
       content.style.transform = `translate3d(${-localX + revealRadius}px, ${-localY + revealRadius}px, 0)`;
       stamp.append(content);
       heroPaintLayer.append(stamp);
