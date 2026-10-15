@@ -18,6 +18,15 @@ build = [ "pnpm", "--filter", "@workspace/samiam3d", "run", "build" ]
 serve = "static"
 publicDir = "artifacts/samiam3d/dist/public"
 
+# Games dashboard: a standalone static page (each game is hosted from its own repo)
+[[services.production.rewrites]]
+from = "/games"
+to = "/games/index.html"
+
+[[services.production.rewrites]]
+from = "/games/"
+to = "/games/index.html"
+
 [[services.production.rewrites]]
 from = "/*"
 to = "/index.html"
