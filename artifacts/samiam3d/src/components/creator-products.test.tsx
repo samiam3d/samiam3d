@@ -70,7 +70,7 @@ describe("Founder-built ventures", () => {
     window.history.replaceState({}, "", "/#creator-products");
   });
 
-  it("renders the venture introduction and all six project cards without direct external links", () => {
+  it("renders the flagship and five venture cards without direct external links", () => {
     renderProductLab();
 
     expect(
@@ -97,8 +97,13 @@ describe("Founder-built ventures", () => {
 
     expectedCardCopy.forEach(({ name, headline, description }) => {
       expect(projectButton(name)).toBeVisible();
-      expect(screen.getByText(headline)).toBeVisible();
-      expect(screen.getByText(description)).toBeVisible();
+      if (name === "MindInk") {
+        expect(screen.getByRole("heading", { name: "MindInk" })).toBeVisible();
+        expect(screen.getByText("Flagship Venture")).toBeVisible();
+      } else {
+        expect(screen.getByText(headline)).toBeVisible();
+        expect(screen.getByText(description)).toBeVisible();
+      }
     });
   });
 
@@ -210,6 +215,24 @@ describe("Founder-built ventures", () => {
       expect(screen.queryByRole("dialog")).not.toBeInTheDocument(),
     );
     expect(window.location.search).toBe("");
+  });
+
+  it("consumes the modal history entry when dismissed and reopens on Forward", async () => {
+    renderProductLab();
+    const { user } = await openProject("MindInk");
+    const historyLength = window.history.length;
+
+    await user.click(screen.getByRole("button", { name: "Close MindInk project details" }));
+    await waitFor(() => expect(screen.queryByRole("dialog")).not.toBeInTheDocument());
+    expect(window.location.search).toBe("");
+    expect(window.history.length).toBe(historyLength);
+
+    act(() => window.history.forward());
+    const dialog = await screen.findByRole("dialog");
+    expect(within(dialog).getByRole("heading", {
+      name: "A complete creative studio for stories, worlds, movies, and publishing.",
+    })).toBeVisible();
+    expect(window.location.search).toBe("?project=mindink");
   });
 
   it("closes with Escape and restores focus to the card that opened it", async () => {
