@@ -125,13 +125,8 @@ export function CreatorProducts() {
 
     setActiveProjectId(directProject);
 
-    const handlePopState = (event: PopStateEvent) => {
-      const state = event.state as ProjectHistoryState | null;
-      setActiveProjectId(
-        state?.creatorProjectLab && state.creatorProjectId
-          ? state.creatorProjectId
-          : null,
-      );
+    const handlePopState = () => {
+      setActiveProjectId(getProjectFromLocation());
     };
 
     window.addEventListener("popstate", handlePopState);
@@ -148,9 +143,16 @@ export function CreatorProducts() {
   );
 
   const closeProject = useCallback(() => {
+    if (!activeProjectId) return;
+
+    if (getHistoryState().creatorProjectLab) {
+      window.history.back();
+      return;
+    }
+
+    writeProjectHistory(null, "replace");
     setActiveProjectId(null);
-    writeProjectHistory(null, "push");
-  }, [writeProjectHistory]);
+  }, [activeProjectId, writeProjectHistory]);
 
   const navigateProject = useCallback(
     (projectId: CreatorProjectId) => {
