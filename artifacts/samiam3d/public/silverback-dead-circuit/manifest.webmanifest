@@ -1,0 +1,22 @@
+{
+  "name": "Silverback: Dead Circuit",
+  "short_name": "Dead Circuit",
+  "description": "A horror comic-book escape game. Free the animals, survive the machines.",
+  "id": "./",
+  "start_url": "./?source=app",
+  "scope": "./",
+  "display": "fullscreen",
+  "display_override": ["fullscreen", "standalone"],
+  "orientation": "landscape",
+  "background_color": "#05030a",
+  "theme_color": "#05030a",
+  "categories": ["games", "entertainment"],
+  "icons": [
+    { "src": "icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ],
+  "screenshots": [
+    { "src": "cover.jpg", "sizes": "1200x630", "type": "image/jpeg", "form_factor": "wide", "label": "Silverback: Dead Circuit" }
+  ]
+}

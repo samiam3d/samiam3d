@@ -11,6 +11,14 @@
     {
       "source": "/games/",
       "destination": "/games/index.html"
+    },
+    {
+      "source": "/silverback-dead-circuit",
+      "destination": "/silverback-dead-circuit/index.html"
+    },
+    {
+      "source": "/silverback-dead-circuit/",
+      "destination": "/silverback-dead-circuit/index.html"
     }
   ]
 }
