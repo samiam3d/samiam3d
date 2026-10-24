@@ -1,0 +1,84 @@
+{
+  "prepared": "2026-10-24",
+  "assets": [
+    {
+      "file": "hotclips-product-demo.webp",
+      "source": "https://www.hotclips.pro/#product",
+      "sourceCapture": "C:/Repos/samiam3d/output/playwright/hotclips-product-demo.png",
+      "sourceType": "browser-screenshot",
+      "description": "Exact browser capture of the already-public HotClips marketing demo. This is a designed product demonstration, not a logged-in customer workspace. Includes the website's existing generated podcast artwork.",
+      "width": 1472,
+      "height": 684,
+      "sha256": "baba69aa955f876497cf3d1f53820840a0eb541012a1346f9f293980c252215b",
+      "prepared": "2026-10-24",
+      "processing": "WebP format conversion only, quality 92, effort 6; no visual retouching, DOM changes or content changes."
+    },
+    {
+      "file": "flower-studio-guest.webp",
+      "source": "https://flowermusica.com/studio",
+      "sourceCapture": "C:/Repos/samiam3d/output/playwright/flower-studio-guest.png",
+      "sourceType": "browser-screenshot",
+      "description": "Exact browser capture of the real publicly accessible Flower Power Studio guest screen. Default empty state, no login, no account data, no generated result, no form submission.",
+      "width": 1440,
+      "height": 1000,
+      "sha256": "47d81300718526dd490d287f46d016ef3b5e21342097bbbd47ae0ffc07d0efb3",
+      "prepared": "2026-10-24",
+      "processing": "WebP format conversion only, quality 92, effort 6; no visual retouching, DOM changes or content changes."
+    },
+    {
+      "file": "trendink-scene-studio.webp",
+      "source": "C:/Repos/TrendInk-Website/public/images/trendink-ui-scenes-v2.webp",
+      "sourceType": "existing-branded-ui-artwork",
+      "description": "Existing TrendInk branded designed UI showcase visual, not verified as a literal app screenshot. Source repository commit 36ec06b30c1482767f18bf6f73e1e916ecb680fa: feat: regenerate seven workflow product visuals.",
+      "sha256": "2c1ec0bed8bcb1fbe1f8e47820456806c649672e6dbb9e42f56bf3501b3de22e",
+      "prepared": "2026-10-24",
+      "processing": "Byte-for-byte copy."
+    },
+    {
+      "file": "trendink-edit-studio.webp",
+      "source": "C:/Repos/TrendInk-Website/public/images/trendink-ui-edit-v2.webp",
+      "sourceType": "existing-branded-ui-artwork",
+      "description": "Existing TrendInk branded designed UI showcase visual, not verified as a literal app screenshot. Source repository commit 36ec06b30c1482767f18bf6f73e1e916ecb680fa: feat: regenerate seven workflow product visuals.",
+      "sha256": "d042e69c17c7b5b9c5b0f5aa8ba0f15816b8431261eb2a06a494da3e530056f9",
+      "prepared": "2026-10-24",
+      "processing": "Byte-for-byte copy."
+    },
+    {
+      "file": "manrope-latin-wght-normal.woff2",
+      "source": "C:/Repos/TrendInk-Website/public/fonts/manrope-latin-wght-normal.woff2",
+      "sourceType": "font",
+      "description": "Original project font. Manrope Variable normal, weights 200–800. SIL OFL 1.1, license included as OFL-Manrope.txt.",
+      "sha256": "a30ddcd349703aff7464c34bef3fffdff405ee50c113440d7c8693c02d210972",
+      "prepared": "2026-10-24",
+      "processing": "Byte-for-byte copy."
+    },
+    {
+      "file": "inter-latin-wght-normal.woff2",
+      "source": "https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa1ZL7.woff2",
+      "stylesheetSource": "https://fonts.googleapis.com/css2?family=Inter:wght@400..800&display=swap",
+      "sourceType": "font",
+      "description": "Official Google Fonts Inter Latin variable normal font; CSS weight range 400–800. Copyright 2020 The Inter Project Authors. SIL OFL 1.1 included as OFL-Inter.txt.",
+      "sha256": "3100e775e8616cd2611beecfa23a4263d7037586789b43f035236a2e6fbd4c62",
+      "prepared": "2026-10-24",
+      "processing": "Unmodified official Google Fonts CDN binary."
+    },
+    {
+      "file": "flower-studio-session.webp",
+      "source": "https://flowermusica.com/media/home/studio-session-hero-desktop.avif",
+      "publicPage": "https://flowermusica.com/",
+      "sourceType": "public-website-photograph",
+      "description": "Real photograph already displayed on the public Flower Musica homepage in the Good music. Good people. section. Source URL was verified from the displayed image currentSrc in a clean signed-out browser on 2026-10-24. Public source supersedes the older local prepared-media private/pending flags for selection in this portfolio; no private local photograph was copied and no source-project approval metadata changed.",
+      "width": 1536,
+      "height": 864,
+      "sha256": "f36d4084586f9ff9baef3b3e4d50d66eeef087de1a19546333956545a733b312",
+      "sourceSha256": "76a453d55051634dc3acde2df3dc9c0b295776173015014ed376c02334817093",
+      "prepared": "2026-10-24",
+      "processing": "AVIF to WebP format conversion at original dimensions, quality 93, effort 6. No crop, generative edits, retouching or content changes."
+    }
+  ],
+  "notes": [
+    "No private Flower source files were copied. The included studio photograph was obtained from the verified live public website. Older local private/pending source flags are documented but were not altered.",
+    "Manrope license source: https://raw.githubusercontent.com/google/fonts/main/ofl/manrope/OFL.txt",
+    "Inter license source: https://raw.githubusercontent.com/google/fonts/main/ofl/inter/OFL.txt"
+  ]
+}

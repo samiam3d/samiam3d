@@ -48,57 +48,55 @@ export function ProjectMark({
   return <ProjectBrandMark project={project} decorative={decorative} />;
 }
 
-function MindInkVisual({
+function ProductCapture({
   project,
   context,
 }: {
   project: CreatorProject;
   context: "card" | "modal";
 }) {
-  const [studio, canvas, poster] = project.media;
-  const loading = context === "modal" ? "eager" : "lazy";
-
+  const capture = {
+    mindink: {
+      src: "/assets/showcase/mindink-v2/movie-creator.webp",
+      width: 1672,
+      height: 941,
+      alt: "MindInk Movie Creator product visualization with a cinematic preview and shot sequence",
+      caption: "Movie Creator · Product visualization",
+    },
+    "flower-musica": {
+      src: "/assets/showcase/product-v2/flower-studio-session.webp",
+      width: 1536,
+      height: 864,
+      alt: "A recording session in the Flower Musica studio",
+      caption: "Inside Flower Musica",
+    },
+    hotclips: {
+      src: "/assets/showcase/product-v2/hotclips-product-demo.webp",
+      width: 1472,
+      height: 684,
+      alt: "HotClips public product demo with portrait video, selected clips and review controls",
+      caption: "HotClips · Product demo",
+    },
+    trendink: {
+      src: "/assets/showcase/product-v2/trendink-edit-studio.webp",
+      width: 1536,
+      height: 1024,
+      alt: "TrendInk Edit Studio designed product view with a film preview and editing timeline",
+      caption: "Edit Studio · Product design",
+    },
+  }[project.id as "mindink" | "flower-musica" | "hotclips" | "trendink"];
   return (
-    <div
-      className={`project-visual project-visual--mindink project-visual--${context}`}
-      role="group"
-      aria-label="MindInk story posters and connected creation studio"
-    >
-      <div className="mindink-visual__halo" aria-hidden="true" />
-      {studio && (
-        <figure className="mindink-visual__frame mindink-visual__frame--studio">
-          <ProjectImage
-            media={studio}
-            loading={loading}
-            sizes={context === "modal" ? "55vw" : "70vw"}
-          />
-        </figure>
-      )}
-      {canvas && (
-        <figure className="mindink-visual__frame mindink-visual__frame--canvas">
-          <ProjectImage
-            media={canvas}
-            loading={loading}
-            sizes={context === "modal" ? "40vw" : "48vw"}
-          />
-        </figure>
-      )}
-      {poster && (
-        <figure className="mindink-visual__poster">
-          <ProjectImage
-            media={poster}
-            loading={loading}
-            sizes={context === "modal" ? "24vw" : "28vw"}
-          />
-        </figure>
-      )}
-      <div className="mindink-visual__caption" aria-hidden="true">
-        <span>Story architecture</span>
-        <span>Worlds</span>
-        <span>Movie + sound</span>
-        <span>Publishing</span>
-      </div>
-    </div>
+    <figure className={`project-capture project-capture--${project.id}`}>
+      <img
+        src={capture.src}
+        width={capture.width}
+        height={capture.height}
+        alt={capture.alt}
+        loading={context === "modal" ? "eager" : "lazy"}
+        decoding="async"
+      />
+      <figcaption>{capture.caption}</figcaption>
+    </figure>
   );
 }
 
@@ -120,35 +118,6 @@ function VibeMindVisual({ context }: { context: "card" | "modal" }) {
           Private alpha · Demo workspace
         </figcaption>
       </figure>
-    </div>
-  );
-}
-
-function FlowerVisual({
-  project,
-  context,
-}: {
-  project: CreatorProject;
-  context: "card" | "modal";
-}) {
-  return (
-    <div
-      className={`project-visual project-visual--flower project-visual--${context}`}
-      role="img"
-      aria-label="Flower Musica original flower identity"
-    >
-      <div className="flower-visual__identity" aria-hidden="true">
-        <ProjectBrandMark
-          project={project}
-          className="flower-visual__authentic-mark"
-        />
-        <div className="flower-visual__name">
-          Flower
-          <br />
-          Musica
-        </div>
-        <p className="flower-visual__discipline">Music. Culture. Creation.</p>
-      </div>
     </div>
   );
 }
@@ -202,17 +171,13 @@ export function ProjectVisual({
   project,
   context = "card",
 }: ProjectVisualProps) {
-  if (project.visual === "mindink") {
-    return <MindInkVisual project={project} context={context} />;
+  if (
+    ["mindink", "flower-musica", "hotclips", "trendink"].includes(project.id)
+  ) {
+    return <ProductCapture project={project} context={context} />;
   }
-
   if (project.visual === "vibemind") {
     return <VibeMindVisual context={context} />;
   }
-
-  if (project.visual === "flower") {
-    return <FlowerVisual project={project} context={context} />;
-  }
-
   return <MediaVisual project={project} context={context} />;
 }

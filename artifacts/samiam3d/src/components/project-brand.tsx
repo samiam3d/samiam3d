@@ -68,7 +68,7 @@ export function ProjectBrand({
   tone = "light",
   decorative = false,
 }: ProjectBrandProps) {
-  const imageWordmark = project.id === "mindink" || project.id === "clauseink";
+  const imageWordmark = project.id === "clauseink";
 
   return (
     <span
@@ -80,15 +80,9 @@ export function ProjectBrand({
       {imageWordmark ? (
         <img
           className="project-brand__wordmark project-brand__wordmark--image"
-          src={brandAsset(
-            project.id === "mindink"
-              ? "mindink-wordmark.png"
-              : `clauseink-wordmark-${tone}.png`,
-          )}
-          width={
-            project.id === "mindink" ? 1581 : tone === "light" ? 512 : 1681
-          }
-          height={project.id === "mindink" ? 374 : tone === "light" ? 79 : 258}
+          src={brandAsset(`clauseink-wordmark-${tone}.png`)}
+          width={tone === "light" ? 512 : 1681}
+          height={tone === "light" ? 79 : 258}
           loading="lazy"
           decoding="async"
           alt=""
@@ -97,7 +91,12 @@ export function ProjectBrand({
         <>
           <ProjectBrandMark project={project} tone={tone} />
           <span className="project-brand__wordmark">
-            {project.id === "vibemind" ? (
+            {project.id === "mindink" ? (
+              <>
+                <b>Mind</b>
+                <em>Ink</em>
+              </>
+            ) : project.id === "vibemind" ? (
               <>
                 <b>Vibe</b>
                 <em>Mind</em>

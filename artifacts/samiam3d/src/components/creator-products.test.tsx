@@ -10,12 +10,13 @@ import userEvent from "@testing-library/user-event";
 import { beforeEach, describe, expect, it } from "vitest";
 import { CreatorProducts } from "@/components/creator-products";
 import { creatorProjects } from "@/lib/creator-projects";
+import { mindinkViews } from "@/lib/mindink-showcase";
 
 const expectedProjects = [
   {
     id: "mindink",
     name: "MindInk",
-    brandAsset: "mindink-wordmark.png",
+    brandAsset: "mindink-mark.webp",
   },
   {
     id: "vibemind",
@@ -114,66 +115,65 @@ describe("Project showcases", () => {
     ).toBeVisible();
   });
 
-  it("switches MindInk between story worlds, branching paths, and its scene editor", async () => {
+  it("switches all four MindInk views by click and keyboard without opening a project or changing history", async () => {
     const user = userEvent.setup();
     renderProductLab();
     const switcher = screen.getByRole("group", { name: "MindInk views" });
-    const worlds = within(switcher).getByRole("button", {
-      name: "Story worlds",
-    });
-    const canvas = within(switcher).getByRole("button", {
-      name: "Branch canvas",
-    });
-    const editor = within(switcher).getByRole("button", {
-      name: "Scene editor",
-    });
+    const controls = within(switcher).getAllByRole("button");
+    const initialUrl = window.location.href;
+    const initialHistoryLength = window.history.length;
+    const initialHistoryState = window.history.state;
 
-    expect(worlds).toHaveAttribute("aria-pressed", "true");
-    expect(canvas).toHaveAttribute("aria-pressed", "false");
-    expect(editor).toHaveAttribute("aria-pressed", "false");
-    expect(
-      screen.getByRole("img", {
-        name: "Midnight Spirits, a MindInk story world",
-      }),
-    ).toBeVisible();
+    expect(controls).toHaveLength(4);
+    ["Branch Canvas", "Scene Editor", "Stories", "Movie Creator"].forEach(
+      (label, index) => expect(controls[index]).toHaveAccessibleName(label),
+    );
 
-    await user.click(canvas);
-    expect(canvas).toHaveAttribute("aria-pressed", "true");
-    expect(worlds).toHaveAttribute("aria-pressed", "false");
-    expect(
-      screen.getByRole("img", {
-        name: /visual canvas connecting branching story paths/i,
-      }),
-    ).toBeVisible();
-    expect(
-      screen.queryByRole("img", {
-        name: "Midnight Spirits, a MindInk story world",
-      }),
-    ).not.toBeInTheDocument();
+    const expectView = (id: (typeof mindinkViews)[number]["id"]) => {
+      const view = mindinkViews.find((item) => item.id === id)!;
+      const figure = screen.getByRole("figure", { name: view.label });
+      expect(figure).toBeVisible();
+      expect(within(figure).getByRole("img", { name: view.alt })).toHaveAttribute(
+        "src",
+        `/assets/showcase/mindink-v2/${id}.webp`,
+      );
+      expect(within(figure).getByRole("heading", { name: view.headline })).toBeVisible();
+      expect(within(figure).getByText(view.description)).toBeVisible();
+      expect(within(figure).getByText("Product visualization")).toBeVisible();
 
+      mindinkViews.forEach((item) => {
+        const selected = item.id === id;
+        expect(within(switcher).getByRole("button", { name: item.label }))
+          .toHaveAttribute("aria-pressed", String(selected));
+        if (!selected) {
+          expect(screen.queryByRole("img", { name: item.alt })).not.toBeInTheDocument();
+        }
+      });
+      expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
+      expect(window.location.href).toBe(initialUrl);
+      expect(window.history.length).toBe(initialHistoryLength);
+      expect(window.history.state).toEqual(initialHistoryState);
+    };
+
+    expectView("branch-canvas");
+
+    const editor = within(switcher).getByRole("button", { name: "Scene Editor" });
     editor.focus();
     await user.keyboard("{Enter}");
-    expect(editor).toHaveAttribute("aria-pressed", "true");
-    expect(canvas).toHaveAttribute("aria-pressed", "false");
-    expect(
-      screen.getByRole("img", { name: /scene editor with dialogue/i }),
-    ).toBeVisible();
-    expect(
-      screen.queryByRole("img", {
-        name: /visual canvas connecting branching story paths/i,
-      }),
-    ).not.toBeInTheDocument();
+    expectView("scene-editor");
+    expect(editor).toHaveFocus();
 
-    await user.click(worlds);
-    expect(worlds).toHaveAttribute("aria-pressed", "true");
-    expect(editor).toHaveAttribute("aria-pressed", "false");
-    expect(
-      screen.getByRole("img", {
-        name: "Midnight Spirits, a MindInk story world",
-      }),
-    ).toBeVisible();
-    expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
-    expect(window.location.search).toBe("");
+    await user.click(within(switcher).getByRole("button", { name: "Stories" }));
+    expectView("stories");
+
+    const movie = within(switcher).getByRole("button", { name: "Movie Creator" });
+    movie.focus();
+    await user.keyboard(" ");
+    expectView("movie-creator");
+    expect(movie).toHaveFocus();
+
+    await user.click(within(switcher).getByRole("button", { name: "Branch Canvas" }));
+    expectView("branch-canvas");
   });
 
   it.each(expectedProjects)(

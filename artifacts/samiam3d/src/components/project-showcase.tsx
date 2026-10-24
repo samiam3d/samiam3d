@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Plus } from "lucide-react";
 import { ProjectBrand } from "@/components/project-brand";
+import { mindinkViews, mindinkViewSource } from "@/lib/mindink-showcase";
 import {
   responsiveCreatorAsset,
   type CreatorProject,
@@ -53,125 +54,75 @@ function BrandHeader({
   );
 }
 
-const storyCovers = [
-  ["MidnightSpirits_cover_tall", "Midnight Spirits"],
-  ["LightsInTheMist_cover_tall", "Lights in the Mist"],
-  ["MascaraMurders_cover_tall", "Mascara Murders"],
-  ["MirrorMirror_cover_tall", "Mirror Mirror"],
-  ["ApexPredators_cover_tall-1", "Apex Predators"],
-] as const;
-
-const studioViews = [
-  { id: "worlds", label: "Story worlds" },
-  { id: "canvas", label: "Branch canvas" },
-  { id: "editor", label: "Scene editor" },
-] as const;
-
 function MindInkShowcase(props: ShowcaseProps) {
-  const [view, setView] =
-    useState<(typeof studioViews)[number]["id"]>("worlds");
+  const [viewId, setViewId] =
+    useState<(typeof mindinkViews)[number]["id"]>("branch-canvas");
+  const view = mindinkViews.find((item) => item.id === viewId)!;
   return (
     <section
       className="project-showcase showcase-mindink"
       id="project-mindink"
       aria-labelledby="showcase-mindink-title"
     >
-      <div className="showcase-mindink__scene" aria-hidden="true">
-        <img
-          src={responsiveCreatorAsset("mindink-cosmic-hero", 1200)}
-          alt=""
-          width="1920"
-          height="1280"
-          loading="lazy"
-          decoding="async"
-        />
-      </div>
       <div className="showcase-inner">
         <BrandHeader
           project={props.project}
-          note="Stories, worlds & the tools to make them"
+          note="The complete storytelling studio"
         />
         <div className="showcase-mindink__hero">
           <ProjectCopy {...props} />
           <p className="showcase-mindink__aside">
-            A little imagination.
+            Write it. Branch it.
             <br />
-            An entire universe.
+            Bring it to life.
           </p>
         </div>
         <div className="showcase-studio">
-          <div
-            className="showcase-studio__controls"
-            aria-label="Explore MindInk"
-          >
-            <p>A look inside MindInk</p>
+          <div className="showcase-studio__controls">
+            <p>Inside the studio</p>
             <div
               className="showcase-studio__switcher"
               role="group"
               aria-label="MindInk views"
             >
-              {studioViews.map((item) => (
+              {mindinkViews.map((item, index) => (
                 <button
                   key={item.id}
                   type="button"
-                  aria-pressed={view === item.id}
+                  aria-pressed={viewId === item.id}
                   aria-controls="mindink-view"
-                  onClick={() => setView(item.id)}
+                  onClick={() => setViewId(item.id)}
                 >
+                  <span aria-hidden="true">0{index + 1}</span>
                   {item.label}
                 </button>
               ))}
             </div>
           </div>
-          <div
-            className={`showcase-studio__view showcase-studio__view--${view}`}
+          <figure
+            className="showcase-studio__view"
             id="mindink-view"
-            aria-label={studioViews.find((item) => item.id === view)?.label}
+            aria-label={view.label}
           >
-            {view === "worlds" ? (
-              <div
-                className="showcase-posters"
-                role="group"
-                aria-label="MindInk story covers"
-                tabIndex={0}
-              >
-                {storyCovers.map(([asset, title]) => (
-                  <figure key={asset}>
-                    <img
-                      src={`/assets/responsive/2025/02/${asset}-480.webp`}
-                      srcSet={`/assets/responsive/2025/02/${asset}-480.webp 480w, /assets/responsive/2025/02/${asset}-1200.webp 1200w`}
-                      sizes="(max-width: 600px) 40vw, 18vw"
-                      alt={`${title}, a MindInk story world`}
-                      width="700"
-                      height="1050"
-                      loading="lazy"
-                      decoding="async"
-                    />
-                    <figcaption>{title}</figcaption>
-                  </figure>
-                ))}
+            <div className="showcase-studio__screen">
+              <img
+                key={view.id}
+                src={mindinkViewSource(view.id)}
+                alt={view.alt}
+                width="1672"
+                height="941"
+                loading="lazy"
+                decoding="async"
+              />
+            </div>
+            <figcaption className="showcase-studio__caption">
+              <div>
+                <h4>{view.headline}</h4>
+                <p>{view.description}</p>
               </div>
-            ) : (
-              <figure className="showcase-studio__screen">
-                <img
-                  src={responsiveCreatorAsset(
-                    view === "canvas"
-                      ? "mindink-story-canvas"
-                      : "mindink-studio",
-                    1200,
-                  )}
-                  alt={
-                    view === "canvas"
-                      ? "MindInk's visual canvas connecting branching story paths"
-                      : "MindInk scene editor with dialogue, narrative tools and a reader preview"
-                  }
-                  width={view === "canvas" ? 1400 : 1280}
-                  height={view === "canvas" ? 900 : 720}
-                  decoding="async"
-                />
-              </figure>
-            )}
-          </div>
+              <span>Product visualization</span>
+            </figcaption>
+          </figure>
         </div>
       </div>
     </section>
@@ -231,35 +182,45 @@ function FlowerShowcase(props: ShowcaseProps) {
       <div className="showcase-inner">
         <BrandHeader
           project={props.project}
-          tone="dark"
-          note="Music, identity & motion"
+          note="Music, identity & a studio of its own"
         />
         <div className="showcase-flower__layout">
-          <div
-            className="showcase-flower__art"
-            role="img"
-            aria-label="Flower Musica's original lightning-eyed flower identity"
-          >
-            <span className="showcase-flower__record" aria-hidden="true" />
+          <ProjectCopy {...props} />
+          <img
+            className="showcase-flower__identity"
+            src="/assets/brands/flower-musica-mark.webp"
+            alt="Flower Musica's original lightning-eyed flower identity"
+            width="800"
+            height="800"
+            loading="lazy"
+            decoding="async"
+          />
+        </div>
+        <div className="showcase-flower__media">
+          <figure className="showcase-flower__session">
             <img
-              src="/assets/brands/flower-musica-mark.webp"
-              alt=""
-              width="800"
-              height="800"
+              src="/assets/showcase/product-v2/flower-studio-session.webp"
+              alt="A recording session in the Flower Musica studio"
+              width="1536"
+              height="864"
               loading="lazy"
               decoding="async"
             />
-            <span className="showcase-flower__sticker" aria-hidden="true">
-              Made of
-              <br />
-              music.
-            </span>
-          </div>
-          <ProjectCopy {...props} />
-        </div>
-        <div className="showcase-flower__footer">
-          <span>Sound. Personality. A world of its own.</span>
-          <span>Flower Musica</span>
+            <figcaption>Where the sound starts.</figcaption>
+          </figure>
+          <figure className="showcase-flower__studio">
+            <img
+              src="/assets/showcase/product-v2/flower-studio-guest.webp"
+              alt="Flower Musica's live Studio interface for creating music and sound"
+              width="1440"
+              height="1000"
+              loading="lazy"
+              decoding="async"
+            />
+            <figcaption>
+              And where the ideas keep going. <span>Studio · Guest view</span>
+            </figcaption>
+          </figure>
         </div>
       </div>
     </section>
@@ -283,42 +244,20 @@ function HotClipsShowcase(props: ShowcaseProps) {
             Great cuts.
           </p>
         </div>
-        <div
-          className="showcase-hotclips__edit"
-          role="group"
-          aria-label="HotClips podcast and clip framing brand artwork"
-        >
-          <figure className="showcase-hotclips__episode">
-            <img
-              src={responsiveCreatorAsset("hotclips-podcast-studio", 1200)}
-              alt="HotClips brand artwork of two podcast hosts in conversation"
-              width="1672"
-              height="941"
-              loading="lazy"
-              decoding="async"
-            />
-            <figcaption>The conversation</figcaption>
-          </figure>
-          <div className="showcase-hotclips__cut" aria-hidden="true">
-            <span />
-            <span />
-            <span />
-          </div>
-          <figure className="showcase-hotclips__moment">
-            <img
-              src={responsiveCreatorAsset("hotclips-podcast-studio", 1200)}
-              alt="Portrait framing of a podcast host from the HotClips brand artwork"
-              width="1672"
-              height="941"
-              loading="lazy"
-              decoding="async"
-            />
-            <figcaption>The moment.</figcaption>
-          </figure>
-        </div>
-        <p className="showcase-caption">
-          Find the highlights. Make the cut. Keep the creative control.
-        </p>
+        <figure className="showcase-hotclips__demo">
+          <img
+            src="/assets/showcase/product-v2/hotclips-product-demo.webp"
+            alt="HotClips public product demo showing found clips, a portrait video preview, and clip review controls"
+            width="1472"
+            height="684"
+            loading="lazy"
+            decoding="async"
+          />
+          <figcaption>
+            <span>Find the moment. Make the cut.</span>
+            <span>HotClips product demo</span>
+          </figcaption>
+        </figure>
       </div>
     </section>
   );
@@ -348,22 +287,39 @@ function TrendInkShowcase(props: ShowcaseProps) {
             decoding="async"
           />
         </div>
-        <figure className="showcase-trendink__studio">
-          <img
-            src={responsiveCreatorAsset("trendink-hero-studio", 1200)}
-            srcSet={`${responsiveCreatorAsset("trendink-hero-studio", 480)} 480w, ${responsiveCreatorAsset("trendink-hero-studio", 1200)} 1200w`}
-            sizes="90vw"
-            alt="TrendInk studio concept artwork connecting research signals, story planning and visual production"
-            width="1920"
-            height="1280"
-            loading="lazy"
-            decoding="async"
-          />
-          <figcaption>
-            <span>Follow the idea all the way through.</span>
-            <span>TrendInk brand & studio concept</span>
-          </figcaption>
-        </figure>
+        <div className="showcase-trendink__studios">
+          <figure>
+            <img
+              src="/assets/showcase/product-v2/trendink-scene-studio.webp"
+              alt="TrendInk Scene Studio designed product view with a shot board, cast continuity and camera blocking"
+              width="1536"
+              height="1024"
+              loading="lazy"
+              decoding="async"
+            />
+            <figcaption>
+              <span>01 / Scene Studio</span>
+              <span>Direct every detail.</span>
+            </figcaption>
+          </figure>
+          <figure>
+            <img
+              src="/assets/showcase/product-v2/trendink-edit-studio.webp"
+              alt="TrendInk Edit Studio designed product view with a film preview and editing timeline"
+              width="1536"
+              height="1024"
+              loading="lazy"
+              decoding="async"
+            />
+            <figcaption>
+              <span>02 / Edit Studio</span>
+              <span>Find the rhythm.</span>
+            </figcaption>
+          </figure>
+        </div>
+        <p className="showcase-caption">
+          TrendInk product design · From the shot board to the final cut.
+        </p>
       </div>
     </section>
   );
