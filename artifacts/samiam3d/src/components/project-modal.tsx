@@ -1,7 +1,8 @@
 import { useEffect, useMemo, useRef, type MutableRefObject } from "react";
 import * as Dialog from "@radix-ui/react-dialog";
 import { ArrowUpRight, ChevronLeft, ChevronRight, X } from "lucide-react";
-import { ProjectMark, ProjectVisual } from "@/components/project-visual";
+import { ProjectVisual } from "@/components/project-visual";
+import { ProjectBrand } from "@/components/project-brand";
 import {
   creatorProjects,
   type CreatorProject,
@@ -120,12 +121,10 @@ export function ProjectModal({
                 <ProjectMediaGallery project={project} />
 
                 <div className="project-modal__content">
-                  <div className="project-modal__brand">
-                    <span className="project-modal__brand-mark">
-                      <ProjectMark project={project} />
-                    </span>
-                    <span>{project.name}</span>
-                  </div>
+                  <ProjectBrand
+                    project={project}
+                    className="project-modal__brand"
+                  />
                   <p className="project-modal__category">{project.category}</p>
                   <Dialog.Title className="project-modal__title">
                     {project.modalHeadline}

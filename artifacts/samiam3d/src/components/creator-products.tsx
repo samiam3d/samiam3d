@@ -1,13 +1,11 @@
 import { useCallback, useEffect, useRef, useState } from "react";
-import { ArrowUpRight } from "lucide-react";
-import { MindInkFlagship } from "@/components/mindink-flagship";
+import { ProjectShowcase } from "@/components/project-showcase";
 import { ProjectModal } from "@/components/project-modal";
-import { ProjectMark, ProjectVisual } from "@/components/project-visual";
+import { ProjectBrandMark } from "@/components/project-brand";
 import {
   creatorProjects,
   getCreatorProject,
   isCreatorProjectId,
-  type CreatorProject,
   type CreatorProjectId,
 } from "@/lib/creator-projects";
 
@@ -37,52 +35,6 @@ const getHistoryState = (): ProjectHistoryState => {
   const state = window.history.state;
   return state && typeof state === "object" ? state : {};
 };
-
-// Projects shown in the grid — MindInk is presented as the flagship above.
-const gridProjects = creatorProjects.filter((p) => p.id !== "mindink");
-
-function ProjectCard({
-  project,
-  onOpen,
-}: {
-  project: CreatorProject;
-  onOpen: (projectId: CreatorProjectId, trigger: HTMLButtonElement) => void;
-}) {
-  return (
-    <article className={`product-card product-card--${project.id}`}>
-      <button
-        className="product-card__button"
-        type="button"
-        aria-haspopup="dialog"
-        aria-label={`View ${project.name} project details`}
-        onClick={(event) => onOpen(project.id, event.currentTarget)}
-      >
-        <div className="product-card__media">
-          <ProjectVisual project={project} />
-        </div>
-
-        <div className="product-card__content">
-          <span className="product-card__status">{project.status}</span>
-          <span className="product-card__identity">
-            <span className="product-card__logo">
-              <ProjectMark project={project} />
-            </span>
-            <span className="product-card__name">{project.name}</span>
-          </span>
-          <span className="product-card__category">{project.category}</span>
-          <span className="product-card__headline">{project.cardHeadline}</span>
-          <span className="product-card__description">
-            {project.cardDescription}
-          </span>
-          <span className="product-card__action">
-            <span>View project</span>
-            <ArrowUpRight aria-hidden="true" />
-          </span>
-        </div>
-      </button>
-    </article>
-  );
-}
 
 export function CreatorProducts() {
   const [activeProjectId, setActiveProjectId] =
@@ -167,42 +119,35 @@ export function CreatorProducts() {
   return (
     <section
       id="creator-products"
-      className="product-lab"
+      className="creator-showcase"
       aria-labelledby="creator-products-title"
     >
-      <div className="product-lab__intro">
-        <div>
-          <p className="product-lab__label">Founder-built ventures</p>
-          <h2 id="creator-products-title">
-            From first spark to working system.
-          </h2>
-        </div>
-        <div className="product-lab__context">
-          <p>
-            I conceive, direct, design, and build products end to end—combining
-            creative vision, narrative, brand, experience design, technical
-            systems, and launch into one connected practice.
-          </p>
-          <p className="product-lab__capabilities">
-            Product strategy · Creative direction · UX/UI · AI systems · Build ·
-            Brand · Launch
-          </p>
-        </div>
+      <div className="creator-showcase__intro">
+        <h2 id="creator-products-title">My own projects.</h2>
+        <p>
+          I make the worlds, the tools, and the brands around them. These are
+          the ideas I’m building into something you can use.
+        </p>
       </div>
-
-      {/* MindInk flagship — full-bleed, breaks out of the lab constraint */}
-      <MindInkFlagship onOpen={openProject} />
-
-      {/* Remaining ventures grid */}
-      <div className="product-lab__grid product-lab__grid--flagship">
-        {gridProjects.map((project) => (
-          <ProjectCard
+      <nav className="creator-showcase__index" aria-label="Explore my projects">
+        {creatorProjects.map((project) => (
+          <a
             key={project.id}
-            project={project}
-            onOpen={openProject}
-          />
+            href={`#project-${project.id}`}
+            aria-label={project.name}
+          >
+            <ProjectBrandMark project={project} />
+            <span>{project.name}</span>
+          </a>
         ))}
-      </div>
+      </nav>
+      {creatorProjects.map((project) => (
+        <ProjectShowcase
+          key={project.id}
+          project={project}
+          onOpen={openProject}
+        />
+      ))}
 
       <ProjectModal
         project={activeProject}

@@ -1,0 +1,129 @@
+{
+  "description": "Authentic project identity assets and optimized browser derivatives. Source-only artwork is recorded for provenance and is not bundled with the site.",
+  "importedAt": "2026-10-24",
+  "assets": [
+    {
+      "sourceRepositoryOrCollection": "MindInkWriter/client/src/components/layout/header.tsx",
+      "originalFile": "MindInk_CUT_1773780716142.png",
+      "sha256": "951748b2af807847a6ff136f11a5138eecc47453abc7f1ba4ac0b9bee47df6f0",
+      "note": "Current app header mark. Display with border-radius:50% as in source.",
+      "bundled": false,
+      "sourceAsset": "mindink-mark.png"
+    },
+    {
+      "file": "mindink-wordmark.png",
+      "sourceRepositoryOrCollection": "Owner project artwork: Mindink/MindInk_Logo_Full.png",
+      "originalFile": "MindInk_Logo_Full.png",
+      "sha256": "5416447444727fa350b473ed5e227bc48af5e05e0ba1e3767959481348f602ed",
+      "note": "Owner-supplied complete colored wordmark; exact original PNG.",
+      "bundled": true
+    },
+    {
+      "sourceRepositoryOrCollection": "project-foundry/components/vibemind/sidebar.tsx",
+      "originalFile": "mindink-orb.png",
+      "sha256": "951748b2af807847a6ff136f11a5138eecc47453abc7f1ba4ac0b9bee47df6f0",
+      "note": "Actual VibeMind header shares the MindInk orb; pair with VibeMind text, not an invented VM monogram.",
+      "bundled": false,
+      "sourceAsset": "vibemind-mark.png"
+    },
+    {
+      "sourceRepositoryOrCollection": "flower-musica/src/components/brand/FlowerMark.tsx and src/app/globals.css",
+      "originalFile": "flower-composite-mask.png",
+      "sha256": "04955a5c570482c8b72a2421a9f5a418e492ef11a1dfcc6c3f51a6a5613862c2",
+      "note": "Canonical static fallback alpha mask. Use as CSS mask or invert on dark backgrounds. No geometry redrawn.",
+      "bundled": false,
+      "sourceAsset": "flower-musica-mark.png"
+    },
+    {
+      "sourceRepositoryOrCollection": "hotclips-website/public/hotclips-mark-blue.png",
+      "originalFile": "hotclips-mark-blue.png",
+      "sha256": "cb01f8daaa84f8c79d974dc6dd10fa3972858c69c6afebfbe8e4d214b764ba32",
+      "note": "Complete current cyan flame/waveform mark. The static animation layer alone omits the central flames.",
+      "bundled": false,
+      "sourceAsset": "hotclips-mark.png"
+    },
+    {
+      "sourceRepositoryOrCollection": "TrendInk-Website/public/images/trendink-aperture-transparent.webp",
+      "originalFile": "trendink-aperture-transparent.webp",
+      "sha256": "257f3fec5cf3c20f310bbf50ed87879ddf53c3d4da408162c741acf5cab1de61",
+      "note": "High-resolution transparent aperture mark.",
+      "bundled": false,
+      "sourceAsset": "trendink-mark.webp"
+    },
+    {
+      "file": "trendink-icon.png",
+      "sourceRepositoryOrCollection": "TrendInk-Website/src/App.tsx",
+      "originalFile": "favicon-cutout.png",
+      "sha256": "3c1ad9b8124d306a576c89611f3046c926886582847ca9e9a2f1030b064813cb",
+      "note": "Exact navigation-header aperture asset.",
+      "bundled": true
+    },
+    {
+      "file": "clauseink-wordmark-light.png",
+      "sourceRepositoryOrCollection": "Clauseink-app/client/src/contexts/BrandingContext.tsx",
+      "originalFile": "logo_basic_white.png",
+      "sha256": "328b624169e126c442a88c8adcabc0d416d4ce19f5aed0d138636c53f51d9f4e",
+      "note": "Current basic-tier dark-interface wordmark, 512 by 79.",
+      "bundled": true
+    },
+    {
+      "file": "clauseink-wordmark-dark.png",
+      "sourceRepositoryOrCollection": "Clauseink-app/client/src/contexts/BrandingContext.tsx",
+      "originalFile": "logo_dark.png",
+      "sha256": "498f6aa406a75753e7bb20ae80080db74c8968ffce206d0f003bcf730505bff6",
+      "note": "Current basic-tier light-interface wordmark, 1681 by 258.",
+      "bundled": true
+    }
+  ],
+  "browserDerivatives": [
+    {
+      "file": "mindink-mark.webp",
+      "source": "mindink-mark.png",
+      "width": 144,
+      "height": 144,
+      "bytes": 14166,
+      "sha256": "54a34667fc7a0c852985711af278a4303ef2424096150e38af50f38be5bba442",
+      "operation": "Proportional Lanczos3 resize; lossless WebP encoding; alpha retained; no crop, recoloring, or artwork edits."
+    },
+    {
+      "file": "vibemind-mark.webp",
+      "source": "vibemind-mark.png",
+      "width": 144,
+      "height": 144,
+      "bytes": 14166,
+      "sha256": "54a34667fc7a0c852985711af278a4303ef2424096150e38af50f38be5bba442",
+      "operation": "Proportional Lanczos3 resize; lossless WebP encoding; alpha retained; no crop, recoloring, or artwork edits."
+    },
+    {
+      "file": "hotclips-mark.webp",
+      "source": "hotclips-mark.png",
+      "width": 144,
+      "height": 128,
+      "bytes": 11006,
+      "sha256": "9b0c1f634e73d2de57d4b17b9e61dd7200c83c7e1e2af3894a0ce2b20361712d",
+      "operation": "Proportional Lanczos3 resize; lossless WebP encoding; alpha retained; no crop, recoloring, or artwork edits."
+    },
+    {
+      "file": "trendink-aperture.webp",
+      "source": "trendink-mark.webp",
+      "width": 720,
+      "height": 720,
+      "bytes": 88838,
+      "sha256": "c9e876130cbfddab0acd1d64de949878f0e8063234fe5f98c4f140112f18ba46",
+      "operation": "Proportional Lanczos3 resize; high-quality WebP encoding (quality 92, alpha quality 100); alpha retained; no crop, recoloring, or artwork edits."
+    },
+    {
+      "file": "flower-musica-mark.webp",
+      "source": "flower-musica-mark.png",
+      "width": 800,
+      "height": 800,
+      "bytes": 30894,
+      "sha256": "cada95d4f697b39f3217bf5fa581fc6dcdc2fa689315f6f35ebb2d2cb282c524",
+      "operation": "Proportional Lanczos3 resize; smaller lossless format selected; alpha retained; no crop, recoloring, or artwork edits.",
+      "comparedFormatBytes": {
+        "png": 48886,
+        "webp": 30894
+      }
+    }
+  ]
+}

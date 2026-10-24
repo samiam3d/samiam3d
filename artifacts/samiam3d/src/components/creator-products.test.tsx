@@ -11,42 +11,36 @@ import { beforeEach, describe, expect, it } from "vitest";
 import { CreatorProducts } from "@/components/creator-products";
 import { creatorProjects } from "@/lib/creator-projects";
 
-const expectedCardCopy = [
+const expectedProjects = [
   {
+    id: "mindink",
     name: "MindInk",
-    headline: "Build stories like a studio.",
-    description:
-      "A creator-led studio for story architecture, characters, real branching narratives, cinematic scenes, posters, sound, video, and publishing.",
+    brandAsset: "mindink-wordmark.png",
   },
   {
+    id: "vibemind",
     name: "VibeMind",
-    headline: "Turn an idea into a visible, working product.",
-    description:
-      "A private application workspace where a product brief becomes an approved plan, recoverable code changes, a healthy preview, and owned software.",
+    brandAsset: "vibemind-mark.webp",
   },
   {
+    id: "flower-musica",
     name: "Flower Musica",
-    headline: "A music brand designed to move.",
-    description:
-      "A producer-led world combining music, podcasting, culture, studio life, community, and useful creator tools inside one expressive identity.",
+    brandAsset: "flower-musica-mark.webp",
   },
   {
+    id: "hotclips",
     name: "HotClips",
-    headline: "Find the moments worth publishing.",
-    description:
-      "A creator-directed workflow that turns full podcast episodes into reviewed, trimmed, ready-to-post clips.",
+    brandAsset: "hotclips-mark.webp",
   },
   {
+    id: "trendink",
     name: "TrendInk",
-    headline: "Find the signal. Build the story.",
-    description:
-      "A creator-led system that carries live trends and their source evidence from discovery through production.",
+    brandAsset: "trendink-icon.png",
   },
   {
+    id: "clauseink",
     name: "ClauseInk",
-    headline: "Draft contracts without fighting the document.",
-    description:
-      "A focused workspace for drafting, reviewing, redlining, collaborating, and exporting polished agreements.",
+    brandAsset: "clauseink-wordmark-dark.png",
   },
 ] as const;
 
@@ -54,7 +48,7 @@ const renderProductLab = () => render(<CreatorProducts />);
 
 const projectButton = (name: string) =>
   screen.getByRole("button", {
-    name: `View ${name} project details`,
+    name: `Explore the project: ${name}`,
   });
 
 const openProject = async (name: string, user = userEvent.setup()) => {
@@ -65,75 +59,142 @@ const openProject = async (name: string, user = userEvent.setup()) => {
   return { dialog, trigger, user };
 };
 
-describe("Founder-built ventures", () => {
+describe("Project showcases", () => {
   beforeEach(() => {
     window.history.replaceState({}, "", "/#creator-products");
   });
 
-  it("renders the flagship and five venture cards without direct external links", () => {
+  it("gives each project its own named section, authentic identity, and index link", () => {
     renderProductLab();
-
+    const collection = screen.getByRole("region", { name: "My own projects." });
+    const sections = within(collection).getAllByRole("region");
+    const index = within(collection).getByRole("navigation", {
+      name: "Explore my projects",
+    });
+    expect(sections).toHaveLength(6);
+    expect(within(index).getAllByRole("link")).toHaveLength(6);
     expect(
-      screen.getByRole("heading", {
-        name: "From first spark to working system.",
-      }),
-    ).toBeVisible();
-    expect(screen.getByText("Founder-built ventures")).toBeVisible();
-    expect(
-      screen.getByText(
-        "I conceive, direct, design, and build products end to end—combining creative vision, narrative, brand, experience design, technical systems, and launch into one connected practice.",
-      ),
-    ).toBeVisible();
-    expect(
-      screen.getByText(
-        "Product strategy · Creative direction · UX/UI · AI systems · Build · Brand · Launch",
-      ),
-    ).toBeVisible();
-
-    expect(
-      screen.getAllByRole("button", { name: /View .* project details/ }),
+      screen.getAllByRole("button", { name: /Explore the project: / }),
     ).toHaveLength(6);
-    expect(screen.queryByRole("link")).not.toBeInTheDocument();
 
-    expectedCardCopy.forEach(({ name, headline, description }) => {
-      expect(projectButton(name)).toBeVisible();
-      if (name === "MindInk") {
-        expect(screen.getByRole("heading", { name: "MindInk" })).toBeVisible();
-        expect(screen.getByText("Flagship Venture")).toBeVisible();
-      } else {
-        expect(screen.getByText(headline)).toBeVisible();
-        expect(screen.getByText(description)).toBeVisible();
-      }
+    expectedProjects.forEach(({ id, name, brandAsset }) => {
+      const link = within(index).getByRole("link", { name });
+      expect(link).toHaveAttribute("href", `#project-${id}`);
+      const section = document.getElementById(`project-${id}`)!;
+      expect(sections).toContain(section);
+      expect(section).toHaveAccessibleName();
+      expect(within(section).getByRole("heading", { level: 3 })).toBeVisible();
+      expect(
+        within(section).getByRole("img", { name, exact: true }),
+      ).toBeVisible();
+      expect(
+        section.querySelector(`img[src="/assets/brands/${brandAsset}"]`),
+      ).toBeInTheDocument();
+      expect(
+        within(section).getByRole("button", {
+          name: `Explore the project: ${name}`,
+        }),
+      ).toHaveAttribute("aria-haspopup", "dialog");
     });
   });
 
-  it("renders custom product visuals for VibeMind and Flower Musica", () => {
+  it("identifies the VibeMind demo workspace and original Flower identity", () => {
     renderProductLab();
 
     expect(
       screen.getByRole("img", {
-        name: /VibeMind workflow moving from a product brief/i,
+        name: /VibeMind private alpha.*demo workspace/i,
       }),
     ).toBeVisible();
+    expect(screen.getByText("Private alpha · Demo workspace")).toBeVisible();
     expect(
       screen.getByRole("img", {
-        name: /Flower Musica lightning-eyed flower identity/i,
+        name: /Flower Musica's original lightning-eyed flower identity/i,
       }),
     ).toBeVisible();
   });
 
-  it("opens a project dialog from a full-card click and writes the project URL", async () => {
+  it("switches MindInk between story worlds, branching paths, and its scene editor", async () => {
+    const user = userEvent.setup();
     renderProductLab();
-    const { dialog } = await openProject("MindInk");
+    const switcher = screen.getByRole("group", { name: "MindInk views" });
+    const worlds = within(switcher).getByRole("button", {
+      name: "Story worlds",
+    });
+    const canvas = within(switcher).getByRole("button", {
+      name: "Branch canvas",
+    });
+    const editor = within(switcher).getByRole("button", {
+      name: "Scene editor",
+    });
 
+    expect(worlds).toHaveAttribute("aria-pressed", "true");
+    expect(canvas).toHaveAttribute("aria-pressed", "false");
+    expect(editor).toHaveAttribute("aria-pressed", "false");
     expect(
-      within(dialog).getByRole("heading", {
-        name: "A complete creative studio for stories, worlds, movies, and publishing.",
+      screen.getByRole("img", {
+        name: "Midnight Spirits, a MindInk story world",
       }),
     ).toBeVisible();
-    expect(window.location.search).toBe("?project=mindink");
-    expect(document.documentElement).toHaveClass("has-project-modal-open");
+
+    await user.click(canvas);
+    expect(canvas).toHaveAttribute("aria-pressed", "true");
+    expect(worlds).toHaveAttribute("aria-pressed", "false");
+    expect(
+      screen.getByRole("img", {
+        name: /visual canvas connecting branching story paths/i,
+      }),
+    ).toBeVisible();
+    expect(
+      screen.queryByRole("img", {
+        name: "Midnight Spirits, a MindInk story world",
+      }),
+    ).not.toBeInTheDocument();
+
+    editor.focus();
+    await user.keyboard("{Enter}");
+    expect(editor).toHaveAttribute("aria-pressed", "true");
+    expect(canvas).toHaveAttribute("aria-pressed", "false");
+    expect(
+      screen.getByRole("img", { name: /scene editor with dialogue/i }),
+    ).toBeVisible();
+    expect(
+      screen.queryByRole("img", {
+        name: /visual canvas connecting branching story paths/i,
+      }),
+    ).not.toBeInTheDocument();
+
+    await user.click(worlds);
+    expect(worlds).toHaveAttribute("aria-pressed", "true");
+    expect(editor).toHaveAttribute("aria-pressed", "false");
+    expect(
+      screen.getByRole("img", {
+        name: "Midnight Spirits, a MindInk story world",
+      }),
+    ).toBeVisible();
+    expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
+    expect(window.location.search).toBe("");
   });
+
+  it.each(expectedProjects)(
+    "opens $name details from its section and writes the project URL",
+    async ({ id, name }) => {
+      renderProductLab();
+      const { dialog } = await openProject(name);
+      const project = creatorProjects.find((item) => item.id === id)!;
+
+      expect(
+        within(dialog).getByRole("heading", {
+          name: project.modalHeadline,
+        }),
+      ).toBeVisible();
+      expect(
+        within(dialog).getByRole("img", { name, exact: true }),
+      ).toBeVisible();
+      expect(window.location.search).toBe(`?project=${id}`);
+      expect(document.documentElement).toHaveClass("has-project-modal-open");
+    },
+  );
 
   it("opens a project dialog with the keyboard", async () => {
     const user = userEvent.setup();
@@ -222,20 +283,26 @@ describe("Founder-built ventures", () => {
     const { user } = await openProject("MindInk");
     const historyLength = window.history.length;
 
-    await user.click(screen.getByRole("button", { name: "Close MindInk project details" }));
-    await waitFor(() => expect(screen.queryByRole("dialog")).not.toBeInTheDocument());
+    await user.click(
+      screen.getByRole("button", { name: "Close MindInk project details" }),
+    );
+    await waitFor(() =>
+      expect(screen.queryByRole("dialog")).not.toBeInTheDocument(),
+    );
     expect(window.location.search).toBe("");
     expect(window.history.length).toBe(historyLength);
 
     act(() => window.history.forward());
     const dialog = await screen.findByRole("dialog");
-    expect(within(dialog).getByRole("heading", {
-      name: "A complete creative studio for stories, worlds, movies, and publishing.",
-    })).toBeVisible();
+    expect(
+      within(dialog).getByRole("heading", {
+        name: "A complete creative studio for stories, worlds, movies, and publishing.",
+      }),
+    ).toBeVisible();
     expect(window.location.search).toBe("?project=mindink");
   });
 
-  it("closes with Escape and restores focus to the card that opened it", async () => {
+  it("closes with Escape and restores focus to the action that opened it", async () => {
     renderProductLab();
     const { trigger } = await openProject("MindInk");
 
@@ -280,19 +347,5 @@ describe("Founder-built ventures", () => {
     expect(cta).toHaveAttribute("href", "https://mindink.ai/");
     expect(cta).toHaveAttribute("target", "_blank");
     expect(cta).toHaveAttribute("rel", "noopener noreferrer");
-  });
-
-  it("supplies meaningful labels for every project visual and mark", () => {
-    creatorProjects.forEach((project) => {
-      if (project.logo) {
-        expect(project.logo.alt.trim()).not.toBe("");
-      } else {
-        expect(project.textMark?.trim()).not.toBe("");
-      }
-
-      project.media.forEach((media) => {
-        expect(media.alt.trim()).not.toBe("");
-      });
-    });
   });
 });

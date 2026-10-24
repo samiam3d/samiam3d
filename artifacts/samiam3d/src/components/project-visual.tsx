@@ -1,5 +1,4 @@
-import type { CSSProperties } from "react";
-import { TrendInkEye } from "@/components/trendink-eye";
+import { ProjectBrandMark } from "@/components/project-brand";
 import {
   responsiveCreatorAsset,
   type CreatorProject,
@@ -46,29 +45,7 @@ export function ProjectMark({
   project: CreatorProject;
   decorative?: boolean;
 }) {
-  if (project.logo) {
-    return (
-      <img
-        src={responsiveCreatorAsset(project.logo.asset, 480)}
-        srcSet={`${responsiveCreatorAsset(project.logo.asset, 480)} 480w, ${responsiveCreatorAsset(project.logo.asset, 1200)} 1200w`}
-        sizes="120px"
-        width={project.logo.width}
-        height={project.logo.height}
-        loading="lazy"
-        decoding="async"
-        alt={decorative ? "" : project.logo.alt}
-      />
-    );
-  }
-
-  return (
-    <span
-      className={`project-mark project-mark--${project.id}`}
-      aria-hidden={decorative ? "true" : undefined}
-    >
-      {project.textMark ?? project.name.slice(0, 2).toUpperCase()}
-    </span>
-  );
+  return <ProjectBrandMark project={project} decorative={decorative} />;
 }
 
 function MindInkVisual({
@@ -126,100 +103,51 @@ function MindInkVisual({
 }
 
 function VibeMindVisual({ context }: { context: "card" | "modal" }) {
-  const stages = ["Brief", "Plan", "Build", "Preview"] as const;
-
   return (
     <div
       className={`project-visual project-visual--vibemind project-visual--${context}`}
-      role="img"
-      aria-label="VibeMind workflow moving from a product brief through planning and build into a healthy application preview"
     >
-      <div className="vibemind-visual__topline">
-        <span>VIBEMIND</span>
-        <span>RUN 017</span>
-        <span className="vibemind-visual__healthy">PREVIEW HEALTHY</span>
-      </div>
-      <div className="vibemind-visual__stages">
-        {stages.map((stage, index) => (
-          <div className="vibemind-visual__stage" key={stage}>
-            <span>{String(index + 1).padStart(2, "0")}</span>
-            <strong>{stage}</strong>
-            <i aria-hidden="true" />
-            <i aria-hidden="true" />
-            <i aria-hidden="true" />
-          </div>
-        ))}
-      </div>
-      <div className="vibemind-visual__workspace">
-        <div className="vibemind-visual__prompt">
-          <span>PRODUCT BRIEF</span>
-          <strong>
-            Build a creator-first workspace that turns intent into owned software.
-          </strong>
-          <p>Plan approved. Changes remain visible, recoverable, and reviewable.</p>
-        </div>
-        <div className="vibemind-visual__preview">
-          <div className="vibemind-visual__browserbar">
-            <i />
-            <i />
-            <i />
-            <span>preview.vibemind</span>
-          </div>
-          <div className="vibemind-visual__preview-grid">
-            <span />
-            <span />
-            <span />
-            <span />
-          </div>
-        </div>
-      </div>
+      <figure className="vibemind-visual__capture">
+        <img
+          src="/assets/showcase/vibemind-workspace.webp"
+          alt="VibeMind private alpha demo workspace with the project conversation and build activity timeline"
+          width={1440}
+          height={900}
+          loading={context === "modal" ? "eager" : "lazy"}
+          decoding="async"
+        />
+        <figcaption className="vibemind-visual__caption">
+          Private alpha · Demo workspace
+        </figcaption>
+      </figure>
     </div>
   );
 }
 
-function FlowerVisual({ context }: { context: "card" | "modal" }) {
+function FlowerVisual({
+  project,
+  context,
+}: {
+  project: CreatorProject;
+  context: "card" | "modal";
+}) {
   return (
     <div
       className={`project-visual project-visual--flower project-visual--${context}`}
       role="img"
-      aria-label="Flower Musica lightning-eyed flower identity with a music waveform"
+      aria-label="Flower Musica original flower identity"
     >
-      <div className="flower-visual__electric" aria-hidden="true" />
-      <div className="flower-visual__mark" aria-hidden="true">
-        {Array.from({ length: 8 }, (_, index) => (
-          <span
-            className="flower-visual__petal"
-            key={index}
-            style={
-              {
-                "--petal-angle": `${index * 45}deg`,
-              } as CSSProperties
-            }
-          />
-        ))}
-        <span className="flower-visual__face">
-          <i className="flower-visual__eye flower-visual__eye--left" />
-          <i className="flower-visual__eye flower-visual__eye--right" />
-          <i className="flower-visual__smile" />
-        </span>
-      </div>
-      <div className="flower-visual__wordmark" aria-hidden="true">
-        <strong>FLOWER</strong>
-        <span>MUSICA</span>
-      </div>
-      <div className="flower-visual__waveform" aria-hidden="true">
-        {Array.from({ length: 28 }, (_, index) => (
-          <i
-            key={index}
-            style={{ height: `${18 + (index % 7) * 9}%` }}
-          />
-        ))}
-      </div>
-      <div className="flower-visual__meta" aria-hidden="true">
-        <span>PRODUCER</span>
-        <span>PODCAST</span>
-        <span>STUDIO</span>
-        <span>CULTURE</span>
+      <div className="flower-visual__identity" aria-hidden="true">
+        <ProjectBrandMark
+          project={project}
+          className="flower-visual__authentic-mark"
+        />
+        <div className="flower-visual__name">
+          Flower
+          <br />
+          Musica
+        </div>
+        <p className="flower-visual__discipline">Music. Culture. Creation.</p>
       </div>
     </div>
   );
@@ -243,7 +171,9 @@ function MediaVisual({
       {primaryMedia ? (
         <ProjectImage
           media={primaryMedia}
-          className={primaryMedia.crop ? `is-crop-${primaryMedia.crop}` : undefined}
+          className={
+            primaryMedia.crop ? `is-crop-${primaryMedia.crop}` : undefined
+          }
           loading={context === "modal" ? "eager" : "lazy"}
           sizes={context === "modal" ? "55vw" : "52vw"}
         />
@@ -252,7 +182,7 @@ function MediaVisual({
       )}
       {project.id === "trendink" && (
         <span className="project-visual__trendink-eye">
-          <TrendInkEye compact />
+          <ProjectBrandMark project={project} />
         </span>
       )}
       {secondaryMedia.length > 0 && (
@@ -281,7 +211,7 @@ export function ProjectVisual({
   }
 
   if (project.visual === "flower") {
-    return <FlowerVisual context={context} />;
+    return <FlowerVisual project={project} context={context} />;
   }
 
   return <MediaVisual project={project} context={context} />;

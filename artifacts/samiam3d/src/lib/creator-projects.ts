@@ -6,11 +6,7 @@ export type CreatorProjectId =
   | "trendink"
   | "clauseink";
 
-export type CreatorProjectVisual =
-  | "mindink"
-  | "vibemind"
-  | "flower"
-  | "media";
+export type CreatorProjectVisual = "mindink" | "vibemind" | "flower" | "media";
 
 export type CreatorProjectMedia = {
   asset: string;
@@ -50,7 +46,7 @@ export const creatorProjects = [
     category: "STORYTELLING · CREATIVE SYSTEMS",
     cardHeadline: "Build stories like a studio.",
     cardDescription:
-      "A creator-led studio for story architecture, characters, real branching narratives, cinematic scenes, posters, sound, video, and publishing.",
+      "Write the story. Build the world. Direct the scene. A connected creative studio for branching stories, characters, film, sound, and publishing.",
     modalHeadline:
       "A complete creative studio for stories, worlds, movies, and publishing.",
     story:
@@ -93,9 +89,9 @@ export const creatorProjects = [
     name: "VibeMind",
     status: "PRIVATE ALPHA",
     category: "APP BUILDING · CREATIVE EXECUTION",
-    cardHeadline: "Turn an idea into a visible, working product.",
+    cardHeadline: "From “what if” to working app.",
     cardDescription:
-      "A private application workspace where a product brief becomes an approved plan, recoverable code changes, a healthy preview, and owned software.",
+      "An app-building workspace that keeps the plan, the code, and the preview in view. Shape the idea, follow the build, and own what you make.",
     modalHeadline: "Creative intent in. Owned software out.",
     story:
       "VibeMind gives founders and creative teams a visible path from product intent to execution. The workspace translates a brief into a reviewable plan, runs work inside controlled environments, exposes progress and changes, verifies the preview, and preserves checkpoints so the owner never loses control of the product or its code.",
@@ -115,7 +111,7 @@ export const creatorProjects = [
     category: "MUSIC BRAND · MEDIA · CREATOR TOOLS",
     cardHeadline: "A music brand designed to move.",
     cardDescription:
-      "A producer-led world combining music, podcasting, culture, studio life, community, and useful creator tools inside one expressive identity.",
+      "A music-first world for a producer, a podcast, and the culture around them. One unmistakable identity, from the studio to the screen.",
     modalHeadline: "Music, stories, and the process behind the sound.",
     story:
       "Flower Musica is being shaped as a music-first brand rather than a technology demo. The public experience brings together a producer portfolio, podcast, tutorials, culture, community, and a restrained studio utility layer while allowing the flower identity, motion language, and artist personality to lead every interaction.",
@@ -123,7 +119,7 @@ export const creatorProjects = [
       "Creative direction, product and content strategy, identity system, animated flower choreography, UX/UI, motion direction, public site architecture, community journey, and creator-tool experience.",
     role: "Creative Direction · Brand · Product Design · Motion",
     ctaLabel: "Visit Flower Musica",
-    href: "https://flowermusic.com/",
+    href: "https://flowermusica.com/",
     visual: "flower",
     textMark: "FM",
     media: [],
@@ -135,7 +131,7 @@ export const creatorProjects = [
     category: "CREATOR MEDIA · PODCAST WORKFLOW",
     cardHeadline: "Find the moments worth publishing.",
     cardDescription:
-      "A creator-directed workflow that turns full podcast episodes into reviewed, trimmed, ready-to-post clips.",
+      "Turn the full conversation into the moments people remember. Find, review, and trim podcast highlights, then publish the cuts you believe in.",
     modalHeadline: "The system finds the moments. The creator makes the cut.",
     story:
       "HotClips starts with the entire episode, follows the creator’s direction on topic, audience, angle, and pace, then surfaces candidate moments for human review. The creator checks the transcript, trims the timing, keeps the strongest clips, and exports only what is ready to publish.",
@@ -154,14 +150,14 @@ export const creatorProjects = [
     media: [
       {
         asset: "hotclips-podcast-studio",
-        alt: "HotClips episode workspace with candidates and transcript review",
+        alt: "HotClips brand artwork of two hosts recording a podcast",
         width: 1672,
         height: 941,
         crop: "left",
       },
       {
         asset: "hotclips-podcast-studio",
-        alt: "HotClips clip shortlist and timing controls from the creator workflow",
+        alt: "Portrait framing from HotClips podcast brand artwork",
         width: 1672,
         height: 941,
         crop: "right",
@@ -175,7 +171,7 @@ export const creatorProjects = [
     category: "TREND INTELLIGENCE · CREATIVE PRODUCTION",
     cardHeadline: "Find the signal. Build the story.",
     cardDescription:
-      "A creator-led system that carries live trends and their source evidence from discovery through production.",
+      "Follow a trend back to its source, find your angle, and take it into production. Research, story, scenes, and the final cut in one creative workflow.",
     modalHeadline:
       "Trend discovery without losing the source—or the creative thread.",
     story:
@@ -218,9 +214,9 @@ export const creatorProjects = [
     name: "ClauseInk",
     status: "ADDITIONAL SYSTEM",
     category: "LEGAL WORKFLOW · DOCUMENT SYSTEMS",
-    cardHeadline: "Draft contracts without fighting the document.",
+    cardHeadline: "Less document wrestling. More getting it done.",
     cardDescription:
-      "A focused workspace for drafting, reviewing, redlining, collaborating, and exporting polished agreements.",
+      "A calmer workspace for drafting, reviewing, and refining agreements. Keep the clauses, comments, and final document together, from first draft to export.",
     modalHeadline: "Legal drafting designed around the work—not around Word.",
     story:
       "ClauseInk combines guided clause drafting, contextual review, reusable clause libraries, redlining, collaboration, professional page layout, and client-ready Word and PDF export in one focused legal workflow.",
