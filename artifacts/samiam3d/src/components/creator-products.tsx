@@ -123,11 +123,8 @@ export function CreatorProducts() {
       aria-labelledby="creator-products-title"
     >
       <div className="creator-showcase__intro">
-        <h2 id="creator-products-title">My own projects.</h2>
-        <p>
-          I make the worlds, the tools, and the brands around them. These are
-          the ideas I’m building into something you can use.
-        </p>
+        <h2 id="creator-products-title">My applications.</h2>
+        <p>I make the worlds, the tools, and the brands around them.</p>
       </div>
       <nav className="creator-showcase__index" aria-label="Explore my projects">
         {creatorProjects.map((project) => (

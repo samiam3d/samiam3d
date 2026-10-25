@@ -1,0 +1,48 @@
+{
+  "created": "2026-10-24",
+  "mode": "Built-in image_gen tool",
+  "type": "Designed product UI visualizations, not literal app screenshots",
+  "processing": "WebP format conversion only at generated dimensions, quality 92, method 6. No crops, compositing, color changes, or resizes.",
+  "dimensions": {
+    "width": 1672,
+    "height": 941
+  },
+  "notes": [
+    "Brand marks, typography, colors and supported workflows were researched from the original apps. Demo content is illustrative; no real customer data or business performance claims.",
+    "Actual brand assets are retained separately in /assets/brands and used by the portfolio’s HTML headings."
+  ],
+  "application": "Flower Musica",
+  "references": [
+    "https://flowermusica.com/studio",
+    "C:/Repos/samiam3d/artifacts/samiam3d/public/assets/showcase/product-v2/flower-studio-guest.webp",
+    "C:/Repos/samiam3d/artifacts/samiam3d/public/assets/brands/flower-musica-mark.webp",
+    "C:/Repos/flower-musica/src/components/studio/SoundLab.tsx",
+    "C:/Repos/flower-musica/src/components/studio/MusicSketch.tsx",
+    "C:/Repos/flower-musica/src/components/studio/StudioResult.tsx",
+    "C:/Repos/flower-musica/src/components/brand/FlowerMark.tsx"
+  ],
+  "assets": [
+    {
+      "file": "hero.webp",
+      "label": "Sound Lab",
+      "source": "C:/Users/samia/.codex/generated_images/01a17086-cbfd-74e3-800d-0956842771ec/exec-637275a0-8b9e-4641-8dcf-4c438321fd5b.png",
+      "prompt": "Use case: ui-mockup. Produce one striking, polished product UI visualization for the real Flower Musica Studio. Landscape 16:9, target 1672x941, edge-to-edge flat orthographic app UI, no monitor, browser chrome, outside frame, perspective, or marketing headline.\nREFERENCES: Image1 is genuine public Flower Musica Studio interface. Preserve its exact brand and functional UI identity: near-black background, slightly warmer charcoal panels, acid lime #b6ff00, pale lime selection, white and soft neutral text, Manrope typography. Image2 is original canonical flower face logo: preserve its exact eight-petal silhouette, black circular center, lightning-bolt eyes and small curved smile, displayed white as in Image1 header. Keep wordmark exactly Flower Musica with Studio in lime. Absolutely do not draw a generic flower.\nVIEW: Sound Lab, polished demonstration with an existing created audio result. Header brand top left; quiet nav “Studio”, “My Creations”, “Book a Session”, with Studio active. Below clean two-column layout about 52/48, vertically aligned. Left heading “Sound Lab”, subtitle “Shape a sound.” and authentic mode switch “Sound” active pale lime, “Music” inactive. Prompt label “Describe the sound”, input reads “A warm vinyl lift into a clean cinematic impact.” Below tasteful short starting points Transition, Impact, Texture, Atmosphere. Controls Category “Transition”, Duration “3s”, Variations “2”. Energy slider “3/5”. Strong acid lime “Create sound” button. Do not show payment amounts or account credits.\nRight large output panel: small eyebrow OUTPUT, title “Warm vinyl lift”, small “Demo creation” tag. Main visual is a highly detailed lime waveform across near-black audio player: organic waveform grows softly into a decisive impact then decays. Show a circular play button, a refined fine-line timeline, time “00:00 / 00:03”, authentic “Variation 1”, “Variation 2” tabs. Below actions “Save”, “Download”, “Make a variation”. Beneath a quieter saved audio row “Night rain” with small waveform, three-second label. No multitrack editing, no mixing console, no capabilities beyond creating audio, playback, saving, downloading and variations. Gorgeous sound-tool precision; generous spacing, crisp legible short type, real dense waveforms rather than skeletons. No huge logos, no dashboard metrics, no outside decorative photos. The active output waveform should be the striking focal point while branding is faithfully preserved.",
+      "width": 1672,
+      "height": 941,
+      "bytes": 89042,
+      "sha256": "7119c56c42af65c8dab580541cc100c2ecdef287c25a902f5d4a59df2a93582c"
+    },
+    {
+      "file": "detail.webp",
+      "label": "Music Sketch",
+      "source": "C:/Users/samia/.codex/generated_images/01a17086-cbfd-74e3-800d-0956842771ec/exec-a3824ab2-3491-4ad1-91d2-e61b5293bec8.png",
+      "prompt": "Use case: ui-mockup. Create one beautifully polished product UI visualization of the real Flower Musica Studio Music Sketch feature. Landscape 16:9, target 1672x941. Flat orthographic app interface fills image edge to edge, no perspective/device/mockup frame, no outside headline.\nREFERENCES: Image1 is genuine Flower Musica Studio public app, preserve brand and palette exactly: Manrope typography, almost-black/charcoal surfaces, acid lime accents #b6ff00, pale lime active controls and neutral text. Image2 is exact canonical flower face mark; preserve exact eight-petal silhouette with lightning bolt eyes and small curved smile. Use it small white beside exact white Flower Musica and lime Studio wordmark. No generic flower logo.\nVIEW: Music Sketch, carefully designed populated demo state using actual source features. Header leftbrand; right Studio, My Creations, Book a Session. Generous two-column layout with leftcomposer 52% and rightoutput 48%. Heading Music Sketch, subtitle “Find the feeling.” Authentic Sound/Music mode selector with Music active pale lime. Label Describe the music, text “A nocturnal electronic groove with rounded bass and glowing synths.” Below authentic presets “Night Drive” selected, “Cinematic Pulse”, “Warm Soul Texture”, “Ambient Underscore”. Controls clearly aligned: Genre Electronic, Mood Nocturnal, Tempo 100 BPM, Duration 10s, Structure Pulse, Instrumental checked. Energy slider 3/5. Acid lime Create music button.\nRight output: small OUTPUT, title Night Drive, small Demo creation tag. A striking large detailed acid-lime stereo audio waveform stretches horizontally in a wide charcoal player with fine time ticks, playbutton and 00:00 / 00:10. Below short metadata Electronic / Nocturnal / 100 BPM, elegant Variation1 and Variation2 switch, Save and Download and Make a variation controls. Bottom small supporting saved creation row “Warm Soul Texture” with secondary waveform. Keep all actual labels sharply readable, no lorem ipsum, no invented audio mixer, no multitrack timeline, no albumcover art, no charts, no commercial performance claims. Output should feel like an exquisitely crafted real sonic workspace, minimal but expressive, airy with exceptional hierarchy and thin rules.",
+      "refinementPrompt": "Edit this Flower Musica Music Sketch UI image. Preserve every pixel of layout, fonts, brand logo, controls, waveform, all colors and all content except the tiny left portion of bottom-left composer footer. Replace the text “33 credits” with “Draft saved”, and replace the small line “10s · 1 variation” below it with “10s · instrumental”. No other changes. The screenshot is a polished illustrative demo; avoid displaying billing amounts. Keep 1672x941 landscape dimensions.",
+      "originalGeneratedSource": "C:/Users/samia/.codex/generated_images/01a17086-cbfd-74e3-800d-0956842771ec/exec-76e6a498-97a0-4bb1-b886-7dfc30cb8068.png",
+      "width": 1672,
+      "height": 941,
+      "bytes": 107526,
+      "sha256": "2dcbe84625596f790b57529a13436229ad4833638d320c7087a08fcfc5cb1bc6"
+    }
+  ]
+}

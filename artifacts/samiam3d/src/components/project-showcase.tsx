@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { Plus } from "lucide-react";
 import { ProjectBrand } from "@/components/project-brand";
+import { ApplicationGallery } from "@/components/application-gallery";
 import { mindinkViews, mindinkViewSource } from "@/lib/mindink-showcase";
 import {
-  responsiveCreatorAsset,
   type CreatorProject,
   type CreatorProjectId,
 } from "@/lib/creator-projects";
@@ -143,21 +143,15 @@ function VibeMindShowcase(props: ShowcaseProps) {
         />
         <div className="showcase-vibemind__layout">
           <ProjectCopy {...props} />
-          <figure className="showcase-vibemind__screen">
-            <img
-              src="/assets/showcase/vibemind-workspace.webp"
-              alt="VibeMind private alpha demo workspace showing the project conversation and build activity timeline"
-              width="1440"
-              height="900"
-              loading="lazy"
-              decoding="async"
-            />
-            <figcaption>
-              <span>From the brief to the browser.</span>
-              <span>Private alpha · Demo workspace</span>
-            </figcaption>
-          </figure>
+          <p className="showcase-vibemind__note">
+            Your idea.
+            <br />
+            Your app.
+            <br />
+            Your code.
+          </p>
         </div>
+        <ApplicationGallery projectId="vibemind" name={props.project.name} />
         <ol
           className="showcase-vibemind__process"
           aria-label="VibeMind workflow"
@@ -196,32 +190,10 @@ function FlowerShowcase(props: ShowcaseProps) {
             decoding="async"
           />
         </div>
-        <div className="showcase-flower__media">
-          <figure className="showcase-flower__session">
-            <img
-              src="/assets/showcase/product-v2/flower-studio-session.webp"
-              alt="A recording session in the Flower Musica studio"
-              width="1536"
-              height="864"
-              loading="lazy"
-              decoding="async"
-            />
-            <figcaption>Where the sound starts.</figcaption>
-          </figure>
-          <figure className="showcase-flower__studio">
-            <img
-              src="/assets/showcase/product-v2/flower-studio-guest.webp"
-              alt="Flower Musica's live Studio interface for creating music and sound"
-              width="1440"
-              height="1000"
-              loading="lazy"
-              decoding="async"
-            />
-            <figcaption>
-              And where the ideas keep going. <span>Studio · Guest view</span>
-            </figcaption>
-          </figure>
-        </div>
+        <ApplicationGallery
+          projectId="flower-musica"
+          name={props.project.name}
+        />
       </div>
     </section>
   );
@@ -244,20 +216,7 @@ function HotClipsShowcase(props: ShowcaseProps) {
             Great cuts.
           </p>
         </div>
-        <figure className="showcase-hotclips__demo">
-          <img
-            src="/assets/showcase/product-v2/hotclips-product-demo.webp"
-            alt="HotClips public product demo showing found clips, a portrait video preview, and clip review controls"
-            width="1472"
-            height="684"
-            loading="lazy"
-            decoding="async"
-          />
-          <figcaption>
-            <span>Find the moment. Make the cut.</span>
-            <span>HotClips product demo</span>
-          </figcaption>
-        </figure>
+        <ApplicationGallery projectId="hotclips" name={props.project.name} />
       </div>
     </section>
   );
@@ -287,39 +246,7 @@ function TrendInkShowcase(props: ShowcaseProps) {
             decoding="async"
           />
         </div>
-        <div className="showcase-trendink__studios">
-          <figure>
-            <img
-              src="/assets/showcase/product-v2/trendink-scene-studio.webp"
-              alt="TrendInk Scene Studio designed product view with a shot board, cast continuity and camera blocking"
-              width="1536"
-              height="1024"
-              loading="lazy"
-              decoding="async"
-            />
-            <figcaption>
-              <span>01 / Scene Studio</span>
-              <span>Direct every detail.</span>
-            </figcaption>
-          </figure>
-          <figure>
-            <img
-              src="/assets/showcase/product-v2/trendink-edit-studio.webp"
-              alt="TrendInk Edit Studio designed product view with a film preview and editing timeline"
-              width="1536"
-              height="1024"
-              loading="lazy"
-              decoding="async"
-            />
-            <figcaption>
-              <span>02 / Edit Studio</span>
-              <span>Find the rhythm.</span>
-            </figcaption>
-          </figure>
-        </div>
-        <p className="showcase-caption">
-          TrendInk product design · From the shot board to the final cut.
-        </p>
+        <ApplicationGallery projectId="trendink" name={props.project.name} />
       </div>
     </section>
   );
@@ -340,18 +267,8 @@ function ClauseInkShowcase(props: ShowcaseProps) {
         />
         <div className="showcase-clauseink__layout">
           <ProjectCopy {...props} />
-          <figure className="showcase-clauseink__document">
-            <img
-              src={responsiveCreatorAsset("clauseink-editor-live", 1200)}
-              alt="ClauseInk's real contract editor with highlighted clauses and contextual review comments"
-              width="2674"
-              height="2014"
-              loading="lazy"
-              decoding="async"
-            />
-            <figcaption>The document. The review. All in one place.</figcaption>
-          </figure>
         </div>
+        <ApplicationGallery projectId="clauseink" name={props.project.name} />
       </div>
     </section>
   );

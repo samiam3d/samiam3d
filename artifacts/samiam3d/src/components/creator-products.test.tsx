@@ -11,6 +11,10 @@ import { beforeEach, describe, expect, it } from "vitest";
 import { CreatorProducts } from "@/components/creator-products";
 import { creatorProjects } from "@/lib/creator-projects";
 import { mindinkViews } from "@/lib/mindink-showcase";
+import {
+  applicationViews,
+  type ApplicationVisualId,
+} from "@/lib/application-visuals";
 
 const expectedProjects = [
   {
@@ -67,7 +71,7 @@ describe("Project showcases", () => {
 
   it("gives each project its own named section, authentic identity, and index link", () => {
     renderProductLab();
-    const collection = screen.getByRole("region", { name: "My own projects." });
+    const collection = screen.getByRole("region", { name: "My applications." });
     const sections = within(collection).getAllByRole("region");
     const index = within(collection).getByRole("navigation", {
       name: "Explore my projects",
@@ -99,15 +103,14 @@ describe("Project showcases", () => {
     });
   });
 
-  it("identifies the VibeMind demo workspace and original Flower identity", () => {
+  it("identifies the designed VibeMind workspace and original Flower identity", () => {
     renderProductLab();
 
     expect(
       screen.getByRole("img", {
-        name: /VibeMind private alpha.*demo workspace/i,
+        name: /VibeMind Build and preview product visualization/i,
       }),
     ).toBeVisible();
-    expect(screen.getByText("Private alpha · Demo workspace")).toBeVisible();
     expect(
       screen.getByRole("img", {
         name: /Flower Musica's original lightning-eyed flower identity/i,
@@ -133,20 +136,24 @@ describe("Project showcases", () => {
       const view = mindinkViews.find((item) => item.id === id)!;
       const figure = screen.getByRole("figure", { name: view.label });
       expect(figure).toBeVisible();
-      expect(within(figure).getByRole("img", { name: view.alt })).toHaveAttribute(
-        "src",
-        `/assets/showcase/mindink-v2/${id}.webp`,
-      );
-      expect(within(figure).getByRole("heading", { name: view.headline })).toBeVisible();
+      expect(
+        within(figure).getByRole("img", { name: view.alt }),
+      ).toHaveAttribute("src", `/assets/showcase/mindink-v2/${id}.webp`);
+      expect(
+        within(figure).getByRole("heading", { name: view.headline }),
+      ).toBeVisible();
       expect(within(figure).getByText(view.description)).toBeVisible();
       expect(within(figure).getByText("Product visualization")).toBeVisible();
 
       mindinkViews.forEach((item) => {
         const selected = item.id === id;
-        expect(within(switcher).getByRole("button", { name: item.label }))
-          .toHaveAttribute("aria-pressed", String(selected));
+        expect(
+          within(switcher).getByRole("button", { name: item.label }),
+        ).toHaveAttribute("aria-pressed", String(selected));
         if (!selected) {
-          expect(screen.queryByRole("img", { name: item.alt })).not.toBeInTheDocument();
+          expect(
+            screen.queryByRole("img", { name: item.alt }),
+          ).not.toBeInTheDocument();
         }
       });
       expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
@@ -157,7 +164,9 @@ describe("Project showcases", () => {
 
     expectView("branch-canvas");
 
-    const editor = within(switcher).getByRole("button", { name: "Scene Editor" });
+    const editor = within(switcher).getByRole("button", {
+      name: "Scene Editor",
+    });
     editor.focus();
     await user.keyboard("{Enter}");
     expectView("scene-editor");
@@ -166,15 +175,60 @@ describe("Project showcases", () => {
     await user.click(within(switcher).getByRole("button", { name: "Stories" }));
     expectView("stories");
 
-    const movie = within(switcher).getByRole("button", { name: "Movie Creator" });
+    const movie = within(switcher).getByRole("button", {
+      name: "Movie Creator",
+    });
     movie.focus();
     await user.keyboard(" ");
     expectView("movie-creator");
     expect(movie).toHaveFocus();
 
-    await user.click(within(switcher).getByRole("button", { name: "Branch Canvas" }));
+    await user.click(
+      within(switcher).getByRole("button", { name: "Branch Canvas" }),
+    );
     expectView("branch-canvas");
   });
+
+  it.each(expectedProjects.filter((project) => project.id !== "mindink"))(
+    "switches $name product views with the keyboard and keeps other galleries unchanged",
+    async ({ id, name }) => {
+      const user = userEvent.setup();
+      renderProductLab();
+      const [first, second] = applicationViews[id as ApplicationVisualId];
+      const group = screen.getByRole("group", { name: `${name} views` });
+      const [firstButton, secondButton] = within(group).getAllByRole("button");
+      const originalUrl = window.location.href;
+      const untouchedMindInkImage = screen.getByRole("img", {
+        name: /MindInk Branch Canvas product visualization/,
+      });
+      expect(firstButton).toHaveAccessibleName(first.label);
+      expect(firstButton).toHaveAttribute("aria-pressed", "true");
+      expect(screen.getByRole("img", { name: first.alt })).toBeVisible();
+      secondButton.focus();
+      await user.keyboard("{Enter}");
+      expect(secondButton).toHaveFocus();
+      expect(secondButton).toHaveAttribute("aria-pressed", "true");
+      expect(firstButton).toHaveAttribute("aria-pressed", "false");
+      expect(
+        screen.queryByRole("img", { name: first.alt }),
+      ).not.toBeInTheDocument();
+      expect(screen.getByRole("img", { name: second.alt })).toHaveAttribute(
+        "src",
+        `/assets/showcase/apps-v3/${id}/detail.webp`,
+      );
+      expect(
+        screen.getByRole("heading", { name: second.headline }),
+      ).toBeVisible();
+      expect(untouchedMindInkImage).toBeVisible();
+      expect(window.location.href).toBe(originalUrl);
+      expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
+      await user.click(firstButton);
+      expect(screen.getByRole("img", { name: first.alt })).toBeVisible();
+      expect(
+        screen.queryByRole("img", { name: second.alt }),
+      ).not.toBeInTheDocument();
+    },
+  );
 
   it.each(expectedProjects)(
     "opens $name details from its section and writes the project URL",

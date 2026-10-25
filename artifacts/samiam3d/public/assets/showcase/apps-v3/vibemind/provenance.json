@@ -1,0 +1,44 @@
+{
+  "created": "2026-10-24",
+  "mode": "Built-in image_gen tool",
+  "type": "Designed product UI visualizations, not literal app screenshots",
+  "processing": "WebP format conversion only at generated dimensions, quality 92, method 6. No crops, compositing, color changes, or resizes.",
+  "dimensions": {
+    "width": 1672,
+    "height": 941
+  },
+  "notes": [
+    "Brand marks, typography, colors and supported workflows were researched from the original apps. Demo content is illustrative; no real customer data or business performance claims.",
+    "Actual brand assets are retained separately in /assets/brands and used by the portfolio’s HTML headings."
+  ],
+  "application": "VibeMind",
+  "references": [
+    "C:/Repos/samiam3d/artifacts/samiam3d/public/assets/showcase/vibemind-workspace.webp",
+    "C:/Repos/samiam3d/artifacts/samiam3d/public/assets/brands/vibemind-mark.webp",
+    "C:/Repos/project-foundry/components/vibemind/sidebar.tsx",
+    "C:/Repos/project-foundry/components/vibemind/preview-tab.tsx",
+    "C:/Repos/project-foundry/components/vibemind/changes-tab.tsx"
+  ],
+  "assets": [
+    {
+      "file": "hero.webp",
+      "label": "Build & preview",
+      "source": "C:/Users/samia/.codex/generated_images/01a17086-cbfd-74e3-800d-0956842771ec/exec-49c9532a-a230-4a74-80e5-a82fe375d6fa.png",
+      "prompt": "Use case: ui-mockup. Create one polished, exceptionally beautiful product UI visualization for the real VibeMind application. Landscape 16:9, target 1672 x 941 pixels. Entire image is the flat orthographic app UI edge to edge; no physical monitor, no floating window, no marketing headline outside app.\nREFERENCES: Image 1 is the genuine VibeMind app screen, use its actual three-column product architecture and typography/color identity. Image 2 is the exact VibeMind orb brand mark; preserve its blue-purple orb with cyan glow and use it small at top left. Keep precise name VibeMind, with Vibe white and Mind subtle cyan/lilac, in Manrope, never a VM monogram.\nVIEW: Build & preview. Dramatically polish the actual app design into a believable carefully designed portfolio demonstration state. Dark midnight navy and almost-black surfaces, fine purple dividers, luminous purple-to-cyan primary action, calm premium developer tool. Left slim nav 15% width, middle conversation 29%, right working preview 56%. Top left exact orb then VibeMind. Left nav: New Project, Home, Projects, Connections. Active project called northstar. Bottom Settings.\nMiddle header Build together. A short user bubble: “Build a creator workspace with a project library.” Then VibeMind reply “The first version is ready to explore.” A compact checklist with “Project library”, “Working preview”, “Checkpoint saved”. A calm follow-up composer at bottom. These are illustrative demo state, no real business metrics.\nRight header northstar; green small dot “Preview healthy”; real horizontal workbench tabs Preview, Code, Changes, Git, Publish, Activity, with Preview selected. The preview is a beautifully finished warm ivory creator workspace called Northstar: elegant dark serif title “Make room for your next idea.”, small “Your projects” label, three visually rich projects with tasteful abstract clay sculpture photography and bold cobalt editorial design: “Studio notes”, “Field journal”, “New collection”. Include a small contextual sidebar and functional buttons to make it look like real software built by VibeMind. This embedded preview is the only warm ivory region, contrasting beautifully with purple midnight app. Avoid generic dashboard KPI tiles, charts, revenue, skeletons, unreadable dense text. UI spacing intentional, hairline rules, short readable labels, restrained corner radii. Nothing cropped. No invented logo. Show product operating, not empty state.",
+      "width": 1672,
+      "height": 941,
+      "bytes": 122736,
+      "sha256": "da95d599a5a667f783c543efbc98bb07be075242c3a95a200f8bd618409e0395"
+    },
+    {
+      "file": "detail.webp",
+      "label": "Review & recover",
+      "source": "C:/Users/samia/.codex/generated_images/01a17086-cbfd-74e3-800d-0956842771ec/exec-aa4e93c6-886e-4f8d-9a05-c5aeecd4da4f.png",
+      "prompt": "Use case: ui-mockup. Create one polished portfolio product UI visualization of the real VibeMind application, landscape 16:9 1672 x 941 target. Entire image is edge-to-edge flat orthographic software interface, no laptop, perspective or outer presentation frame.\nREFERENCES: Image 1 genuine app screenshot establishes product architecture, exact VibeMind name and navy/purple identity. Image 2 is exact original blue-purple orb brand mark; faithfully keep that mark small beside VibeMind in Manrope top left, Vibe white and Mind cyan/lilac. Do not invent VM logo.\nVIEW: Review & recover, a thoughtfully designed demonstration of real recorded artifacts, activity and checkpoint features. Same three-column layout: slim app nav at left, narrow collaboration conversation at middle, wide workbench on right. Dark midnight navy, fine purple rules, deliberate negative space, precision typography, violet-to-cyan accents. Left: exact brand, New Project, Home, Projects, Connections, active project northstar, Settings.\nMiddle heading Build together. User: “Keep this version before the next round.” VibeMind response: “Checkpoint recorded. Your source is ready to download.” Compact plan summary with three check rows “Plan approved”, “Build complete”, “Validation passed”. Bottom message composer.\nWorkbench top northstar then tabs Preview, Code, Changes, Git, Publish, Activity; Changes selected. Main heading “Your work, kept.” Below a tasteful large outlined checkpoint panel “Private checkpoint recorded” and short text “Review the source or return to this version.” Buttons “Download source ZIP”, “Download manifest”, secondary “Restore checkpoint”. An ordered vertical activity timeline with four clear short stages: Plan approved, Build complete, Validation passed, Checkpoint recorded, each tasteful green check or violet circle and a short one-line explanation. Small “DEMO WORKSPACE” status in corner. A slim file list along right of workbench with app/page.tsx, components/project-library.tsx, styles/globals.css, all readable. The source app supports downloadable source artifacts and restore; this is a polished designed state, not business stats. No charts, no fake revenue/KPIs, no huge floating cards, no decorative cosmic background, no outside headline. Precise functional software UI, no clipped labels.",
+      "width": 1672,
+      "height": 941,
+      "bytes": 123024,
+      "sha256": "5ce91276047a686c361f4cbfe0cb1709fe48503eba63045ee5192e17cf59419c"
+    }
+  ]
+}

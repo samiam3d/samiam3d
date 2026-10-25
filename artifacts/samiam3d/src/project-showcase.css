@@ -38,8 +38,8 @@
 
 .creator-showcase__intro h2 {
   margin: 0;
-  max-width: 9ch;
-  font: 400 clamp(3.6rem, 7vw, 7rem)/0.96 var(--font-brand);
+  max-width: 12ch;
+  font: 400 clamp(2.7rem, 6.5vw, 6.7rem)/0.96 var(--font-brand);
   letter-spacing: -0.055em;
 }
 
@@ -188,7 +188,7 @@
   font-family: "Manrope", sans-serif;
 }
 .project-brand--hotclips {
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: "Manrope", sans-serif;
 }
 .showcase-vibemind .showcase-copy h3,
 .showcase-flower .showcase-copy h3,
@@ -388,7 +388,90 @@
   font-size: 0.68rem;
 }
 
-/* VibeMind: real software, shown at a size you can actually read. */
+/* Large, readable product views, with each application's own color and type. */
+.application-gallery {
+  --gallery-accent: #b8a4ff;
+  padding-block: 2rem 0;
+}
+.application-gallery__toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  border-top: 1px solid color-mix(in srgb, var(--showcase-ink) 18%, transparent);
+  padding-top: 1rem;
+  margin-bottom: 1.5rem;
+}
+.application-gallery__toolbar > p {
+  margin: 0;
+  font-size: 0.85rem;
+  color: var(--showcase-muted);
+}
+.application-gallery__switcher {
+  display: flex;
+  gap: 2rem;
+}
+.application-gallery__switcher button {
+  min-height: 3rem;
+  padding: 0.7rem 0;
+  border: 0;
+  border-bottom: 2px solid transparent;
+  background: none;
+  color: var(--showcase-muted);
+  font:
+    600 0.85rem/1.4 "Manrope",
+    sans-serif;
+  cursor: pointer;
+}
+.application-gallery__switcher button:hover {
+  color: var(--showcase-ink);
+}
+.application-gallery__switcher button[aria-pressed="true"] {
+  color: var(--showcase-ink);
+  border-color: var(--gallery-accent);
+}
+.application-gallery__switcher button:focus-visible {
+  outline: 2px solid var(--gallery-accent);
+  outline-offset: 5px;
+}
+.application-gallery__screen {
+  background: var(--showcase-field);
+  border-radius: 7px;
+  overflow: hidden;
+}
+.application-gallery__screen img {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 1672/941;
+  object-fit: contain;
+}
+.application-gallery__caption {
+  display: flex;
+  justify-content: space-between;
+  gap: 2rem;
+  padding-top: 1.4rem;
+}
+.application-gallery__caption h4 {
+  margin: 0;
+  font:
+    600 1.15rem/1.4 "Manrope",
+    sans-serif;
+  letter-spacing: -0.035em;
+}
+.application-gallery__caption p {
+  max-width: 66ch;
+  margin: 0.5rem 0 0;
+  color: var(--showcase-muted);
+  font-size: 0.85rem;
+  line-height: 1.65;
+}
+.application-gallery__caption > span {
+  flex-shrink: 0;
+  color: var(--showcase-muted);
+  font-size: 0.68rem;
+  padding-top: 0.2rem;
+}
+
 .showcase-vibemind {
   --showcase-field: #1b172a;
   background: var(--showcase-field);
@@ -397,39 +480,32 @@
   padding-bottom: 0;
 }
 .showcase-vibemind__layout {
-  display: grid;
-  grid-template-columns: 0.8fr 1.7fr;
-  align-items: center;
-  gap: clamp(2rem, 5vw, 5rem);
-  padding: 2rem 0 4.5rem;
-}
-.showcase-vibemind .showcase-copy h3 {
-  font-size: clamp(2.5rem, 3.4vw, 3.75rem);
-  max-width: 12ch;
-}
-.showcase-vibemind__screen {
-  min-width: 0;
-}
-.showcase-vibemind__screen img {
-  width: 100%;
-  height: auto;
-  border: 1px solid #5c4d79;
-  border-radius: 7px;
-  box-shadow: 0 20px 60px #09051166;
-}
-.showcase-vibemind__screen figcaption {
   display: flex;
   justify-content: space-between;
-  gap: 1rem;
-  margin-top: 1rem;
-  color: #b4acc9;
-  font-size: 0.72rem;
+  align-items: end;
+  gap: 3rem;
+  padding: 1rem 0 1.5rem;
+}
+.showcase-vibemind .showcase-copy h3 {
+  max-width: 18ch;
+}
+.showcase-vibemind .showcase-copy > p {
+  max-width: 57ch;
+}
+.showcase-vibemind__note {
+  margin: 0 0 0.5rem;
+  color: #b9ace9;
+  font:
+    500 1.2rem/1.6 "Manrope",
+    sans-serif;
+  text-align: right;
+  flex-shrink: 0;
 }
 .showcase-vibemind__process {
   display: flex;
   justify-content: space-between;
   gap: 1rem;
-  margin: 0;
+  margin: 3rem 0 0;
   padding: 1.8rem 0;
   list-style: none;
   border-top: 1px solid #51435f;
@@ -439,7 +515,6 @@
   letter-spacing: -0.05em;
 }
 
-/* Flower's original identity and the real recording studio. */
 .showcase-flower {
   --showcase-field: #13150d;
   --showcase-muted: #c0c7ad;
@@ -456,7 +531,7 @@
   grid-template-columns: 1fr 0.45fr;
   align-items: center;
   gap: 4rem;
-  padding: 0 0 3rem;
+  padding: 0 0 1.5rem;
 }
 .showcase-flower .showcase-copy h3 {
   max-width: 16ch;
@@ -467,55 +542,12 @@
   justify-self: end;
   filter: brightness(0) invert(1);
 }
-.showcase-flower__media {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 2rem;
-  align-items: start;
-}
-.showcase-flower__session {
-  grid-column: 1 / -1;
-}
-.showcase-flower__session img {
-  width: 100%;
-  height: auto;
-  aspect-ratio: 16/7;
-  object-fit: cover;
-  object-position: 66% 50%;
-}
-.showcase-flower__session figcaption {
-  padding: 1rem 0;
-  color: #d4f1ab;
-  font-size: 0.85rem;
-}
-.showcase-flower__studio {
-  grid-column: 2;
-  margin-top: -10rem !important;
-  position: relative;
-  box-shadow: 0 15px 50px #0005;
-}
-.showcase-flower__studio img {
-  width: 100%;
-  height: auto;
-  border: 1px solid #47552d;
-  border-radius: 5px;
-}
-.showcase-flower__studio figcaption {
-  display: flex;
-  justify-content: space-between;
-  gap: 1rem;
-  padding-top: 1rem;
-  font-size: 0.75rem;
-  color: #b3c29e;
-}
-.showcase-flower__studio figcaption span {
-  flex-shrink: 0;
-  font-size: 0.65rem;
+.showcase-flower .application-gallery {
+  --gallery-accent: #b5ff27;
 }
 
-/* HotClips: its native review workflow, shown whole. */
 .showcase-hotclips {
-  --showcase-field: #071e28;
+  --showcase-field: #0a141c;
   --showcase-muted: #aec8d3;
   background: var(--showcase-field);
 }
@@ -527,13 +559,14 @@
   justify-content: space-between;
   align-items: end;
   gap: 3rem;
-  margin: 0 0 3rem;
+  margin: 0 0 1.5rem;
 }
 .showcase-hotclips .showcase-copy {
   max-width: 52rem;
 }
 .showcase-hotclips .showcase-copy h3 {
   max-width: 19ch;
+  font-family: "Manrope", sans-serif;
 }
 .showcase-hotclips .showcase-copy > p {
   max-width: 58ch;
@@ -541,26 +574,15 @@
 .showcase-hotclips__statement {
   margin: 0 0 0.5rem;
   flex-shrink: 0;
-  color: #38d1f1;
+  color: #55bdf8;
   font-size: 1rem;
   line-height: 1.6;
   text-align: right;
 }
-.showcase-hotclips__demo img {
-  width: 100%;
-  height: auto;
-  border-radius: 5px;
-}
-.showcase-hotclips__demo figcaption {
-  display: flex;
-  justify-content: space-between;
-  gap: 1rem;
-  padding-top: 1rem;
-  color: #9ebdc9;
-  font-size: 0.8rem;
+.showcase-hotclips .application-gallery {
+  --gallery-accent: #55bdf8;
 }
 
-/* TrendInk: the product's own aperture and studio artwork, without added effects. */
 .showcase-trendink {
   --showcase-field: #121315;
   --showcase-muted: #bfc0c4;
@@ -574,6 +596,7 @@
   grid-template-columns: 1fr 0.5fr;
   align-items: center;
   gap: 5rem;
+  padding-bottom: 1.5rem;
 }
 .showcase-trendink .showcase-copy h3 {
   max-width: 17ch;
@@ -582,34 +605,13 @@
   max-width: 55ch;
 }
 .showcase-trendink__aperture {
-  width: min(100%, 21rem);
+  width: min(100%, 18rem);
   justify-self: center;
 }
-.showcase-trendink__studios {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 1.5rem;
-  padding-top: 3rem;
-}
-.showcase-trendink__studios img {
-  width: 100%;
-  height: auto;
-  border-radius: 5px;
-  border: 1px solid #33363a;
-}
-.showcase-trendink__studios figcaption {
-  display: flex;
-  justify-content: space-between;
-  gap: 1rem;
-  margin-top: 1rem;
-  color: #c0c1c6;
-  font-size: 0.75rem;
-}
-.showcase-trendink__studios figcaption span:first-child {
-  color: #f0f0f2;
+.showcase-trendink .application-gallery {
+  --gallery-accent: #ff694e;
 }
 
-/* ClauseInk: an actual document on a quiet, paper-colored desk. */
 .showcase-clauseink {
   --showcase-field: #eaf0f5;
   --showcase-ink: #182845;
@@ -617,35 +619,24 @@
   background: var(--showcase-field);
 }
 .showcase-clauseink .showcase-inner {
-  padding-bottom: 4.5rem;
+  padding-bottom: 4rem;
 }
 .showcase-clauseink__layout {
-  display: grid;
-  grid-template-columns: 0.8fr 1.3fr;
-  align-items: center;
-  gap: clamp(2rem, 6vw, 6rem);
-  padding-top: 1.5rem;
+  padding: 1rem 0 1.5rem;
 }
 .showcase-clauseink .showcase-copy h3 {
-  font-size: clamp(2.5rem, 3.8vw, 4rem);
-  max-width: 13ch;
+  max-width: 23ch;
+  font-family: "Inter", sans-serif;
+  font-size: clamp(2.5rem, 4vw, 4.5rem);
 }
-.showcase-clauseink__document {
-  min-width: 0;
-  transform: rotate(-1deg);
+.showcase-clauseink .showcase-copy > p {
+  max-width: 61ch;
 }
-.showcase-clauseink__document img {
-  width: 100%;
-  height: auto;
-  border: 1px solid #cfd8e2;
-  border-radius: 5px;
-  box-shadow: 0 22px 40px -18px #223f6b40;
+.showcase-clauseink .application-gallery {
+  --gallery-accent: #2454ff;
 }
-.showcase-clauseink__document figcaption {
-  margin-top: 1.3rem;
-  color: #566981;
-  font-size: 0.8rem;
-  text-align: center;
+.showcase-clauseink .application-gallery__screen {
+  border: 1px solid #cbd5e5;
 }
 
 /* The same genuine identities carry into the existing accessible detail view. */
@@ -784,22 +775,6 @@
     grid-template-columns: 1fr;
     gap: 2.5rem;
   }
-  .showcase-vibemind .showcase-copy {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    column-gap: 3rem;
-    align-items: start;
-  }
-  .showcase-vibemind .showcase-copy h3 {
-    grid-row: span 2;
-    max-width: 14ch;
-  }
-  .showcase-vibemind .showcase-copy > p {
-    margin-top: 0;
-  }
-  .showcase-vibemind .showcase-action {
-    justify-self: start;
-  }
   .showcase-clauseink__layout {
     grid-template-columns: 1fr 1.2fr;
     gap: 2rem;
@@ -813,15 +788,45 @@
   .showcase-studio__switcher {
     justify-content: space-between;
   }
-  .showcase-flower__studio {
-    margin-top: -6rem !important;
-  }
-  .showcase-flower__studio figcaption {
-    flex-direction: column;
-    gap: 0.4rem;
-  }
 }
 @media (max-width: 700px) {
+  .creator-showcase__intro h2 {
+    font-size: clamp(2.7rem, 8vw, 4rem);
+  }
+  .application-gallery {
+    padding-top: 1rem;
+  }
+  .application-gallery__toolbar {
+    display: block;
+  }
+  .application-gallery__toolbar > p {
+    margin-bottom: 0.6rem;
+  }
+  .application-gallery__switcher {
+    gap: 1.25rem;
+  }
+  .application-gallery__switcher button {
+    font-size: 0.78rem;
+  }
+  .application-gallery__caption {
+    display: block;
+  }
+  .application-gallery__caption h4 {
+    font-size: 1.05rem;
+  }
+  .application-gallery__caption p {
+    font-size: 0.8rem;
+  }
+  .application-gallery__caption > span {
+    display: block;
+    margin-top: 0.8rem;
+  }
+  .showcase-vibemind__layout {
+    display: block;
+  }
+  .showcase-vibemind__note {
+    display: none;
+  }
   .builder-method__intro {
     grid-template-columns: minmax(0, 1fr);
   }
@@ -942,16 +947,6 @@
     padding-block: 1rem 2.5rem;
     gap: 2.5rem;
   }
-  .showcase-vibemind .showcase-copy {
-    display: block;
-  }
-  .showcase-vibemind .showcase-copy > p {
-    margin-top: 1.25rem;
-  }
-  .showcase-vibemind__screen figcaption {
-    flex-direction: column;
-    gap: 0.3rem;
-  }
   .showcase-vibemind__process {
     flex-wrap: wrap;
     padding-block: 1.25rem;
@@ -965,29 +960,12 @@
   .showcase-flower__identity {
     display: none !important;
   }
-  .showcase-flower__media {
-    display: block;
-  }
-  .showcase-flower__session img {
-    aspect-ratio: 4/3;
-  }
-  .showcase-flower__studio {
-    margin-top: 1.5rem !important;
-  }
-  .showcase-flower__studio figcaption {
-    font-size: 0.7rem;
-  }
   .showcase-hotclips__heading {
     display: block;
     margin-bottom: 2rem;
   }
   .showcase-hotclips__statement {
     display: none;
-  }
-  .showcase-hotclips__demo figcaption {
-    flex-direction: column;
-    gap: 0.4rem;
-    font-size: 0.7rem;
   }
   .showcase-flower .showcase-inner,
   .showcase-hotclips .showcase-inner,
@@ -1006,14 +984,6 @@
   .showcase-trendink__aperture {
     display: none !important;
   }
-  .showcase-trendink__studios {
-    grid-template-columns: 1fr;
-    padding-top: 2rem;
-    gap: 2rem;
-  }
-  .showcase-trendink__studios figcaption {
-    font-size: 0.7rem;
-  }
   .showcase-clauseink__layout {
     grid-template-columns: 1fr;
     gap: 2.5rem;
@@ -1021,9 +991,6 @@
   }
   .showcase-clauseink .showcase-copy h3 {
     max-width: 14ch;
-  }
-  .showcase-clauseink__document {
-    transform: none;
   }
   .project-modal .project-brand {
     font-size: 1.5rem;
@@ -1041,4 +1008,11 @@
   .showcase-action {
     transition: none;
   }
+}
+
+.project-modal__media:has(.project-capture--clauseink) {
+  background: #eaf0f5;
+}
+.project-capture--clauseink figcaption {
+  color: #4c5d73;
 }

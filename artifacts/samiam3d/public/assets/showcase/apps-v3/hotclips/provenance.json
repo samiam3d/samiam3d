@@ -1,0 +1,38 @@
+{
+  "description": "Designed product visualizations based on the owner's actual application and authentic brand references. These are not literal screenshots. Fictional sample media and documents.",
+  "createdAt": "2026-10-24",
+  "toolMode": "Built-in image_gen; one call per asset; one targeted text correction to ClauseInk version comparison.",
+  "sourceEvidence": [
+    "C:/Repos/hotclips/src/styles.css: Manrope heading/brand typography, DM Sans body, #08090b canvas, #55bdf8 signal",
+    "C:/Repos/hotclips/src/App.tsx: Producer Room review; keep/maybe/skip decisions; transcript; source boundaries; format; dead-air trimming",
+    "C:/Repos/hotclips-website/public/hotclips-mark-blue.png: authentic complete flame/waveform logo"
+  ],
+  "assets": [
+    {
+      "file": "hero.webp",
+      "label": "Producer Room",
+      "width": 1672,
+      "height": 941,
+      "sourceOriginal": "C:/Users/samia/.codex/generated_images/01a17086-fa1e-7820-89a7-55a154e4bdd8/exec-92af4581-d97d-419f-8bdf-c3319cdb5af3.png",
+      "references": [
+        "C:/Repos/samiam3d/artifacts/samiam3d/public/assets/showcase/product-v2/hotclips-product-demo.webp",
+        "C:/Repos/samiam3d/artifacts/samiam3d/public/assets/brands/hotclips-mark.webp"
+      ],
+      "prompt": "Use case: ui-mockup. Asset type: premium portfolio product visualization of the real HotClips application. Generate ONE complete 16:9 landscape app screenshot-style design, 2048x1152, edge-to-edge orthographic desktop UI, no outer margins or browser/device frame. Reference image 1 is the real HotClips product demo, reference 2 is the EXACT cyan flame/waveform logo: preserve this mark and HotClips spelling faithfully, do not invent a logo. Build a visually stunning refined version of its actual Producer Room review workflow, with excellent crisp readable typography and restrained product design, not a dashboard template. Actual app palette: near-black #08090b canvas, charcoal #12151a panels, hairline #2a2f37 dividers, pale #f4f2ed text, electric cyan-blue #55bdf8 action and selection, mint #62d7a3 review status. Actual Manrope bold headings and DM Sans body. Layout: compact left navigation 175px with genuine logo and HotClips wordmark, selected Producer Room, other items Projects and Show settings. Topbar title \"Producer Room\" with smaller fictional episode \"The creative process · Demo episode\", cyan button \"Export approved clips\". Three-column main work area. Left 265px panel \"Found clips\" with three compelling clip rows, thumbnail and time, selected \"Start before you're ready\", below \"The first honest draft\" and \"Make room for the unexpected\". Middle is dominant finely lit photorealistic vertical 9:16 podcast video of a fictional adult woman in a dark jacket wearing studio headphones beside a silver broadcast microphone, warm wood and deep teal bokeh background. Natural editorial cinematography, expressive speaking pose, hands anatomical. Simple accurate caption on video: \"Start before you're ready.\" Video has clean playhead controls 00:18 / 00:42, one cyan playback line. Right spacious inspector title \"Start before you're ready\", chips 00:42 and 9:16, compact \"Transcript\" section with three timed spoken lines, selected evidence subtly cyan. Exact readable text: \"00:12 You learn by making the first version.\", \"00:18 Start before you're ready.\", \"00:25 The real work begins when you share it.\" A restrained green check row \"Transcript checked\". Bottom right three clear buttons \"Keep\", \"Maybe\", \"Skip\". Bottom across content a slim actual episode speech waveform with cyan selected clip interval and time ticks. Visual hierarchy: video large and beautiful, substantial clean UI with real-purpose controls, crisp every label. No performance numbers, viral scores, invented analytics, floating objects, cosmic background, heavy glow, marketing headline, laptop, hands outside video, stock logo, giant rounded cards. This is a designed product visualization based on the app, using fictional sample media.",
+      "optimization": "Original dimensions retained; WebP encoding at quality 91, method 6. No cropping, compositing or redraw."
+    },
+    {
+      "file": "detail.webp",
+      "label": "Make the cut",
+      "width": 1672,
+      "height": 941,
+      "sourceOriginal": "C:/Users/samia/.codex/generated_images/01a17086-fa1e-7820-89a7-55a154e4bdd8/exec-e18723ec-d621-406e-be71-bfad1b806a5a.png",
+      "references": [
+        "C:/Repos/samiam3d/artifacts/samiam3d/public/assets/showcase/product-v2/hotclips-product-demo.webp",
+        "C:/Repos/samiam3d/artifacts/samiam3d/public/assets/brands/hotclips-mark.webp"
+      ],
+      "prompt": "Use case: ui-mockup. Asset type: premium real HotClips product visualization showing precision clip adjustment. Generate ONE complete 16:9 landscape 2048x1152, flat orthographic desktop app UI fills image edge-to-edge, no browser hardware or external frame. Reference 1 is genuine HotClips product review UI, reference 2 is original logo. Preserve exact cyan flame/waveform mark and HotClips name in top-left header. This is the same real app as reference with polished layout and actual supported functions: reviewing transcript-grounded clips, source start/end controls, trimming dead air, preview captions and selecting export aspect ratio. Brand palette #08090b canvas, #12151a charcoal panels, #2a2f37 thin borders, #f4f2ed text, #55bdf8 cyan-blue highlights. Manrope headings and DM Sans body. Top header logo HotClips, breadcrumb \"Producer Room / Make the cut\", project \"The creative process · Demo\". Right button \"Save adjustment\". Slim far-left icon navigation. Main two-column workspace: left 58% is a large widescreen source-video preview of a fictional adult woman in headphones seated beside studio microphone, dark jacket, warm wood and deep teal studio bokeh. Overlay a tasteful narrow 9:16 crop-guide in cyan showing framing. Beneath it a clear wide accurate source audio waveform timeline with two cyan range handles, selected interval 00:12 to 00:54, white vertical playhead, and small filmstrip of five real-looking frames. A compact transport row play icon, \"00:18 / 00:42\", minus/plus zoom. Right 37% panel \"Adjust this clip\", two tabs \"Boundaries\" selected and \"Transcript\". Start 00:12.000 and End 00:54.000 actual numeric fields. \"Format\" controls \"9:16\" selected, \"1:1\", \"16:9\". A small vertical preview thumbnail using same speaker with one accurate white caption: \"Start before you're ready.\" Then short highlighted transcript with sentences \"You learn by making the first version.\" and \"Start before you're ready.\" Clear toggled \"Trim dead air\" control, supportive sentence \"Tighten the opening and ending.\" Bottom unobtrusive \"Keep original\" secondary button and \"Save adjustment\" cyan primary. Careful authentic professional video-production interface, crisp icons, readable meaningful text, balanced spacing. No invented subtitles style editor, AI effects, performance scores, viral analytics, dashboards, marketing slogans, gradient backdrop, floating screens, perspective, device frames. All source content is fictional demo media.",
+      "optimization": "Original dimensions retained; WebP encoding at quality 91, method 6. No cropping, compositing or redraw."
+    }
+  ]
+}
