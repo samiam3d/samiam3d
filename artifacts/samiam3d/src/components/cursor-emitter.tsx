@@ -1,15 +1,8 @@
 import { useEffect, useRef } from "react";
 
-const minimumPaintDistance = 42;
-const maximumPaintStamps = 48;
-// Keep the persistent paint comfortably larger than the wordmark height so the
-// rounded edge of the D is covered when the draw pass reaches it.
-const revealRadius = 208;
-
 /**
- * A deliberately small cursor layer. The old cursor emitted animated letter
- * spans on every pointer movement; this keeps only the single blue glass dot
- * and the hero's separate, intentional draw-to-reveal interaction.
+ * A blue glass cursor and a soft, transient spotlight on the hero wordmark.
+ * Both layers follow pointer movement in a single animation frame.
  */
 export function CursorEmitter() {
   const cursorRef = useRef<HTMLDivElement>(null);
@@ -26,12 +19,7 @@ export function CursorEmitter() {
     const heroRevealContent = heroTitle?.querySelector<HTMLElement>(
       ".hero__reveal-content",
     );
-    const heroPaintLayer = heroTitle?.querySelector<HTMLElement>(
-      ".hero__paint-layer",
-    );
-    const heroPaintSource = heroRevealContent?.querySelector<HTMLElement>(
-      ".hero__sheen",
-    );
+    const heroGlow = heroTitle?.querySelector<HTMLElement>(".hero__glow");
 
     document.documentElement.classList.add("has-custom-cursor");
 
@@ -40,50 +28,20 @@ export function CursorEmitter() {
     let pendingPointerX = -100;
     let pendingPointerY = -100;
     let heroRect = heroTitle?.getBoundingClientRect() ?? null;
+    let revealRadius = (heroReveal?.offsetWidth ?? 416) / 2;
     let hasPendingPointer = false;
     let isOverHero = false;
     let activeTouchId: number | null = null;
-    let paintStampCount = 0;
-    let lastPaintX = -100;
-    let lastPaintY = -100;
 
     const refreshHeroBounds = () => {
       boundsFrame = 0;
       heroRect = heroTitle?.getBoundingClientRect() ?? null;
+      revealRadius = (heroReveal?.offsetWidth ?? 416) / 2;
     };
 
     const scheduleHeroBoundsRefresh = () => {
       if (!heroTitle || boundsFrame) return;
       boundsFrame = window.requestAnimationFrame(refreshHeroBounds);
-    };
-
-    const addPaintStamp = (localX: number, localY: number) => {
-      if (!heroPaintLayer || !heroPaintSource) return;
-      if (paintStampCount >= maximumPaintStamps) return;
-
-      const distance = Math.hypot(localX - lastPaintX, localY - lastPaintY);
-      if (distance < minimumPaintDistance && paintStampCount > 0) return;
-
-      const stamp = document.createElement("span");
-      stamp.className = "hero__reveal-stamp";
-      stamp.style.left = `${localX - revealRadius}px`;
-      stamp.style.top = `${localY - revealRadius}px`;
-
-      const content = document.createElement("span");
-      content.className = "hero__reveal-content";
-      // Persistent stamps only keep the bright glass finish. Repeating the
-      // offset depth layer causes dark seams where painted circles overlap.
-      const sheen = heroPaintSource.cloneNode(true) as HTMLElement;
-      // The sheen must size its wrapper after the in-flow depth is removed.
-      sheen.style.position = "relative";
-      content.append(sheen);
-      content.style.transform = `translate3d(${-localX + revealRadius}px, ${-localY + revealRadius}px, 0)`;
-      stamp.append(content);
-      heroPaintLayer.append(stamp);
-
-      paintStampCount += 1;
-      lastPaintX = localX;
-      lastPaintY = localY;
     };
 
     const setHeroReaction = (clientX: number, clientY: number) => {
@@ -98,9 +56,10 @@ export function CursorEmitter() {
       if (nextIsOverHero) {
         const localX = clientX - heroRect.left;
         const localY = clientY - heroRect.top;
-        heroReveal.style.transform = `translate3d(${localX - revealRadius}px, ${localY - revealRadius}px, 0)`;
+        const spotlightTransform = `translate3d(${localX - revealRadius}px, ${localY - revealRadius}px, 0)`;
+        heroReveal.style.transform = spotlightTransform;
+        if (heroGlow) heroGlow.style.transform = spotlightTransform;
         heroRevealContent.style.transform = `translate3d(${-localX + revealRadius}px, ${-localY + revealRadius}px, 0)`;
-        addPaintStamp(localX, localY);
       }
 
       if (nextIsOverHero !== isOverHero) {
@@ -117,6 +76,7 @@ export function CursorEmitter() {
 
       const pointerX = pendingPointerX;
       const pointerY = pendingPointerY;
+      cursor.classList.remove("is-hidden");
       cursor.style.transform = `translate3d(${pointerX}px, ${pointerY}px, 0)`;
       setHeroReaction(pointerX, pointerY);
     };
@@ -169,6 +129,7 @@ export function CursorEmitter() {
     };
 
     const handlePointerLeave = () => {
+      activeTouchId = null;
       hasPendingPointer = false;
       cursor.classList.add("is-hidden");
       if (isOverHero) {

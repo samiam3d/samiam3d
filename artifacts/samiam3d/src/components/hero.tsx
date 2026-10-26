@@ -22,7 +22,7 @@ export function Hero({ title = "samiam3D" }: HeroProps) {
           <span className="hero__layer hero__face" aria-hidden="true">
             <HeroWordmark />
           </span>
-          <span className="hero__paint-layer" aria-hidden="true" />
+          <span className="hero__glow" aria-hidden="true" />
           <span className="hero__reveal" aria-hidden="true">
             <span className="hero__reveal-content">
               <span className="hero__layer hero__depth">
