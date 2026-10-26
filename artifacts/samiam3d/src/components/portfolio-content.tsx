@@ -10,21 +10,23 @@ import * as Dialog from "@radix-ui/react-dialog";
 import { portfolioHtml } from "@/lib/portfolio-content";
 import { preparePortfolioLayout } from "@/lib/prepare-portfolio-layout";
 
-type PortfolioImage = {
+export type PortfolioImage = {
   alt: string;
   src: string;
 };
 
-function ImageLightbox({
+export function ImageLightbox({
   images,
   activeIndex,
   onChange,
   onClose,
+  returnFocusTo,
 }: {
   images: PortfolioImage[];
   activeIndex: number;
   onChange: (index: number) => void;
   onClose: () => void;
+  returnFocusTo?: HTMLElement | null;
 }) {
   const touchStartX = useRef<number | null>(null);
   const activeImage = images[activeIndex];
@@ -61,7 +63,15 @@ function ImageLightbox({
     >
       <Dialog.Portal>
         <Dialog.Overlay className="lightbox-backdrop" />
-        <Dialog.Content className="lightbox">
+        <Dialog.Content
+          className="lightbox"
+          onCloseAutoFocus={(event) => {
+            if (returnFocusTo?.isConnected) {
+              event.preventDefault();
+              returnFocusTo.focus();
+            }
+          }}
+        >
           <Dialog.Title className="sr-only">
             Portfolio image viewer
           </Dialog.Title>

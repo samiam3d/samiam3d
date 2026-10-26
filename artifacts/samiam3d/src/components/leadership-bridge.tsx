@@ -1,36 +1,21 @@
-const companies = ["Mattel", "Tales", "EA / Visceral", "Bigpoint", "2K"] as const;
+const workIndex = [
+  ["Mattel", "mattel"],
+  ["Tales", "tales"],
+  ["EA / Visceral", "ea-visceral"],
+  ["Bigpoint", "bigpoint"],
+  ["2K", "visual-concepts"],
+] as const;
 
 export function LeadershipBridge() {
   return (
-    <section
-      id="leadership"
-      className="leadership-bridge"
-      aria-labelledby="leadership-bridge-title"
-    >
-      <div className="leadership-bridge__inner">
-        <p className="leadership-bridge__eyebrow">
-          Built independently. Proven at scale.
-        </p>
-        <div className="leadership-bridge__statement">
-          <h2 id="leadership-bridge-title">
-            The scale changed. The method did not.
-          </h2>
-          <div>
-            <p>
-              The ventures above are the founder-scale version of the work I
-              have done throughout my career: turn ambiguity into a clear
-              creative vision, build the system around it, align
-              multidisciplinary teams, and carry the work through production.
-            </p>
-            <a href="#work">Explore leadership work</a>
-          </div>
-        </div>
-        <ul className="leadership-bridge__companies" aria-label="Selected companies">
-          {companies.map((company) => (
-            <li key={company}>{company}</li>
-          ))}
-        </ul>
+    <div id="leadership" className="career-introduction">
+      <div className="career-introduction__heading">
+        <h2 id="leadership-work-title">From Hot Wheels<br />to Hardline.</h2>
+        <p>Game worlds, interactive stories, and the teams behind them. Selected work from my career in art direction and production.</p>
       </div>
-    </section>
+      <nav aria-label="Explore career work">
+        {workIndex.map(([name, id]) => <a href={`#${id}`} key={id}>{name}</a>)}
+      </nav>
+    </div>
   );
 }

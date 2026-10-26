@@ -6,6 +6,7 @@ import "./index.css";
 import "./portfolio-refresh.css";
 import "./portfolio-refresh-overrides.css";
 import "./project-showcase.css";
+import "./leadership-work.css";
 
 // /games is a standalone static page; if the host ever falls back to the app for it, hand off to the file.
 if (window.location.pathname.replace(/\/$/, "") === "/games") {

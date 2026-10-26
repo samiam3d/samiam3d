@@ -1,0 +1,493 @@
+.career-work {
+  background: #11171c;
+  scroll-margin-top: 0;
+}
+
+.career-introduction {
+  width: min(calc(100% - var(--page-gutter) * 2), 88rem);
+  margin-inline: auto;
+  padding-block: clamp(3rem, 5vw, 5rem) 0;
+  font-family: "Inter", sans-serif;
+  scroll-margin-top: 0;
+}
+
+.career-introduction__heading {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 4rem;
+}
+
+.career-introduction h2 {
+  margin: 0;
+  font: 600 clamp(3rem, 5vw, 4.8rem)/1.08 "Manrope", sans-serif;
+  letter-spacing: -0.06em;
+}
+
+.career-introduction__heading > p {
+  max-width: 36ch;
+  margin: 0 0 0.4rem;
+  font-size: 1.1rem;
+  line-height: 1.75;
+  color: #a8b7c0;
+}
+
+.career-introduction nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem 3rem;
+  padding-block: 2.5rem 1.5rem;
+}
+
+.career-introduction nav a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2.75rem;
+  color: #d1dde4;
+  font-size: 1rem;
+  text-decoration: none;
+}
+
+.career-introduction nav a:hover {
+  text-decoration: underline;
+  text-underline-offset: 0.4rem;
+}
+
+.career-introduction a:focus-visible {
+  outline: 3px solid #87bfda;
+  outline-offset: 5px;
+}
+
+.leadership-work {
+  --work-paper: #f3f6f7;
+  --work-muted: #a8b7c0;
+  --work-focus: #87bfda;
+  width: min(calc(100% - var(--page-gutter) * 2), 88rem);
+  margin-inline: auto;
+  color: var(--work-paper);
+  font-family: "Inter", sans-serif;
+}
+
+.leadership-work__entry,
+.leadership-case {
+  scroll-margin-top: 0;
+}
+
+.leadership-case {
+  padding-block: clamp(3.5rem, 7vw, 7.5rem);
+  border-top: 1px solid rgb(168 183 192 / 20%);
+}
+
+.leadership-work__entry:first-child .leadership-case {
+  padding-top: 0;
+  border-top: 0;
+}
+
+.leadership-case__header {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+  align-items: end;
+  gap: clamp(2rem, 6vw, 6rem);
+  margin-bottom: clamp(1.8rem, 3.5vw, 3.4rem);
+}
+
+.leadership-case__studio {
+  margin: 0 0 0.8rem;
+  color: var(--work-muted);
+  font-size: 1rem;
+  font-weight: 450;
+  line-height: 1.5;
+}
+
+.leadership-case__heading h3 {
+  max-width: 16ch;
+  margin: 0;
+  color: var(--work-paper);
+  font-family: "Manrope", sans-serif;
+  font-size: clamp(2.3rem, 4.5vw, 4.7rem);
+  font-weight: 600;
+  line-height: 1.08;
+  letter-spacing: -0.055em;
+  text-wrap: balance;
+}
+
+.leadership-case__intro > p {
+  max-width: 58ch;
+  margin: 0;
+  color: var(--work-muted);
+  font-size: clamp(1rem, 1.2vw, 1.12rem);
+  line-height: 1.75;
+}
+
+.leadership-case__intro > .leadership-case__role {
+  margin-bottom: 0.65rem;
+  color: var(--work-paper);
+  font-weight: 600;
+  line-height: 1.5;
+}
+
+.leadership-case__stage {
+  display: grid;
+  gap: clamp(0.7rem, 1.6vw, 1.5rem);
+}
+
+.leadership-artwork {
+  min-width: 0;
+  margin: 0;
+}
+
+.leadership-artwork__open {
+  position: relative;
+  display: block;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  border: 0;
+  border-radius: 0;
+  background: #10202a;
+  color: #f3f6f7;
+  cursor: zoom-in;
+}
+
+.leadership-artwork__open img {
+  display: block;
+  width: 100%;
+  height: auto;
+  margin: 0;
+}
+
+.leadership-artwork__expand {
+  position: absolute;
+  right: 0.6rem;
+  bottom: 0.6rem;
+  display: grid;
+  width: 2rem;
+  height: 2rem;
+  place-items: center;
+  border: 1px solid rgb(243 246 247 / 30%);
+  background: rgb(17 23 28 / 85%);
+  opacity: 0;
+  transition: opacity 160ms ease;
+}
+
+.leadership-artwork__open:hover .leadership-artwork__expand,
+.leadership-artwork__open:focus-visible .leadership-artwork__expand {
+  opacity: 1;
+}
+
+.leadership-artwork__open:focus-visible,
+.leadership-archive > summary:focus-visible,
+.leadership-video button:focus-visible {
+  outline: 3px solid var(--work-focus);
+  outline-offset: 5px;
+}
+
+.leadership-artwork figcaption,
+.leadership-video figcaption {
+  padding-top: 0.7rem;
+  color: var(--work-muted);
+  font-size: 0.78rem;
+  line-height: 1.6;
+}
+
+.leadership-artwork__credit {
+  display: block;
+  margin-top: 0.25rem;
+  color: var(--work-muted);
+}
+
+.leadership-case__credit {
+  max-width: 90ch;
+  margin: 1.6rem 0 0;
+  color: var(--work-muted);
+  font-size: 0.85rem;
+  line-height: 1.65;
+}
+
+.leadership-case__stage--mattel {
+  grid-template-columns: minmax(0, 3.6fr) minmax(0, 1fr);
+  align-items: start;
+}
+
+.leadership-case__stage--tales {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  row-gap: 2rem;
+}
+
+.leadership-case__stage--tales > :nth-child(n + 5) {
+  grid-column: span 2;
+}
+
+.leadership-case__stage--direction {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  row-gap: 2rem;
+}
+
+.leadership-case__stage--direction > :first-child {
+  grid-column: 1 / -1;
+}
+
+.leadership-case__stage--sports {
+  grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
+  align-items: start;
+}
+
+.leadership-case__stage--sports > :first-child {
+  grid-row: span 2;
+}
+
+.leadership-case--prototype {
+  display: grid;
+  grid-template-columns: minmax(0, 0.7fr) minmax(0, 1.3fr);
+  column-gap: clamp(2rem, 5vw, 5rem);
+  align-items: start;
+}
+
+.leadership-case--prototype .leadership-case__header {
+  display: block;
+  grid-column: 1;
+  grid-row: 1 / 4;
+  margin-bottom: 0;
+}
+
+.leadership-case--prototype .leadership-case__intro {
+  margin-top: 1.8rem;
+}
+
+.leadership-case--prototype > :not(.leadership-case__header) {
+  grid-column: 2;
+}
+
+.leadership-archive {
+  margin-top: 1.8rem;
+}
+
+.leadership-archive > summary {
+  width: fit-content;
+  max-width: 100%;
+  padding-block: 0.5rem;
+  color: var(--work-paper);
+  font-size: 0.9rem;
+  font-weight: 500;
+  line-height: 1.5;
+  cursor: pointer;
+  text-underline-offset: 0.3em;
+}
+
+.leadership-archive > summary::marker {
+  color: var(--work-focus);
+}
+
+.leadership-archive > summary:hover {
+  text-decoration: underline;
+}
+
+.leadership-archive__content {
+  padding-top: 1.6rem;
+}
+
+.leadership-archive__grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  align-items: start;
+  gap: 1.8rem 1.2rem;
+}
+
+.leadership-archive--tales .leadership-archive__grid {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.leadership-archive--mattel .leadership-archive__grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.leadership-archive--mattel .leadership-artwork:nth-child(n + 3) {
+  max-width: 65%;
+}
+
+.leadership-archive--prototype .leadership-archive__grid {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.leadership-video {
+  max-width: 52rem;
+  margin: 2rem 0 0;
+}
+
+.leadership-video button {
+  position: relative;
+  display: block;
+  width: 100%;
+  padding: 0;
+  overflow: hidden;
+  border: 0;
+  border-radius: 0;
+  background: #0a0f13;
+  color: #f3f6f7;
+  cursor: pointer;
+}
+
+.leadership-video button img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  opacity: 0.75;
+}
+
+.leadership-video__play {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  font-size: 1rem;
+  font-weight: 600;
+  text-shadow: 0 1px 12px #000;
+}
+
+.leadership-video iframe {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border: 0;
+}
+
+@media (max-width: 900px) {
+  .career-introduction__heading {
+    gap: 2rem;
+  }
+
+  .career-introduction__heading > p {
+    max-width: 28ch;
+    font-size: 1rem;
+  }
+
+  .leadership-case__header {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 1.4rem;
+  }
+
+  .leadership-case__heading h3 {
+    max-width: 22ch;
+    font-size: clamp(2.5rem, 6.3vw, 4.2rem);
+  }
+
+  .leadership-case__intro > p {
+    max-width: 70ch;
+  }
+
+  .leadership-case--prototype {
+    display: block;
+  }
+
+  .leadership-case--prototype .leadership-case__header {
+    margin-bottom: 2rem;
+  }
+
+  .leadership-archive__grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 700px) {
+  .career-introduction__heading {
+    display: block;
+  }
+
+  .career-introduction h2 {
+    font-size: 2.8rem;
+  }
+
+  .career-introduction__heading > p {
+    max-width: 38ch;
+    margin-top: 2rem;
+    font-size: 0.95rem;
+  }
+
+  .career-introduction nav {
+    gap: 0.5rem 1.5rem;
+    padding-block: 1.5rem 1rem;
+  }
+
+  .career-introduction nav a {
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .leadership-case__heading h3 {
+    font-size: clamp(2.15rem, 8vw, 3rem);
+    letter-spacing: -0.045em;
+  }
+
+  .leadership-case__studio {
+    font-size: 0.9rem;
+  }
+
+  .leadership-case__stage--mattel {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 1.5rem;
+  }
+
+  .leadership-case__stage--mattel > :last-child {
+    width: 70%;
+    max-width: 17rem;
+    justify-self: center;
+  }
+
+  .leadership-case__stage--tales,
+  .leadership-archive--tales .leadership-archive__grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .leadership-case__stage--tales > :nth-child(n + 5) {
+    grid-column: 1 / -1;
+  }
+
+  .leadership-case__stage--direction {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .leadership-case__stage--sports {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1.5rem 0.75rem;
+  }
+
+  .leadership-case__stage--sports > :first-child {
+    grid-row: auto;
+    grid-column: 1 / -1;
+  }
+
+  .leadership-artwork figcaption {
+    font-size: 0.72rem;
+  }
+
+  .leadership-artwork__expand {
+    right: 0.4rem;
+    bottom: 0.4rem;
+    width: 1.6rem;
+    height: 1.6rem;
+    opacity: 1;
+  }
+
+  .leadership-case__credit {
+    font-size: 0.8rem;
+  }
+
+  .leadership-archive__grid {
+    gap: 1.5rem 0.75rem;
+  }
+
+  .leadership-archive--mattel .leadership-artwork:nth-child(n + 3) {
+    max-width: 100%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .leadership-artwork__expand {
+    transition: none;
+  }
+}
