@@ -1,3 +1,48 @@
+.career-prelude {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  align-items: center;
+  gap: clamp(2rem, 7vw, 7rem);
+  width: min(calc(100% - var(--page-gutter) * 2), 88rem);
+  margin-inline: auto;
+  padding-block: clamp(5rem, 9vw, 8.5rem);
+  color: #f3f6f7;
+}
+
+.career-prelude h2 {
+  max-width: 17ch;
+  margin: 0;
+  font: 600 clamp(2.5rem, 4.4vw, 4.4rem)/1.1 "Manrope", sans-serif;
+  letter-spacing: -0.05em;
+  text-wrap: balance;
+}
+
+.career-prelude__copy {
+  max-width: 54ch;
+  font: 400 clamp(1rem, 1.3vw, 1.15rem)/1.85 "Inter", sans-serif;
+  color: #b8c3c9;
+}
+
+.career-prelude__copy p {
+  margin: 0;
+}
+
+.career-prelude__copy p + p {
+  margin-top: 1.25rem;
+}
+
+#leadership.career-prelude {
+  scroll-margin-top: 0;
+}
+
+@media (max-width: 700px) {
+  .career-prelude {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 1.75rem;
+    padding-block: 4rem;
+  }
+}
+
 .career-work {
   background: #11171c;
   scroll-margin-top: 0;

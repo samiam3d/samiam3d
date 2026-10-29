@@ -8,7 +8,7 @@ const workIndex = [
 
 export function LeadershipBridge() {
   return (
-    <div id="leadership" className="career-introduction">
+    <div className="career-introduction">
       <div className="career-introduction__heading">
         <h2 id="leadership-work-title">From Hot Wheels<br />to Hardline.</h2>
         <p>Game worlds, interactive stories, and the teams behind them. Selected work from my career in art direction and production.</p>

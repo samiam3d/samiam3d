@@ -1,4 +1,5 @@
 import { BuilderMethod } from "@/components/builder-method";
+import { CareerIntro } from "@/components/career-intro";
 import { CreatorProducts } from "@/components/creator-products";
 import { CursorEmitter } from "@/components/cursor-emitter";
 import { Hero } from "@/components/hero";
@@ -22,6 +23,7 @@ function App() {
         <Hero title="samiam3D" />
         <BuilderMethod />
         <CreatorProducts />
+        <CareerIntro />
         <section
           id="work"
           className="career-work"
