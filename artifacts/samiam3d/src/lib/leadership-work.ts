@@ -197,23 +197,6 @@ export const leadershipCases: LeadershipCase[] = [
     archiveLabel: "More stadiums & MLB 2K trailer",
     video: { id: "XCZHhW3rjts", title: "Major League Baseball 2K10 trailer" },
   },
-  {
-    id: "other-projects",
-    studio: "Mobile game prototype",
-    title: "Toy Truck",
-    role: "Art style, environments & vehicles",
-    description:
-      "A small world built for a side-scrolling mobile game. I developed the art style and created the environments and vehicles. The project was canceled during development.",
-    credit: "Art and development work for the canceled Toy Truck prototype.",
-    layout: "prototype",
-    featured: [
-      artwork("2015/08/jungle_01_colorCorrections.jpg", "Toy Truck — jungle environment and color direction", 2200, 1184),
-    ],
-    archive: [
-      artwork("2015/08/Work_in_progress.jpg", "Toy Truck — environment in development", 1600, 861),
-    ],
-    archiveLabel: "View the prototype in development",
-  },
 ];
 
 export function leadershipImageSource(source: string, width: 480 | 1200) {
