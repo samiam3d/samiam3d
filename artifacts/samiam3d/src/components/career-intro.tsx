@@ -8,11 +8,14 @@ export function CareerIntro() {
       <h2 id="career-intro-title">The studio side of my work.</h2>
       <div className="career-prelude__copy">
         <p>
-          I’ve built 3D environments, directed art teams, and co-founded Tales.
-          Across games and interactive stories, I’ve worked on both the art and
-          the tools behind it.
+          I’m an art director and creative leader. I set the visual direction,
+          lead multidisciplinary teams, and guide games and interactive stories
+          from concept through production. As co-founder and Art Director at
+          Tales, I led a distributed art team and helped shape the product.
         </p>
-        <p>That experience shapes the applications I build today.</p>
+        <p>
+          That same creative leadership shapes the applications I build today.
+        </p>
       </div>
     </section>
   );
