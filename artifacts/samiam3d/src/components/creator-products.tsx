@@ -2,7 +2,7 @@ import { Fragment, useCallback, useEffect, useRef, useState } from "react";
 import { ProjectShowcase } from "@/components/project-showcase";
 import { ProjectDivider } from "@/components/project-divider";
 import { ProjectModal } from "@/components/project-modal";
-import { ProjectBrandMark } from "@/components/project-brand";
+import { ApplicationsIntro } from "@/components/applications-intro";
 import {
   creatorProjects,
   getCreatorProject,
@@ -123,22 +123,7 @@ export function CreatorProducts() {
       className="creator-showcase"
       aria-labelledby="creator-products-title"
     >
-      <div className="creator-showcase__intro">
-        <h2 id="creator-products-title">My applications.</h2>
-        <p>I make the worlds, the tools, and the brands around them.</p>
-      </div>
-      <nav className="creator-showcase__index" aria-label="Explore my projects">
-        {creatorProjects.map((project) => (
-          <a
-            key={project.id}
-            href={`#project-${project.id}`}
-            aria-label={project.name}
-          >
-            <ProjectBrandMark project={project} />
-            <span>{project.name}</span>
-          </a>
-        ))}
-      </nav>
+      <ApplicationsIntro />
       {creatorProjects.map((project, index) => (
         <Fragment key={project.id}>
           {index > 0 && (
