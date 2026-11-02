@@ -1,7 +1,3 @@
-.builder-method:has(+ .creator-showcase) {
-  padding-bottom: clamp(3rem, 5vw, 5rem);
-}
-
 .applications-intro {
   position: relative;
   overflow: clip;

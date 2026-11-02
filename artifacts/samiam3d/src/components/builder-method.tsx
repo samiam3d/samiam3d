@@ -1,94 +1,84 @@
-const leadershipCapabilities = [
-  "Creative vision",
-  "World-building",
-  "Art direction",
-  "Team leadership",
-  "Production systems",
-  "Quality bar",
-] as const;
+import { ArrowUpRight } from "lucide-react";
+import { leadershipImageSource } from "@/lib/leadership-work";
+import { mindinkViewSource } from "@/lib/mindink-showcase";
+import "./builder-practice.css";
 
-const founderCapabilities = [
-  "Product strategy",
-  "UX/UI",
-  "Brand systems",
-  "Creative technology",
-  "Technical implementation",
-  "Launch",
-] as const;
-
-const methodSteps = [
-  "Find the signal",
-  "Define the world",
-  "Build the system",
-  "Align the team",
-  "Ship the experience",
-] as const;
+const characterPipeline = "/assets/images/2015/08/monsters_character_pipeline.jpg";
 
 export function BuilderMethod() {
   return (
-    <section
-      id="builder-method"
-      className="builder-method"
-      aria-labelledby="builder-method-title"
-    >
-      <div className="builder-method__intro">
-        <div>
-          <p className="builder-method__eyebrow">One connected creative practice</p>
-          <h2 id="builder-method-title">I build from both sides of the table.</h2>
-        </div>
-        <p>
-          As a creative director, I shape the vision, world, visual language,
-          team, and production system. As a founder, I carry those same
-          responsibilities into product strategy, experience design,
-          technology, and launch.
-        </p>
-      </div>
+    <section id="builder-method" className="builder-practice" aria-labelledby="builder-method-title">
+      <div className="builder-practice__inner">
+        <header className="builder-practice__intro">
+          <h2 id="builder-method-title">
+            <span>I lead creative teams.</span>{" "}
+            <span>I build creative tools.</span>
+          </h2>
+          <p>
+            I set the visual direction, bring teams together, and carry ideas
+            through production. I also design and build the tools that make
+            new kinds of creative work possible.
+          </p>
+        </header>
 
-      <div className="builder-method__duality">
-        <article className="builder-method__lane builder-method__lane--leadership">
-          <div className="builder-method__lane-heading">
-            <span>01</span>
-            <div>
-              <p>Creative leadership</p>
-              <h3>Shape the vision.</h3>
+        <div className="builder-practice__work">
+          <article className="builder-practice__example builder-practice__example--direction">
+            <div className="builder-practice__example-heading">
+              <h3>Art direction</h3>
+              <span>Universal Monsters Online</span>
             </div>
-          </div>
-          <ul>
-            {leadershipCapabilities.map((capability) => (
-              <li key={capability}>{capability}</li>
-            ))}
-          </ul>
-        </article>
-
-        <div className="builder-method__convergence" aria-hidden="true">
-          <span />
-          <i />
-          <span />
-        </div>
-
-        <article className="builder-method__lane builder-method__lane--founder">
-          <div className="builder-method__lane-heading">
-            <span>02</span>
-            <div>
-              <p>Founder building</p>
-              <h3>Make it real.</h3>
+            <a className="builder-practice__image" href="#bigpoint" aria-label="Explore the Universal Monsters Online art direction work">
+              <img
+                src={leadershipImageSource(characterPipeline, 480)}
+                srcSet={`${leadershipImageSource(characterPipeline, 480)} 480w, ${leadershipImageSource(characterPipeline, 1200)} 1200w`}
+                sizes="(max-width: 900px) 92vw, 48vw"
+                width={3280}
+                height={1846}
+                alt="Universal Monsters Online character pipeline: sketches, final concepts, and game models developed by the team under Sam’s art direction"
+                loading="lazy"
+                decoding="async"
+              />
+              <span className="builder-practice__image-action" aria-hidden="true"><ArrowUpRight size={22} /></span>
+            </a>
+            <div className="builder-practice__detail">
+              <p>
+                At Bigpoint, I led <strong>12+ artists</strong> and set the visual
+                direction and character pipeline for Universal Monsters Online.
+              </p>
+              <a href="#bigpoint">See the art direction work <ArrowUpRight size={18} aria-hidden="true" /></a>
+              <p className="builder-practice__credit">
+                Art direction: Sam Gutierrez. Final concepts: Christian MacNevin.
+                3D character models: Eric Maki.
+              </p>
             </div>
-          </div>
-          <ul>
-            {founderCapabilities.map((capability) => (
-              <li key={capability}>{capability}</li>
-            ))}
-          </ul>
-        </article>
-      </div>
+          </article>
 
-      <div className="builder-method__process" aria-label="Creative process">
-        {methodSteps.map((step, index) => (
-          <div className="builder-method__step" key={step}>
-            <span>{String(index + 1).padStart(2, "0")}</span>
-            <strong>{step}</strong>
-          </div>
-        ))}
+          <article className="builder-practice__example builder-practice__example--product">
+            <div className="builder-practice__example-heading">
+              <h3>Product building</h3>
+              <span>MindInk</span>
+            </div>
+            <a className="builder-practice__image" href="#project-mindink" aria-label="Explore MindInk’s creative tools">
+              <img
+                src={mindinkViewSource("branch-canvas")}
+                width={1672}
+                height={941}
+                alt="MindInk Branch Canvas product visualization, connecting story scenes and branching choices in one creative workspace"
+                loading="lazy"
+                decoding="async"
+              />
+              <span className="builder-practice__image-action" aria-hidden="true"><ArrowUpRight size={22} /></span>
+            </a>
+            <div className="builder-practice__detail">
+              <p>
+                I founded <strong>MindInk</strong> and built its story
+                architecture, creative workflows, brand, and product experience.
+              </p>
+              <a href="#project-mindink">Explore the creative tools <ArrowUpRight size={18} aria-hidden="true" /></a>
+              <p className="builder-practice__credit">MindInk Branch Canvas. Product visualization.</p>
+            </div>
+          </article>
+        </div>
       </div>
     </section>
   );

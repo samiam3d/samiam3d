@@ -750,9 +750,6 @@
   .showcase-vibemind__note {
     display: none;
   }
-  .builder-method__intro {
-    grid-template-columns: minmax(0, 1fr);
-  }
   .skip-link--second {
     left: 0.75rem;
     top: 4rem;
