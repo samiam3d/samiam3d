@@ -120,7 +120,6 @@
 
 .leadership-case {
   padding-block: clamp(3.5rem, 7vw, 7.5rem);
-  border-top: 1px solid rgb(168 183 192 / 20%);
 }
 
 .leadership-work__entry:first-child .leadership-case {

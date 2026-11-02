@@ -1,5 +1,6 @@
-import { useCallback, useEffect, useRef, useState } from "react";
+import { Fragment, useCallback, useEffect, useRef, useState } from "react";
 import { ProjectShowcase } from "@/components/project-showcase";
+import { ProjectDivider } from "@/components/project-divider";
 import { ProjectModal } from "@/components/project-modal";
 import { ProjectBrandMark } from "@/components/project-brand";
 import {
@@ -138,12 +139,13 @@ export function CreatorProducts() {
           </a>
         ))}
       </nav>
-      {creatorProjects.map((project) => (
-        <ProjectShowcase
-          key={project.id}
-          project={project}
-          onOpen={openProject}
-        />
+      {creatorProjects.map((project, index) => (
+        <Fragment key={project.id}>
+          {index > 0 && (
+            <ProjectDivider from={creatorProjects[index - 1].id} to={project.id} />
+          )}
+          <ProjectShowcase project={project} onOpen={openProject} />
+        </Fragment>
       ))}
 
       <ProjectModal

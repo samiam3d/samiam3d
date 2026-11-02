@@ -1,0 +1,87 @@
+/* An offset cut carries the color of one project into the next. */
+.project-divider {
+  --divider-height: clamp(4rem, 6.5vw, 6rem);
+  position: relative;
+  height: var(--divider-height);
+  overflow: clip;
+  background: var(--divider-to-field);
+  pointer-events: none;
+}
+
+.project-divider::before {
+  position: absolute;
+  inset: -1px 0;
+  background: var(--divider-from-field);
+  clip-path: polygon(
+    0 0, 100% 0,
+    100% calc(50% - 12px), calc(61% + 18px) calc(50% - 12px),
+    calc(61% - 18px) calc(50% + 12px), 0 calc(50% + 12px)
+  );
+  content: "";
+}
+
+/* Overlap fractional pixel edges so contrasting fields have no hairline seam. */
+.creator-showcase > .project-divider {
+  margin-block: -1px;
+}
+
+.project-divider__cut {
+  position: absolute;
+  inset: 0;
+}
+
+.project-divider__out,
+.project-divider__in {
+  position: absolute;
+  height: 1px;
+}
+
+.project-divider__out {
+  top: calc(50% + 12px);
+  left: 0;
+  width: calc(61% - 18px);
+  background: linear-gradient(90deg, transparent, var(--divider-from) 78%);
+}
+
+.project-divider__in {
+  top: calc(50% - 12px);
+  right: 0;
+  width: calc(39% - 18px);
+  background: linear-gradient(90deg, var(--divider-to), transparent);
+}
+
+.project-divider__splice {
+  position: absolute;
+  top: calc(50% - 12px);
+  left: calc(61% - 18px);
+  width: 36px;
+  height: 25px;
+  background: linear-gradient(145deg, var(--divider-to), var(--divider-from));
+  clip-path: polygon(94% 0, 100% 0, 6% 100%, 0 100%);
+}
+
+.project-divider__splice::after {
+  position: absolute;
+  inset: 0;
+  background: #fff;
+  opacity: 0.22;
+  content: "";
+}
+
+.leadership-work__entry {
+  position: relative;
+}
+
+.leadership-work__entry > .project-divider {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  transform: translateY(-50%);
+}
+
+@media (max-width: 700px) {
+  .project-divider {
+    --divider-height: 3.5rem;
+  }
+}

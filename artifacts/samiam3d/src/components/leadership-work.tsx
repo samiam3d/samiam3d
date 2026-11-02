@@ -1,6 +1,7 @@
 import { useRef, useState } from "react";
 import { ArrowUpRight, Play } from "lucide-react";
 import { ImageLightbox } from "@/components/portfolio-content";
+import { ProjectDivider } from "@/components/project-divider";
 import {
   leadershipCases,
   leadershipImageSource,
@@ -132,8 +133,11 @@ function WorkCase({ project }: { project: LeadershipCase }) {
 export function LeadershipWork() {
   return (
     <div className="leadership-work">
-      {leadershipCases.map((project) => (
+      {leadershipCases.map((project, index) => (
         <div key={project.id} id={project.id === "ea-visceral" ? "past-projects" : undefined} className="leadership-work__entry">
+          {index > 0 && (
+            <ProjectDivider from={leadershipCases[index - 1].id} to={project.id} />
+          )}
           <WorkCase project={project} />
         </div>
       ))}
