@@ -92,9 +92,15 @@ describe("Project showcases", () => {
       expect(
         within(section).getByRole("img", { name, exact: true }),
       ).toBeVisible();
-      expect(
-        section.querySelector(`img[src="/assets/brands/${brandAsset}"]`),
-      ).toBeInTheDocument();
+      if (id === "flower-musica") {
+        const mark = section.querySelector(".project-brand__mark--flower-musica");
+        expect(mark).toBeInTheDocument();
+        expect((mark as HTMLElement).style.mask).toContain(`/assets/brands/${brandAsset}`);
+      } else {
+        expect(
+          section.querySelector(`img[src="/assets/brands/${brandAsset}"]`),
+        ).toBeInTheDocument();
+      }
       expect(
         within(section).getByRole("button", {
           name: `Explore the project: ${name}`,

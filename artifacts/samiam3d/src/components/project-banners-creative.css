@@ -1,0 +1,282 @@
+/* Narrative: three genuine covers become the opening scene of the studio. */
+.project-banner--mindink {
+  background: #090d18;
+  padding-bottom: clamp(3rem, 5vw, 5rem);
+}
+
+.project-banner--mindink .mindink-banner__stage {
+  display: grid;
+  grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr);
+  align-items: center;
+  gap: clamp(2rem, 4vw, 4rem);
+  padding-block: 1.5rem 1rem;
+}
+
+.project-banner--mindink .project-banner__copy h3 {
+  max-width: 11ch;
+  font-family: "Inter", sans-serif;
+  font-size: clamp(3rem, 4.9vw, 5rem);
+  line-height: 1.04;
+  letter-spacing: -0.065em;
+}
+
+.project-banner--mindink .project-banner__copy > p { max-width: 43ch; }
+
+.project-banner--mindink .mindink-banner__worlds {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  align-items: center;
+  gap: 0;
+  padding: 2rem 0 3.25rem;
+  isolation: isolate;
+  perspective: 1100px;
+}
+
+.project-banner--mindink .mindink-banner__cover {
+  position: relative;
+  width: 130%;
+  box-shadow: 0 20px 40px rgb(0 0 0 / 42%);
+  transition: transform 260ms ease-out;
+}
+
+.project-banner--mindink .mindink-banner__cover img {
+  width: 100%;
+  aspect-ratio: 2 / 3;
+  object-fit: cover;
+  object-position: center;
+}
+
+.project-banner--mindink .mindink-banner__cover:first-child {
+  z-index: 0;
+  transform: translateX(-2%) rotate(-9deg) rotateY(8deg);
+}
+
+.project-banner--mindink .mindink-banner__cover:nth-child(2) {
+  z-index: 2;
+  transform: translateX(-12%) translateY(-1rem) scale(1.12);
+}
+
+.project-banner--mindink .mindink-banner__cover:nth-child(3) {
+  z-index: 1;
+  transform: translateX(-24%) rotate(9deg) rotateY(-8deg);
+}
+
+.project-banner--mindink .mindink-banner__signature {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin: 0;
+  text-align: center;
+  color: #b8b8d4;
+  font: 500 0.8rem/1.6 "Inter", sans-serif;
+}
+
+/* Music: the real session photograph and canonical flower share one bold spread. */
+.project-banner--flower {
+  background: #13150d;
+  padding-bottom: clamp(3rem, 5vw, 5rem);
+}
+
+.project-banner--flower .flower-banner__spread {
+  display: grid;
+  grid-template-columns: minmax(0, 0.32fr) minmax(0, 0.68fr);
+  min-height: 0;
+  margin: 0 0 2.5rem;
+}
+
+.project-banner--flower .flower-banner__identity {
+  display: grid;
+  place-items: center;
+  padding: 2rem;
+  background: #b6ff27;
+  color: #171a10;
+  border-radius: 3rem 0 0 0;
+}
+
+.project-banner--flower .flower-banner__identity .project-brand__mark {
+  display: block;
+  width: min(100%, 16rem);
+  height: auto;
+  aspect-ratio: 1;
+  transition: transform 260ms ease-out;
+}
+
+.project-banner--flower .flower-banner__photograph {
+  overflow: hidden;
+  border-radius: 0 0 3rem 0;
+}
+
+.project-banner--flower .flower-banner__photograph img {
+  width: 100%;
+  height: clamp(17rem, 26vw, 25rem);
+  object-fit: cover;
+  object-position: 65% 48%;
+}
+
+.project-banner--flower .project-banner__copy {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+  align-items: start;
+  column-gap: clamp(2rem, 5vw, 5rem);
+}
+
+.project-banner--flower .project-banner__copy h3 {
+  grid-row: 1 / 3;
+  max-width: 15ch;
+  color: #f0f4e8;
+  font-size: clamp(2.5rem, 4.4vw, 4.75rem);
+  line-height: 1.04;
+}
+
+.project-banner--flower .project-banner__copy > p { max-width: 43ch; margin-top: 0; }
+.project-banner--flower .showcase-action { justify-self: start; color: #cefa9c; }
+.project-banner--flower .showcase-action:hover { background: #b6ff27; color: #13150d; }
+
+/* Clips: a wide conversation, a portrait framing guide, and one selected interval. */
+.project-banner--hotclips {
+  background: #0a141c;
+  padding-bottom: clamp(3rem, 5vw, 5rem);
+}
+
+.project-banner--hotclips .hotclips-banner__stage {
+  display: grid;
+  grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+  align-items: center;
+  gap: clamp(2rem, 4vw, 4rem);
+  padding-top: 1rem;
+}
+
+.project-banner--hotclips .project-banner__copy h3 {
+  max-width: 13ch;
+  font-size: clamp(2.7rem, 4.2vw, 4.5rem);
+  line-height: 1.06;
+}
+
+.project-banner--hotclips .project-banner__copy > p { max-width: 40ch; }
+.project-banner--hotclips .hotclips-banner__edit { min-width: 0; }
+
+.project-banner--hotclips .hotclips-banner__source {
+  position: relative;
+  border-block: 0.5rem solid #071017;
+  background: #071017;
+}
+
+.project-banner--hotclips .hotclips-banner__source img {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 1.35;
+  object-fit: cover;
+  object-position: center;
+}
+
+.project-banner--hotclips .hotclips-banner__crop {
+  position: absolute;
+  inset: 5% auto 5% 8%;
+  width: 40%;
+  border: 1px solid rgb(85 189 248 / 70%);
+  box-shadow: 0 0 0 1px rgb(8 22 30 / 35%);
+  transition: transform 240ms ease-out;
+}
+
+.project-banner--hotclips .hotclips-banner__crop span {
+  position: absolute;
+  width: 0.9rem;
+  height: 0.9rem;
+  border-color: #74cdff;
+  border-style: solid;
+}
+.project-banner--hotclips .hotclips-banner__crop span:nth-child(1) { top: -2px; left: -2px; border-width: 3px 0 0 3px; }
+.project-banner--hotclips .hotclips-banner__crop span:nth-child(2) { top: -2px; right: -2px; border-width: 3px 3px 0 0; }
+.project-banner--hotclips .hotclips-banner__crop span:nth-child(3) { bottom: -2px; right: -2px; border-width: 0 3px 3px 0; }
+.project-banner--hotclips .hotclips-banner__crop span:nth-child(4) { bottom: -2px; left: -2px; border-width: 0 0 3px 3px; }
+
+.project-banner--hotclips .hotclips-banner__waveform {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 4px;
+  height: 4.25rem;
+  margin-top: 0.5rem;
+  padding: 0.75rem 0.4rem;
+  background: #071017;
+}
+
+.project-banner--hotclips .hotclips-banner__waveform > i {
+  display: block;
+  flex: 1;
+  max-width: 5px;
+  background: #56798c;
+  border-radius: 2px;
+}
+
+.project-banner--hotclips .hotclips-banner__waveform > i:nth-child(n + 13):nth-child(-n + 30) { background: #65c6ff; }
+.project-banner--hotclips .hotclips-banner__selection {
+  position: absolute;
+  inset: 0.3rem 35% 0.3rem 25%;
+  border: 1px solid #55bdf8;
+  border-inline-width: 3px;
+  background: rgb(85 189 248 / 9%);
+}
+
+.project-banner--hotclips .hotclips-banner__edit figcaption {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-top: 0.9rem;
+  color: #aec8d3;
+  font: 500 0.85rem/1.5 "Manrope", sans-serif;
+}
+.project-banner--hotclips .hotclips-banner__edit figcaption strong { color: #70c7fb; font-weight: 600; }
+
+@media (hover: hover) and (pointer: fine) {
+  .project-banner--mindink .mindink-banner__worlds:hover .mindink-banner__cover:first-child { transform: translateX(-7%) rotate(-12deg) rotateY(8deg); }
+  .project-banner--mindink .mindink-banner__worlds:hover .mindink-banner__cover:nth-child(3) { transform: translateX(-19%) rotate(12deg) rotateY(-8deg); }
+  .project-banner--flower .flower-banner__identity:hover .project-brand__mark { transform: rotate(-8deg); }
+  .project-banner--hotclips .hotclips-banner__edit:hover .hotclips-banner__crop { transform: translateX(3%); }
+}
+
+@media (max-width: 1050px) {
+  .project-banner--mindink .mindink-banner__stage { gap: 2rem; }
+  .project-banner--mindink .project-banner__copy h3 { font-size: clamp(2.6rem, 4.8vw, 3.6rem); }
+  .project-banner--mindink .mindink-banner__worlds { padding-bottom: 3rem; }
+  .project-banner--mindink .mindink-banner__signature { font-size: 0.72rem; }
+  .project-banner--flower .flower-banner__identity { padding: 1.25rem; }
+  .project-banner--hotclips .hotclips-banner__stage { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 2rem; }
+  .project-banner--hotclips .project-banner__copy h3 { font-size: clamp(2.4rem, 4.2vw, 3.6rem); }
+  .project-banner--hotclips .hotclips-banner__source img { aspect-ratio: 0.95; object-position: 40% center; }
+  .project-banner--hotclips .hotclips-banner__crop { width: 55%; left: 4%; }
+}
+
+@media (max-width: 700px) {
+  .project-banner--mindink .mindink-banner__stage,
+  .project-banner--hotclips .hotclips-banner__stage { grid-template-columns: 1fr; gap: 2.5rem; padding-top: 0.5rem; }
+  .project-banner--mindink .project-banner__copy h3 { font-size: clamp(2.8rem, 10vw, 4rem); max-width: 12ch; }
+  .project-banner--mindink .mindink-banner__worlds { width: 94%; margin: 0 auto; padding-top: 1.5rem; }
+  .project-banner--mindink .mindink-banner__cover:nth-child(2) { transform: translateX(-12%) translateY(-0.5rem) scale(1.1); }
+  .project-banner--mindink .mindink-banner__signature { font-size: 0.72rem; }
+  .project-banner--flower .flower-banner__spread { grid-template-columns: 0.28fr 0.72fr; margin-bottom: 1.75rem; }
+  .project-banner--flower .flower-banner__identity { padding: 0.75rem; border-top-left-radius: 1.5rem; }
+  .project-banner--flower .flower-banner__photograph { border-bottom-right-radius: 1.5rem; }
+  .project-banner--flower .flower-banner__photograph img { height: clamp(12rem, 43vw, 19rem); object-position: 67% center; }
+  .project-banner--flower .project-banner__copy { display: block; }
+  .project-banner--flower .project-banner__copy h3 { max-width: 14ch; font-size: clamp(2.5rem, 9vw, 3.6rem); }
+  .project-banner--flower .project-banner__copy > p { margin-top: 1.25rem; }
+  .project-banner--hotclips .project-banner__copy h3 { font-size: clamp(2.6rem, 9.2vw, 3.8rem); max-width: 14ch; }
+  .project-banner--hotclips .hotclips-banner__source img { aspect-ratio: 1.35; object-position: center; }
+  .project-banner--hotclips .hotclips-banner__crop { width: 40%; left: 8%; }
+  .project-banner--hotclips .hotclips-banner__waveform { height: 3.5rem; gap: 3px; }
+  .project-banner--hotclips .hotclips-banner__edit figcaption { font-size: 0.78rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .project-banner--mindink .mindink-banner__cover,
+  .project-banner--flower .flower-banner__identity .project-brand__mark,
+  .project-banner--hotclips .hotclips-banner__crop { transition: none; }
+  .project-banner--mindink .mindink-banner__worlds:hover .mindink-banner__cover:first-child { transform: translateX(-2%) rotate(-9deg) rotateY(8deg); }
+  .project-banner--mindink .mindink-banner__worlds:hover .mindink-banner__cover:nth-child(3) { transform: translateX(-24%) rotate(9deg) rotateY(-8deg); }
+  .project-banner--flower .flower-banner__identity:hover .project-brand__mark,
+  .project-banner--hotclips .hotclips-banner__edit:hover .hotclips-banner__crop { transform: none; }
+}

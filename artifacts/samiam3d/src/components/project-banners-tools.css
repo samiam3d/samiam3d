@@ -1,0 +1,355 @@
+/* VibeMind: a product taking shape on a violet drafting surface. */
+.project-banner--vibemind {
+  background: #211b38;
+  border-bottom: 1px solid #5a4977;
+}
+
+.project-banner.project-banner--vibemind .showcase-inner {
+  padding-bottom: clamp(3.5rem, 6vw, 6rem);
+}
+
+.project-banner--vibemind .project-banner__brand {
+  border-bottom: 1px solid rgb(189 166 236 / 24%);
+}
+
+.project-banner--vibemind .vibemind-banner__layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 0.95fr);
+  align-items: center;
+  gap: clamp(3rem, 7vw, 7rem);
+  padding-top: clamp(3.5rem, 6vw, 6rem);
+}
+
+.project-banner--vibemind .project-banner__copy h3 {
+  max-width: 12ch;
+  font-family: "Manrope", sans-serif;
+  font-size: clamp(3rem, 4.7vw, 5rem);
+  line-height: 1.06;
+  letter-spacing: -0.065em;
+}
+
+.project-banner--vibemind .project-banner__copy > p {
+  max-width: 40ch;
+  color: #d0c7e4;
+}
+
+.project-banner--vibemind .showcase-action {
+  background: #d4c6ff;
+  color: #24173f;
+  border-color: #d4c6ff;
+}
+
+.project-banner--vibemind .showcase-action:hover {
+  background: #fff;
+  border-color: #fff;
+}
+
+.project-banner--vibemind .vibemind-banner__workbench {
+  position: relative;
+  isolation: isolate;
+  min-width: 0;
+  padding: 1.5rem 0 0 1rem;
+  perspective: 1300px;
+}
+
+.project-banner--vibemind .vibemind-banner__blueprint {
+  position: absolute;
+  z-index: -1;
+  inset: -1rem -2rem 3rem -1rem;
+  border: 1px solid #786498;
+  background-image: linear-gradient(#66518455 1px, transparent 1px), linear-gradient(90deg, #66518455 1px, transparent 1px);
+  background-size: 2.5rem 2.5rem;
+  transform: rotate(5deg);
+  opacity: 0.55;
+}
+
+.project-banner--vibemind .vibemind-banner__preview {
+  position: relative;
+  overflow: hidden;
+  aspect-ratio: 1.1;
+  background: #f8f5ed;
+  border: 1px solid #b4a2d3;
+  border-radius: 0.6rem;
+  box-shadow: -1rem 1rem 0 #35264c, -1rem 1rem 0 1px #695083, 0 2rem 4rem rgb(8 3 19 / 32%);
+  transform: rotateY(-8deg) rotateZ(-3deg);
+  transform-origin: center;
+  transition: transform 250ms ease-out;
+}
+
+.project-banner--vibemind .vibemind-banner__preview img {
+  position: absolute;
+  width: 185.78%;
+  max-width: none;
+  height: auto;
+  min-height: 100%;
+  left: -84.4%;
+}
+
+.project-banner--vibemind .vibemind-banner__workbench figcaption {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+  margin: 2.5rem 0 0;
+  color: #dfd5f1;
+  font: 500 0.85rem/1.6 "Manrope", sans-serif;
+}
+
+.project-banner--vibemind .vibemind-banner__workbench figcaption small {
+  color: #b8a9d0;
+  font-size: 0.68rem;
+  text-align: right;
+}
+
+/* TrendInk: the real monochrome brand artwork becomes a panoramic signal field. */
+.project-banner--trendink {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  min-height: 43rem;
+  background: #08090b;
+  border-bottom: 1px solid #64372e;
+}
+
+.project-banner--trendink .trendink-banner__art {
+  position: absolute;
+  z-index: -2;
+  top: 0;
+  right: -3%;
+  width: 79%;
+  height: 100%;
+  max-width: none;
+  object-fit: cover;
+  object-position: 55% 50%;
+  opacity: 0.9;
+}
+
+.project-banner--trendink::before {
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  background: linear-gradient(90deg, #08090b 0%, #08090bf5 24%, #08090bb8 44%, #08090b1a 76%), linear-gradient(0deg, #08090b 0%, transparent 25%, transparent 75%, #08090ba8);
+  content: "";
+}
+
+.project-banner--trendink .project-banner__discipline {
+  color: #dadada;
+}
+
+.project-banner--trendink .trendink-banner__story {
+  padding-block: clamp(2rem, 4vw, 4rem) 4rem;
+  min-height: 27rem;
+  display: flex;
+  align-items: center;
+}
+
+.project-banner--trendink .project-banner__copy {
+  max-width: 40rem;
+}
+
+.project-banner--trendink .project-banner__copy h3 {
+  max-width: 12ch;
+  font-family: "Manrope", sans-serif;
+  font-size: clamp(3.2rem, 5vw, 5.1rem);
+  line-height: 1.04;
+  letter-spacing: -0.06em;
+}
+
+.project-banner--trendink .project-banner__copy > p {
+  max-width: 39ch;
+  color: #d0cfd1;
+}
+
+.project-banner--trendink .showcase-action {
+  color: #fff;
+  border-color: #ff745e;
+  background: #271613;
+}
+
+.project-banner--trendink .showcase-action:hover {
+  color: #130907;
+  background: #ff947e;
+}
+
+.project-banner--trendink .trendink-banner__signal {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  padding: 1.5rem 0 2rem;
+  max-width: 42rem;
+  color: #e5dedb;
+  font: 500 0.95rem/1.4 "Manrope", sans-serif;
+}
+
+.project-banner--trendink .trendink-banner__signal i {
+  flex: 1;
+  height: 1px;
+  background: #a9503e;
+  position: relative;
+}
+
+.project-banner--trendink .trendink-banner__signal i::after {
+  position: absolute;
+  right: 0;
+  top: -3px;
+  width: 7px;
+  height: 7px;
+  border-top: 1px solid #ff8b73;
+  border-right: 1px solid #ff8b73;
+  transform: rotate(45deg);
+  content: "";
+}
+
+/* ClauseInk: open paper, generous margins, and the actual document editor. */
+.project-banner--clauseink {
+  --showcase-ink: #182845;
+  --showcase-muted: #4c5d73;
+  color: #182845;
+  background: #f8fafc;
+  border-bottom: 1px solid #c8d5e9;
+}
+
+.project-banner.project-banner--clauseink .showcase-inner {
+  padding-bottom: clamp(3.5rem, 6vw, 6rem);
+}
+
+.project-banner--clauseink .project-banner__brand {
+  border-bottom: 1px solid #ccd6e4;
+}
+
+.project-banner--clauseink .project-banner__discipline {
+  color: #58667b;
+}
+
+.project-banner--clauseink .clauseink-banner__layout {
+  display: grid;
+  grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+  gap: 0 clamp(3rem, 7vw, 7rem);
+  padding-top: clamp(2.5rem, 5vw, 5rem);
+}
+
+.project-banner--clauseink .project-banner__copy {
+  display: contents;
+}
+
+.project-banner--clauseink .project-banner__copy h3 {
+  grid-column: 1 / -1;
+  max-width: 22ch;
+  margin-bottom: 2.5rem;
+  font-family: "Inter", sans-serif;
+  font-size: clamp(3rem, 5.1vw, 5rem);
+  font-weight: 600;
+  line-height: 1.08;
+  letter-spacing: -0.065em;
+}
+
+.project-banner--clauseink .project-banner__copy > p {
+  grid-column: 1;
+  align-self: end;
+  max-width: 39ch;
+  margin-top: 0;
+  padding-left: 1.25rem;
+  border-left: 3px solid #2454ff;
+  color: #4c5d73;
+}
+
+.project-banner--clauseink .showcase-action {
+  grid-column: 1;
+  justify-self: start;
+  align-self: start;
+  margin-top: 1.75rem;
+  border-color: #2454ff;
+  color: #fff;
+  background: #2454ff;
+}
+
+.project-banner--clauseink .showcase-action:hover {
+  color: #fff;
+  background: #183ccb;
+}
+
+.project-banner--clauseink .clauseink-banner__papers {
+  grid-column: 2;
+  grid-row: 2 / 4;
+  position: relative;
+  isolation: isolate;
+  min-width: 0;
+  margin-top: 0.75rem;
+  transform: rotate(2deg);
+  transition: transform 250ms ease-out;
+}
+
+.project-banner--clauseink .clauseink-banner__papers::before {
+  position: absolute;
+  z-index: -1;
+  inset: -0.4rem 0.5rem 2.2rem -0.5rem;
+  border: 1px solid #c2cde0;
+  background: #e8effb;
+  transform: rotate(-6deg);
+  content: "";
+}
+
+.project-banner--clauseink .clauseink-banner__document {
+  overflow: hidden;
+  aspect-ratio: 1.75;
+  border: 1px solid #c4cfdf;
+  background: #fff;
+  box-shadow: 0 1.4rem 2.5rem rgb(37 61 101 / 10%);
+}
+
+.project-banner--clauseink .clauseink-banner__document img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 18%;
+}
+
+.project-banner--clauseink .clauseink-banner__papers figcaption {
+  margin-top: 0.9rem;
+  color: #52627a;
+  font: 500 0.8rem/1.5 "Inter", sans-serif;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .project-banner--vibemind .vibemind-banner__workbench:hover .vibemind-banner__preview { transform: rotateY(-3deg) rotateZ(-1deg); }
+  .project-banner--clauseink .clauseink-banner__papers:hover { transform: rotate(0deg); }
+}
+
+@media (max-width: 1000px) {
+  .project-banner--vibemind .vibemind-banner__layout { gap: 3rem; }
+  .project-banner--vibemind .project-banner__copy h3 { font-size: clamp(2.5rem, 5vw, 3.8rem); }
+  .project-banner--vibemind .vibemind-banner__workbench figcaption { display: block; }
+  .project-banner--vibemind .vibemind-banner__workbench figcaption small { display: block; margin-top: 0.3rem; text-align: left; }
+  .project-banner--trendink .trendink-banner__art { width: 100%; right: -20%; }
+  .project-banner--clauseink .clauseink-banner__layout { gap: 0 2.5rem; }
+}
+
+@media (max-width: 700px) {
+  .project-banner--vibemind .vibemind-banner__layout { grid-template-columns: 1fr; gap: 2.5rem; padding-top: 2.5rem; }
+  .project-banner--vibemind .project-banner__copy h3 { max-width: 14ch; font-size: clamp(2.7rem, 9vw, 4rem); }
+  .project-banner--vibemind .vibemind-banner__workbench { width: min(100%, 28rem); justify-self: center; padding: 1rem 0.5rem 0 1.5rem; }
+  .project-banner--vibemind .vibemind-banner__blueprint { inset: 0 -0.5rem 3rem 0; }
+  .project-banner--vibemind .vibemind-banner__preview { aspect-ratio: 1.15; }
+  .project-banner--vibemind .vibemind-banner__preview img { width: 185.78%; height: auto; min-height: 100%; }
+  .project-banner--vibemind .vibemind-banner__workbench figcaption { margin-top: 2rem; }
+  .project-banner--trendink { min-height: 0; }
+  .project-banner--trendink .trendink-banner__art { inset: auto 0 3rem; width: 100%; height: 19rem; opacity: 1; object-position: center; }
+  .project-banner--trendink::before { background: linear-gradient(0deg, #08090b 0, transparent 12rem, #08090b 23rem); }
+  .project-banner--trendink .trendink-banner__story { min-height: 0; padding-block: 1.5rem 18rem; }
+  .project-banner--trendink .project-banner__copy h3 { max-width: 12ch; font-size: clamp(2.7rem, 9vw, 4rem); }
+  .project-banner--trendink .trendink-banner__signal { gap: 0.9rem; font-size: 0.8rem; padding-block: 1rem 1.5rem; }
+  .project-banner--clauseink .clauseink-banner__layout { grid-template-columns: 1fr; padding-top: 2rem; }
+  .project-banner--clauseink .project-banner__copy h3 { font-size: clamp(2.6rem, 8.6vw, 3.8rem); max-width: 16ch; margin-bottom: 1.75rem; }
+  .project-banner--clauseink .project-banner__copy > p { align-self: start; }
+  .project-banner--clauseink .clauseink-banner__papers { grid-column: 1; grid-row: auto; margin: 2.75rem 0.5rem 0; }
+  .project-banner--clauseink .clauseink-banner__document { aspect-ratio: 1.35; }
+  .project-banner--clauseink .clauseink-banner__document img { object-position: center top; }
+  .project-banner--clauseink .clauseink-banner__papers figcaption { font-size: 0.75rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .project-banner--vibemind .vibemind-banner__preview,
+  .project-banner--clauseink .clauseink-banner__papers { transition: none; }
+  .project-banner--vibemind .vibemind-banner__workbench:hover .vibemind-banner__preview { transform: rotateY(-8deg) rotateZ(-3deg); }
+  .project-banner--clauseink .clauseink-banner__papers:hover { transform: rotate(2deg); }
+}

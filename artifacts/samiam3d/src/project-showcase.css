@@ -45,18 +45,6 @@
   display: block;
   max-width: 100%;
 }
-.showcase-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 1.5rem;
-  padding-block: 3.5rem 2.5rem;
-}
-.showcase-discipline {
-  color: var(--showcase-muted);
-  font-size: 0.82rem;
-  text-align: right;
-}
 
 .project-brand {
   display: inline-flex;
@@ -121,11 +109,6 @@
 .project-brand--hotclips {
   font-family: "Manrope", sans-serif;
 }
-.showcase-vibemind .showcase-copy h3,
-.showcase-flower .showcase-copy h3,
-.showcase-trendink .showcase-copy h3 {
-  font-family: "Manrope", sans-serif;
-}
 
 .project-brand--vibemind .project-brand__wordmark {
   letter-spacing: -0.08em;
@@ -152,23 +135,6 @@
   height: 3.2rem;
 }
 
-.showcase-copy h3 {
-  max-width: 13ch;
-  margin: 0;
-  font:
-    650 clamp(2.5rem, 4.4vw, 4.75rem)/1.04 "Open Sans",
-    sans-serif;
-  letter-spacing: -0.065em;
-  text-wrap: balance;
-}
-.showcase-copy > p {
-  max-width: 43ch;
-  margin: 1.5rem 0 0;
-  color: var(--showcase-muted);
-  font-size: clamp(1rem, 1.2vw, 1.13rem);
-  line-height: 1.75;
-  text-wrap: pretty;
-}
 .showcase-action {
   display: inline-flex;
   min-height: 3rem;
@@ -209,30 +175,6 @@
   --showcase-field: #090d18;
   background: var(--showcase-field);
   font-family: "Inter", sans-serif;
-}
-.showcase-mindink__hero {
-  display: flex;
-  justify-content: space-between;
-  align-items: end;
-  gap: 3rem;
-  padding: 1rem 0 3.5rem;
-}
-.showcase-mindink .showcase-copy h3 {
-  max-width: 17ch;
-  font-family: "Inter", sans-serif;
-  font-size: clamp(2.8rem, 5.2vw, 5rem);
-  font-weight: 650;
-}
-.showcase-mindink .showcase-copy > p {
-  max-width: 54ch;
-}
-.showcase-mindink__aside {
-  margin: 0 0 0.5rem;
-  font-size: 1rem;
-  line-height: 1.7;
-  text-align: right;
-  color: #8f9fbf;
-  flex-shrink: 0;
 }
 .showcase-studio {
   padding-bottom: 4rem;
@@ -407,30 +349,8 @@
   --showcase-field: #1b172a;
   background: var(--showcase-field);
 }
-.showcase-vibemind .showcase-inner {
+.showcase-vibemind > .showcase-inner {
   padding-bottom: 0;
-}
-.showcase-vibemind__layout {
-  display: flex;
-  justify-content: space-between;
-  align-items: end;
-  gap: 3rem;
-  padding: 1rem 0 1.5rem;
-}
-.showcase-vibemind .showcase-copy h3 {
-  max-width: 18ch;
-}
-.showcase-vibemind .showcase-copy > p {
-  max-width: 57ch;
-}
-.showcase-vibemind__note {
-  margin: 0 0 0.5rem;
-  color: #b9ace9;
-  font:
-    500 1.2rem/1.6 "Manrope",
-    sans-serif;
-  text-align: right;
-  flex-shrink: 0;
 }
 .showcase-vibemind__process {
   display: flex;
@@ -451,27 +371,11 @@
   --showcase-muted: #c0c7ad;
   background: var(--showcase-field);
 }
-.showcase-flower .showcase-inner {
+.showcase-flower > .showcase-inner {
   padding-bottom: 4rem;
 }
 .showcase-flower .project-brand {
   color: #d4f1ab;
-}
-.showcase-flower__layout {
-  display: grid;
-  grid-template-columns: 1fr 0.45fr;
-  align-items: center;
-  gap: 4rem;
-  padding: 0 0 1.5rem;
-}
-.showcase-flower .showcase-copy h3 {
-  max-width: 16ch;
-}
-.showcase-flower__identity {
-  width: 15rem;
-  height: auto;
-  justify-self: end;
-  filter: brightness(0) invert(1);
 }
 .showcase-flower .application-gallery {
   --gallery-accent: #b5ff27;
@@ -482,33 +386,8 @@
   --showcase-muted: #aec8d3;
   background: var(--showcase-field);
 }
-.showcase-hotclips .showcase-inner {
+.showcase-hotclips > .showcase-inner {
   padding-bottom: 4rem;
-}
-.showcase-hotclips__heading {
-  display: flex;
-  justify-content: space-between;
-  align-items: end;
-  gap: 3rem;
-  margin: 0 0 1.5rem;
-}
-.showcase-hotclips .showcase-copy {
-  max-width: 52rem;
-}
-.showcase-hotclips .showcase-copy h3 {
-  max-width: 19ch;
-  font-family: "Manrope", sans-serif;
-}
-.showcase-hotclips .showcase-copy > p {
-  max-width: 58ch;
-}
-.showcase-hotclips__statement {
-  margin: 0 0 0.5rem;
-  flex-shrink: 0;
-  color: #55bdf8;
-  font-size: 1rem;
-  line-height: 1.6;
-  text-align: right;
 }
 .showcase-hotclips .application-gallery {
   --gallery-accent: #55bdf8;
@@ -519,25 +398,8 @@
   --showcase-muted: #bfc0c4;
   background: var(--showcase-field);
 }
-.showcase-trendink .showcase-inner {
+.showcase-trendink > .showcase-inner {
   padding-bottom: 4rem;
-}
-.showcase-trendink__layout {
-  display: grid;
-  grid-template-columns: 1fr 0.5fr;
-  align-items: center;
-  gap: 5rem;
-  padding-bottom: 1.5rem;
-}
-.showcase-trendink .showcase-copy h3 {
-  max-width: 17ch;
-}
-.showcase-trendink .showcase-copy > p {
-  max-width: 55ch;
-}
-.showcase-trendink__aperture {
-  width: min(100%, 18rem);
-  justify-self: center;
 }
 .showcase-trendink .application-gallery {
   --gallery-accent: #ff694e;
@@ -549,19 +411,8 @@
   --showcase-muted: #4c5d73;
   background: var(--showcase-field);
 }
-.showcase-clauseink .showcase-inner {
+.showcase-clauseink > .showcase-inner {
   padding-bottom: 4rem;
-}
-.showcase-clauseink__layout {
-  padding: 1rem 0 1.5rem;
-}
-.showcase-clauseink .showcase-copy h3 {
-  max-width: 23ch;
-  font-family: "Inter", sans-serif;
-  font-size: clamp(2.5rem, 4vw, 4.5rem);
-}
-.showcase-clauseink .showcase-copy > p {
-  max-width: 61ch;
 }
 .showcase-clauseink .application-gallery {
   --gallery-accent: #2454ff;
@@ -697,14 +548,6 @@
 }
 
 @media (max-width: 1050px) {
-  .showcase-vibemind__layout {
-    grid-template-columns: 1fr;
-    gap: 2.5rem;
-  }
-  .showcase-clauseink__layout {
-    grid-template-columns: 1fr 1.2fr;
-    gap: 2rem;
-  }
   .showcase-studio__controls {
     display: block;
   }
@@ -744,12 +587,6 @@
     display: block;
     margin-top: 0.8rem;
   }
-  .showcase-vibemind__layout {
-    display: block;
-  }
-  .showcase-vibemind__note {
-    display: none;
-  }
   .skip-link--second {
     left: 0.75rem;
     top: 4rem;
@@ -757,15 +594,6 @@
   }
   .skip-link--second:focus {
     transform: translateY(0);
-  }
-  .showcase-header {
-    padding-block: 2.25rem;
-    align-items: start;
-  }
-  .showcase-discipline {
-    max-width: 15ch;
-    font-size: 0.65rem;
-    line-height: 1.6;
   }
   .project-brand {
     font-size: 1.45rem;
@@ -785,25 +613,8 @@
     width: 2.25rem;
     height: 2.25rem;
   }
-  .showcase-copy h3,
-  .showcase-mindink .showcase-copy h3 {
-    font-size: clamp(2.5rem, 8.6vw, 3.8rem);
-    max-width: 14ch;
-  }
-  .showcase-copy > p {
-    font-size: 1rem;
-    line-height: 1.7;
-    margin-top: 1.25rem;
-  }
   .showcase-action {
     margin-top: 1.5rem;
-  }
-  .showcase-mindink__hero {
-    display: block;
-    padding: 0.5rem 0 2rem;
-  }
-  .showcase-mindink__aside {
-    display: none;
   }
   .showcase-studio {
     padding-bottom: 2.5rem;
@@ -830,54 +641,20 @@
     display: block;
     margin-top: 0.8rem;
   }
-  .showcase-vibemind__layout {
-    padding-block: 1rem 2.5rem;
-    gap: 2.5rem;
-  }
   .showcase-vibemind__process {
     flex-wrap: wrap;
     padding-block: 1.25rem;
     font-size: 1.2rem;
   }
-  .showcase-flower__layout {
-    grid-template-columns: 1fr;
-    gap: 1.5rem;
-    padding-bottom: 2rem;
-  }
-  .showcase-flower__identity {
-    display: none !important;
-  }
-  .showcase-hotclips__heading {
-    display: block;
-    margin-bottom: 2rem;
-  }
-  .showcase-hotclips__statement {
-    display: none;
-  }
-  .showcase-flower .showcase-inner,
-  .showcase-hotclips .showcase-inner,
-  .showcase-trendink .showcase-inner,
-  .showcase-clauseink .showcase-inner {
+  .showcase-flower > .showcase-inner,
+  .showcase-hotclips > .showcase-inner,
+  .showcase-trendink > .showcase-inner,
+  .showcase-clauseink > .showcase-inner {
     padding-bottom: 2.5rem;
   }
   .showcase-caption {
     font-size: 0.7rem;
     line-height: 1.6;
-  }
-  .showcase-trendink__layout {
-    grid-template-columns: 1fr;
-    gap: 1.5rem;
-  }
-  .showcase-trendink__aperture {
-    display: none !important;
-  }
-  .showcase-clauseink__layout {
-    grid-template-columns: 1fr;
-    gap: 2.5rem;
-    padding-top: 1rem;
-  }
-  .showcase-clauseink .showcase-copy h3 {
-    max-width: 14ch;
   }
   .project-modal .project-brand {
     font-size: 1.5rem;
